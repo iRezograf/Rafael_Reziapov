@@ -4,13 +4,80 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>ru.training.at</groupId>
     <artifactId>rafael_reziapov</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
+    <!--<properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+    </properties> -->
+    <properties>
+        <testng.configs.path>${project.build.testOutputDirectory}/testngconfigs</testng.configs.path>
+        <testng.suite.file/>
+        <java.version>1.8</java.version>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+            <!-- 7.4.0 don't include junit -->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${testng.suite.file}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>addsubstractTest</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/addsubstractTest.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>multiplydevideTest</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/multiplydevideTest.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>allTest</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/allTest.xml</testng.suite.file>
+            </properties>
+        </profile>
+    </profiles>
 </project>
