@@ -3,11 +3,11 @@
     <test name="multiplydivideTests">
         <groups>
             <run>
-                <include name="second"/>
+                <include name="mult_div"/>
             </run>
         </groups>
         <classes>
-            <class name="ru.training.at.hw1.TaxCalculationUnitTest"/>
+            <class name="ru.training.at.hw1.calculatorTest"/>
         </classes>
     </test>
 </suite>
