@@ -3,11 +3,11 @@
 <test name="allTestsForAddAndSubtractOperations">
     <groups>
         <run>
-            <include name="add_sub"/>
+            <include name="add_subtract"/>
         </run>
     </groups>
     <classes>
-        <class name="ru.training.at.hw1.calculatorTest"/>
+        <class name="ru.training.at.hw1.calculator.CalculatorAddTest"/>
     </classes>
 </test>
 </suite>

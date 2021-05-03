@@ -3,12 +3,12 @@
     <test name="allTests">
         <groups>
             <run>
-                <include name="add_sum"/>
-                <include name="mult_div"/>
+                <include name="add_subtract"/>
+                <include name="multiply_divide"/>
             </run>
         </groups>
         <classes>
-            <class name="ru.training.at.hw1.calculatorTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorAddTest"/>
         </classes>
     </test>
 </suite>
