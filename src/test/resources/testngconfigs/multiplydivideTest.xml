@@ -8,6 +8,9 @@
         </groups>
         <classes>
             <class name="ru.training.at.hw1.calculator.CalculatorAddTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorSubTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorMultiplyTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorDivideTest"/>
         </classes>
     </test>
 </suite>

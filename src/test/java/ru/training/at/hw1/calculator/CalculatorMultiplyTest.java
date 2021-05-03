@@ -31,12 +31,14 @@ public class CalculatorMultiplyTest {
         long actual = calculator.mult(a, b);
         softAssert.assertEquals(actual, expected, "MultiplyLongDataPositiveTestProvider is wrong");
     }
+
     @Test(groups = {"multiply_divide"}, priority = 60,
             dataProvider = "MultiplyDoubleDataPositiveTestProvider",
             dataProviderClass = MultiplyDoubleDataPositiveTestProvider.class)
     public void testMultDouble(double a, double b, double expected) {
         double actual = calculator.mult(a, b);
-        softAssert.assertEquals(actual, expected, "MultiplyDoubleDataPositiveTestProvider is wrong");
+        softAssert.assertEquals(actual, expected,
+                "MultiplyDoubleDataPositiveTestProvider is wrong");
     }
 
 }

@@ -3,16 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!--
-    <groupId>com.epam.tat.module4</groupId>
-    <artifactId>calculator</artifactId>
-    <version>1.0</version>
-    <packaging>jar</packaging>
-    <scope>system</scope>
-    <systemPath>${project.basedir}/src/main/calculator-1.0.jar</systemPath>
-    <type>jar</type>
-    <optional>true</optional>
-    -->
 
     <groupId>ru.training.at</groupId>
     <artifactId>rafael_reziapov</artifactId>
@@ -39,11 +29,11 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
-        </dependency>
+        </dependency -->
 
         <dependency>
             <groupId>com.epam.tat.module4</groupId>
@@ -113,6 +103,9 @@
     <profiles>
         <profile>
             <id>addsubstractTest</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <testng.suite.file>${testng.configs.path}/addsubstractTest.xml</testng.suite.file>
             </properties>
@@ -120,14 +113,12 @@
         <profile>
             <id>multiplydevideTest</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/multiplydevideTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/multiplydivideTest.xml</testng.suite.file>
             </properties>
         </profile>
         <profile>
             <id>allTest</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTest.xml</testng.suite.file>
             </properties>
