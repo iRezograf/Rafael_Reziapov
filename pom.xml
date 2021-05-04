@@ -9,38 +9,49 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <testng.configs.path>${project.build.testOutputDirectory}/testngconfigs</testng.configs.path>
-        <testng.suite.file/>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--  pay attention, dependencies versions are usually set as properties  -->
+        <checkstyle.version>8.41.1</checkstyle.version>
+        <testng.version>7.4.0</testng.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <selenium-java.version>3.141.59</selenium-java.version>
+        <maven-compiler.version>3.8.1</maven-compiler.version>
+        <maven-surefire.version>3.0.0-M5</maven-surefire.version>
+        <maven-checkstyle.version>3.1.2</maven-checkstyle.version>
+
+        <testng.configs.path>${project.build.testOutputDirectory}/testngconfigs</testng.configs.path>
+        <testng.suite.file/>
+
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.4.0</version>
+            <version>${testng.version}</version>
             <!-- 7.4.0 don't include junit -->
             <scope>test</scope>
         </dependency>
 
-        <!--dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
-        </dependency -->
+            <version>${selenium-java.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.epam.tat.module4</groupId>
             <artifactId>calculator</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/java/ru/training/at/hw1/calculator-1.0.jar</systemPath>
+            <systemPath>${project.build.testOutputDirectory}/calculator-1.0.jar</systemPath>
             <type>jar</type>
             <optional>true</optional>
         </dependency>
@@ -51,32 +62,34 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven-surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>${testng.suite.file}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>${maven-checkstyle.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.41.1</version>
+                        <version>${checkstyle.version}</version>
                     </dependency>
                 </dependencies>
                     <configuration>
@@ -97,8 +110,8 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
+
     </build>
     <profiles>
         <profile>
@@ -111,14 +124,13 @@
             </properties>
         </profile>
         <profile>
-            <id>multiplydevideTest</id>
+            <id>multiplydivideTest</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/multiplydivideTest.xml</testng.suite.file>
             </properties>
         </profile>
         <profile>
             <id>allTest</id>
-
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTest.xml</testng.suite.file>
             </properties>
