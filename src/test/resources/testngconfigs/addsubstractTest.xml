@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="testsForAddAndSubtractOperations">
+    <test name="allTestsForAddAndSubtractOperations">
+        <groups>
+            <run>
+                <include name="add_subtract"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="ru.training.at.hw1.calculator.CalculatorAddTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorSubTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorMultiplyTest"/>
+            <class name="ru.training.at.hw1.calculator.CalculatorDivideTest"/>
+        </classes>
+    </test>
+</suite>
