@@ -11,7 +11,7 @@ public class SumDoubleDataPositiveTestProvider {
                 {Double.MAX_VALUE, 0.0, Double.MAX_VALUE},
                 {1.7976931348623157E308, -1, 1.7976931348623156E308},
                 {Double.MAX_VALUE, Double.MIN_VALUE, -1},
-                {'A', 0, 'A'},
+                {'C', 0, 'C'},
                 {0.0, 0.0, 0.0}};
     }
 }

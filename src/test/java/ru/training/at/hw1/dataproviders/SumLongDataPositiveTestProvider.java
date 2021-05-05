@@ -11,7 +11,7 @@ public class SumLongDataPositiveTestProvider {
                 {Long.MAX_VALUE, 0, Long.MAX_VALUE},
                 {9223372036854775807L, -1, 9223372036854775806L},
                 {9223372036854775807L, -9223372036854775808L, -1},
-                {'A', 0, 'A'},
+                {'C', 0, 'C'},
                 {0, 0, 0}};
     }
 }

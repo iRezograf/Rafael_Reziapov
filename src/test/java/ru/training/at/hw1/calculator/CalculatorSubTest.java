@@ -1,28 +1,10 @@
 package ru.training.at.hw1.calculator;
 
-import com.epam.tat.module4.Calculator;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import org.testng.annotations.*;
 import ru.training.at.hw1.dataproviders.SubDoubleDataPositiveTestProvider;
 import ru.training.at.hw1.dataproviders.SubLongDataPositiveTestProvider;
 
-public class CalculatorSubTest {
-    Calculator calculator;
-    SoftAssert softAssert;
-
-    @BeforeMethod(groups = {"add_subtract"})
-    public void setUp() {
-        calculator = new Calculator();
-        softAssert = new SoftAssert();
-    }
-
-    @AfterMethod(groups = {"add_subtract"})
-    public void tearDown() {
-        calculator = null;
-        softAssert = null;
-    }
+public class CalculatorSubTest extends AbstractTest {
 
     @Test(groups = {"add_subtract"}, priority = 30,
             dataProvider = "SubLongDataPositiveTestProvider",
