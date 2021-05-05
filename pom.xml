@@ -109,16 +109,25 @@
 
         </plugins>
     </build>
+
     <profiles>
         <profile>
-            <id>addsubstractTest</id>
+            <id>Exercise1Test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <testng.suite.file>${testng.configs.path}/Exercise1Test.xml</testng.suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>addsubstractTest</id>
+            <properties>
                 <testng.suite.file>${testng.configs.path}/addsubstractTest.xml</testng.suite.file>
             </properties>
         </profile>
+
         <profile>
             <id>multiplydevideTest</id>
             <properties>
@@ -126,11 +135,11 @@
             </properties>
         </profile>
         <profile>
-            <id>allTest</id>
-
+            <id>allCalculatorTest</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTest.xml</testng.suite.file>
             </properties>
         </profile>
+
     </profiles>
 </project>
