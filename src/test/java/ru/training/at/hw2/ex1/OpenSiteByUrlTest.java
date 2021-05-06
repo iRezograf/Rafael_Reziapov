@@ -4,10 +4,16 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
+
+import static org.testng.AssertJUnit.assertEquals;
 
 
 public class OpenSiteByUrlTest {
     WebDriver driver;
+    WebElement element;
+    SoftAssert softAssert;
+
     String driverPath;
     String testedSite;
 
@@ -47,11 +53,11 @@ public class OpenSiteByUrlTest {
 
         driver.manage().window().maximize();
 
-        /** driver.manage().deleteAllCookies();*/
-        /** driver.manage().addCookie(new Cookie("name", "Roman"));*/
-        /** driver.manage().addCookie(new Cookie("password", "Jdi1234"));*/
+        /* driver.manage().deleteAllCookies();
+        * driver.manage().addCookie(new Cookie("name", "Roman"));
+        * driver.manage().addCookie(new Cookie("password", "Jdi1234"));
+        */
 
-        WebElement element;
         element = driver.findElement(By.id("user-icon"));
         element.click();
 
@@ -73,18 +79,29 @@ public class OpenSiteByUrlTest {
         driver.findElement (By.linkText("Contact Us"));
         driver.findElement (By.partialLinkText("Contact"));
          */
-
-        /*
-        @Test
-        public void elementTest() {
-        element.click();
-        element.sendKeys("Admin007");
-        element.clear();
-        assertEquals(element.getText(), "Ages");
-        assertEquals(element.getAttribute("el-value"), "Save Product");
-        assertEquals(element.getCssValue("font-size"), "12");
-        }
-         * */
     }
+
+    @Test(groups = {"exercise_1"}, priority = 40)
+    public void UsernameIsLogginedTest() {
+        element = driver.findElement(By.id("user-name"));
+        assertEquals(element.getText(), "ROMAN IOVLEV");
+    }
+
+    @Test(groups = {"exercise_1"}, priority = 50)
+    public void headerwHaveProperTextsTest() {
+        element = driver.findElement(By.className("dropdown-toggle"));
+        softAssert.assertEquals(element., "SERVICE");
+
+        //element = driver.findElement(By.cssSelector("index.html"));
+        //softAssert.assertEquals(element.getText(), "HOME");
+
+        //element = driver.findElement(By.xpath("//li[@href='index.html'"));
+        //softAssert.assertEquals(element.getText(), "Home");
+
+        //element = driver.findElement(By.cssSelector("index.html"));
+        //softAssert.assertEquals(element.getText(), "Home");
+    }
+
+
 }
 
