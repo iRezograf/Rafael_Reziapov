@@ -6,6 +6,9 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -26,6 +29,7 @@ public class OpenSiteByUrlTest {
         testedSite = "https://jdi-testing.github.io/jdi-light/index.html";
         System.setProperty("webdriver.chrome.driver", driverPath);
         driver = new ChromeDriver();
+        softAssert = new SoftAssert();
     }
 
     @AfterClass(groups = {"exercise_1"})
@@ -34,8 +38,7 @@ public class OpenSiteByUrlTest {
     }
 
     @Test(groups = {"exercise_1"}, priority = 10)
-    public void openSiteByUrlTest_() {
-
+    public void openSiteByUrlTest() {
         driver.navigate().to(testedSite);
         driver.getTitle();
     }
@@ -43,11 +46,10 @@ public class OpenSiteByUrlTest {
     @Test(groups = {"exercise_1"}, priority = 20)
     public void browserTitleTest() {
         driver.navigate().to(testedSite);
-        Assert.assertEquals(driver.getTitle(),
+        softAssert.assertEquals(driver.getTitle(),
                 "Home Page");
 
     }
-
 
     @Test(groups = {"exercise_1"}, priority = 30)
     public void performLoginTest() {
@@ -69,22 +71,47 @@ public class OpenSiteByUrlTest {
     @Test(groups = {"exercise_1"}, priority = 40)
     public void usernameIsLogginedTest() {
         element = driver.findElement(By.id("user-name"));
-        assertEquals(element.getText(), "ROMAN IOVLEV");
+        softAssert.assertEquals(element.getText(), "ROMAN IOVLEV");
     }
 
     @Test(groups = {"exercise_1"}, priority = 50)
-    public void headerwHaveProperTextsTest() {
+    public void headerHaveProperTextsTest() {
+
         List<WebElement> elements = driver.findElements(By.tagName("li")).subList(0, 3);
-        //List<WebElement> firstFourElements = elements.subList(0,3);
+
+        softAssert.assertEquals(elements.get(0).getText(), "HOME");
+        softAssert.assertEquals(elements.get(1).getText(), "CONTACT FORM");
+        softAssert.assertEquals(elements.get(2).getText(), "SERVICE");
 
         element = driver.findElement(By.cssSelector(
-                "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(1)"));
-        System.out.println(element.getText());
-        // body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(1) > a
-        //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(2) > a
-        //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li.dropdown
-        //html/body/header/div/nav/ul[1]/li[3]/a/text()
-        //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(4) > a
+                "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(4)"));
+        softAssert.assertEquals(element.getText(), "METALS & COLORS");
+
+        element = driver.findElement(By.xpath(
+                "/html/body/header/div/nav/ul[1]/li[4]/a"));
+        softAssert.assertEquals(element.getText(), "METALS & COLORS");
+    }
+
+    @Test(groups = {"exercise_1"}, priority = 60)
+    public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
+        element = driver.findElement(By.id("epam-logo"));
+        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+
+        element = driver.findElement(By.id("user-icon"));
+        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+
+        element = driver.findElement(By.xpath("/html/body/header/div/nav/div[3]/span"));
+        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+
+        // drop-down profile menu open
+        element = driver.findElement(By.xpath("/html/body/header/div/nav/ul[2]/li/a"));
+        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+
+        // Logout
+        element = driver.findElement(
+                By.xpath("/html/body/header/div/nav/ul[2]/li/div/div/button/i"));
+        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        element.click();
     }
 }
 
