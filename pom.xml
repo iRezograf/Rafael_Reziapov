@@ -71,6 +71,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -78,9 +79,10 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <encoding>project.build.sourceEncoding</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -91,6 +93,7 @@
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -143,7 +146,7 @@
         </profile>
 
         <profile>
-            <id>multiplydevideTest</id>
+            <id>multiplydivideTest</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/multiplydivideTest.xml</testng.suite.file>
             </properties>

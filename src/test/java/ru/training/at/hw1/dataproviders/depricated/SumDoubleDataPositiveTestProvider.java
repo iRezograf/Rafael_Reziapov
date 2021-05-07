@@ -1,4 +1,4 @@
-package ru.training.at.hw1.dataproviders;
+package ru.training.at.hw1.dataproviders.depricated;
 
 import org.testng.annotations.DataProvider;
 
@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 public class SumDoubleDataPositiveTestProvider {
     @DataProvider(name = "SumDoubleDataPositiveTestProvider")
     public  Object [][] createData() {
-        return new Object[][]{
+        return new Object[][] {
                 {0.0, Double.MAX_VALUE, Double.MAX_VALUE},
                 {Double.MAX_VALUE, 0.0, Double.MAX_VALUE},
                 {1.7976931348623157E308, -1, 1.7976931348623156E308},

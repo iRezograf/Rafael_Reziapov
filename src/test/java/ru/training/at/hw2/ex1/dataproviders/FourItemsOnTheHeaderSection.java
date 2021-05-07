@@ -9,7 +9,7 @@ import java.util.List;
 public class FourItemsOnTheHeaderSection {
     @DataProvider(name = "FourItemsOnTheHeaderSection")
     public Iterator<Object[]> createData() {
-        List<String> lst = new ArrayList<> ();
+        List<String> lst = new ArrayList<>();
         lst.add("HOME");
         lst.add("CONTACT FORM");
         lst.add("SERVICE");

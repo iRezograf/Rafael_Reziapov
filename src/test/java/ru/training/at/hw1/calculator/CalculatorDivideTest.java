@@ -1,9 +1,9 @@
 package ru.training.at.hw1.calculator;
 
 import org.testng.annotations.Test;
-import ru.training.at.hw1.dataproviders.DivideByZeroDataTestProvider;
-import ru.training.at.hw1.dataproviders.DivideDoubleDataPositiveTestProvider;
-import ru.training.at.hw1.dataproviders.DivideLongDataPositiveTestProvider;
+import ru.training.at.hw1.dataproviders.AllTestProvider;
+import ru.training.at.hw1.dataproviders.depricated.DivideDoubleDataPositiveTestProvider;
+import ru.training.at.hw1.dataproviders.depricated.DivideLongDataPositiveTestProvider;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.fail;
@@ -12,8 +12,8 @@ public class CalculatorDivideTest extends AbstractTest {
 
     @Test(groups = {"multiply_divide"}, priority = 70,
             expectedExceptionsMessageRegExp = "Attempt to divide by zero",
-            dataProvider = "DivideByZeroDataTestProvider",
-            dataProviderClass = DivideByZeroDataTestProvider.class)
+            dataProvider = "AllTestProvider",
+            dataProviderClass = AllTestProvider.class)
     public void testDivLongByZeroExceptionMessage(long a, long b) {
         try {
             calculator.div(a, b);

@@ -1,4 +1,4 @@
-package ru.training.at.hw1.dataproviders;
+package ru.training.at.hw1.dataproviders.depricated;
 
 import org.testng.annotations.DataProvider;
 
