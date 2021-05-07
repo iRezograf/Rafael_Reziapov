@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import ru.training.at.hw2.ex1.dataproviders.DpForUnderFourIconsTexts;
 
 import javax.swing.text.html.HTMLDocument;
 import java.util.Collection;
@@ -87,6 +88,7 @@ public class OpenSiteByUrlTest {
                 "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(4)"));
         softAssert.assertEquals(element.getText(), "METALS & COLORS");
 
+        // Alternative method
         element = driver.findElement(By.xpath(
                 "/html/body/header/div/nav/ul[1]/li[4]/a"));
         softAssert.assertEquals(element.getText(), "METALS & COLORS");
@@ -111,8 +113,40 @@ public class OpenSiteByUrlTest {
         element = driver.findElement(
                 By.xpath("/html/body/header/div/nav/ul[2]/li/div/div/button/i"));
         softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+    }
+
+    @Test(groups = {"exercise_1"}, priority = 70,
+            dataProvider = "DpForUnderFourIconsTexts",
+            dataProviderClass = DpForUnderFourIconsTexts.class)
+    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(String expected) {
+        String xpathLocator;
+
+        // Check 1st text under the 1st Icons
+        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[1]/div/span";
+        element = driver.findElement(By.xpath(xpathLocator));
+        softAssert.assertEquals(element.getText(),
+                expected, "Element's text isn't proper or not found");
+
+        // Check 2d text under the 2d Icons
+        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[2]/div/span";
+        element = driver.findElement(By.xpath(xpathLocator));
+        softAssert.assertEquals(element.getText(),
+                expected, "Element's text isn't proper or not found");
+
+        // Check 3d text under the 3d Icons
+        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[3]/div/span";
+        element = driver.findElement(By.xpath(xpathLocator));
+        softAssert.assertEquals(element.getText(),
+                expected, "Element's text isn't proper or not found");
+
+        // Check 4th text under the 4th Icons
+        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[4]/div/span";
+        element = driver.findElement(By.xpath(xpathLocator));
+        softAssert.assertEquals(element.getText(),
+                expected, "Element's text isn't proper or not found");
         element.click();
     }
+
 }
 
 
