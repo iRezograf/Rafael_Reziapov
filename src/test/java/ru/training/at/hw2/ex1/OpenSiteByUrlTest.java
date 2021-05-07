@@ -146,8 +146,10 @@ public class OpenSiteByUrlTest {
                 expected, "Element's text isn't proper or not found");
         //element.click();
     }
-    @Test(groups = {"exercise_1"}, priority = 70)
-    public void IframeWithFrameButtonExistTest(){
+
+    @Test(groups = {"exercise_1"}, priority = 80)
+    public void iframeWithFrameButtonExistTest() {
+
         element = driver.findElement(By.id("frame"));
         softAssert.assertEquals(element.getText(),
                 "<p>Your browser does not support iframes.</p>",
