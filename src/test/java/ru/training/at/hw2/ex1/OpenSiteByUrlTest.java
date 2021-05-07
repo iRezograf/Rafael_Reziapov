@@ -5,6 +5,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import ru.training.at.hw1.dataproviders.SumLongDataPositiveTestProvider;
+import ru.training.at.hw2.ex1.dataproviders.FourItemsOnTheHeaderSection;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
 
@@ -49,14 +54,7 @@ public class OpenSiteByUrlTest {
 
     @Test(groups = {"exercise_1"}, priority = 30)
     public void performLoginTest() {
-        //driver.navigate().to(testedSite);
-
         driver.manage().window().maximize();
-
-        /* driver.manage().deleteAllCookies();
-        * driver.manage().addCookie(new Cookie("name", "Roman"));
-        * driver.manage().addCookie(new Cookie("password", "Jdi1234"));
-        */
 
         element = driver.findElement(By.id("user-icon"));
         element.click();
@@ -69,16 +67,6 @@ public class OpenSiteByUrlTest {
 
         element = driver.findElement(By.id("login-button"));
         element.click();
-
-        /*
-         * List<WebElement> elements = driver.findElements (By.tagName("li"));
-        driver.findElement (By.className("options-class"));
-        driver.findElement (By.name("button-name"));
-        driver.findElement (By.cssSelector(".options"));
-        driver.findElement (By.xpath("//li[@name='button-name']"));
-        driver.findElement (By.linkText("Contact Us"));
-        driver.findElement (By.partialLinkText("Contact"));
-         */
     }
 
     @Test(groups = {"exercise_1"}, priority = 40)
@@ -89,19 +77,17 @@ public class OpenSiteByUrlTest {
 
     @Test(groups = {"exercise_1"}, priority = 50)
     public void headerwHaveProperTextsTest() {
-        element = driver.findElement(By.className("dropdown-toggle"));
-        softAssert.assertEquals(element., "SERVICE");
+        List<WebElement> elements = driver.findElements (By.tagName("li")).subList(0,3);
+        //List<WebElement> firstFourElements = elements.subList(0,3);
 
-        //element = driver.findElement(By.cssSelector("index.html"));
-        //softAssert.assertEquals(element.getText(), "HOME");
-
-        //element = driver.findElement(By.xpath("//li[@href='index.html'"));
-        //softAssert.assertEquals(element.getText(), "Home");
-
-        //element = driver.findElement(By.cssSelector("index.html"));
-        //softAssert.assertEquals(element.getText(), "Home");
+        element = driver.findElement(By.cssSelector("ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(1)"));
+        System.out.println(element.getText());
+        // body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(1) > a
+        //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(2) > a
+        //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li.dropdown
+        //html/body/header/div/nav/ul[1]/li[3]/a/text()
+        //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(4) > a
     }
-
-
 }
+
 
