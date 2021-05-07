@@ -5,10 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
-import ru.training.at.hw1.dataproviders.SumLongDataPositiveTestProvider;
-import ru.training.at.hw2.ex1.dataproviders.FourItemsOnTheHeaderSection;
 
-import java.util.Iterator;
 import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -70,17 +67,18 @@ public class OpenSiteByUrlTest {
     }
 
     @Test(groups = {"exercise_1"}, priority = 40)
-    public void UsernameIsLogginedTest() {
+    public void usernameIsLogginedTest() {
         element = driver.findElement(By.id("user-name"));
         assertEquals(element.getText(), "ROMAN IOVLEV");
     }
 
     @Test(groups = {"exercise_1"}, priority = 50)
     public void headerwHaveProperTextsTest() {
-        List<WebElement> elements = driver.findElements (By.tagName("li")).subList(0,3);
+        List<WebElement> elements = driver.findElements(By.tagName("li")).subList(0, 3);
         //List<WebElement> firstFourElements = elements.subList(0,3);
 
-        element = driver.findElement(By.cssSelector("ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(1)"));
+        element = driver.findElement(By.cssSelector(
+                "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(1)"));
         System.out.println(element.getText());
         // body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(1) > a
         //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8 > li:nth-child(2) > a

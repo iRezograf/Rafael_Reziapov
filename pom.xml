@@ -21,7 +21,9 @@
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <assertj.core.version>3.19.0</assertj.core.version>
+        <checkstyle.version>8.41.1</checkstyle.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -71,6 +73,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -78,9 +81,10 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <encoding>project.build.sourceEncoding</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -91,6 +95,7 @@
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -99,7 +104,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.41.1</version>
+                        <version>${checkstyle.version}</version>
                     </dependency>
                 </dependencies>
                     <configuration>
@@ -120,13 +125,12 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>Exercise1Test</id>
+            <id>2.1 Exercise1Test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -136,20 +140,20 @@
         </profile>
 
         <profile>
-            <id>addsubstractTest</id>
+            <id>1.1 addsubstractTest</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/addsubstractTest.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
-            <id>multiplydevideTest</id>
+            <id>1.2 multiplydivideTest</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/multiplydivideTest.xml</testng.suite.file>
             </properties>
         </profile>
         <profile>
-            <id>allCalculatorTest</id>
+            <id>1.0 allCalculatorTest</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTest.xml</testng.suite.file>
             </properties>
