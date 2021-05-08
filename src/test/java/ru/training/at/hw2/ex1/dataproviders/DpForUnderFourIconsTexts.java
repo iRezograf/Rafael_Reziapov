@@ -5,14 +5,19 @@ import org.testng.annotations.DataProvider;
 public class DpForUnderFourIconsTexts {
     @DataProvider(name = "DpForUnderFourIconsTexts")
     public Object[][] createData() {
+        /*
+            1,2,3,4 - is child's element index
+            element = driver.findElement(By.cssSelector(
+                ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
+         */
         return new Object[][]{
-                {"To include good practices\n"
+                {1, "To include good practices\n"
                         + "and ideas from successful\n"
                         + "EPAM project"},
-                {"To be flexible and\n"
+                {2, "To be flexible and\n"
                        + "customizable"},
-                {"To be multiplatform"},
-                {"Already have good base\n"
+                {3, "To be multiplatform"},
+                {4, "Already have good base\n"
                        + "(about 20 internal and\n"
                        + "some external projects),\n"
                        + "wish to get more…"}};

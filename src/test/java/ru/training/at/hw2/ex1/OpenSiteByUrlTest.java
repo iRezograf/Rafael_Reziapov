@@ -102,54 +102,40 @@ public class OpenSiteByUrlTest {
         element = driver.findElement(By.id("user-icon"));
         softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
-        element = driver.findElement(By.xpath("/html/body/header/div/nav/div[3]/span"));
+        //element = driver.findElement(By.xpath("/html/body/header/div/nav/div[3]/span"));
+        element = driver.findElement(By.cssSelector("span.icon-search"));
         softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
         // drop-down profile menu open
-        element = driver.findElement(By.xpath("/html/body/header/div/nav/ul[2]/li/a"));
+        //element = driver.findElement(By.xpath("/html/body/header/div/nav/ul[2]/li/a"));
+        element = driver.findElement(By.cssSelector("span.caret"));
         softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
         // Logout
-        element = driver.findElement(
-                By.xpath("/html/body/header/div/nav/ul[2]/li/div/div/button/i"));
+        //element = driver.findElement(
+        //        By.xpath("/html/body/header/div/nav/ul[2]/li/div/div/button/i"));
+        element = driver.findElement(By.cssSelector("i.fa.fa-sign-out"));
+        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        // also, it is possible:
+        element = driver.findElement(By.cssSelector("i.fa-sign-out"));
         softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
     }
 
     @Test(groups = {"exercise_1"}, priority = 70,
             dataProvider = "DpForUnderFourIconsTexts",
             dataProviderClass = DpForUnderFourIconsTexts.class)
-    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(String expected) {
-        String xpathLocator;
+    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(int index,
+                                                                           String expected) {
 
-        // Check 1st text under the 1st Icons
-        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[1]/div/span";
-        element = driver.findElement(By.xpath(xpathLocator));
-        softAssert.assertEquals(element.getText(),
+        element = driver.findElement(By.cssSelector(
+                ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
+        Assert.assertEquals(element.getText(),
                 expected, "Element's text isn't proper or not found");
 
-        // Check 2d text under the 2d Icons
-        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[2]/div/span";
-        element = driver.findElement(By.xpath(xpathLocator));
-        softAssert.assertEquals(element.getText(),
-                expected, "Element's text isn't proper or not found");
-
-        // Check 3d text under the 3d Icons
-        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[3]/div/span";
-        element = driver.findElement(By.xpath(xpathLocator));
-        softAssert.assertEquals(element.getText(),
-                expected, "Element's text isn't proper or not found");
-
-        // Check 4th text under the 4th Icons
-        xpathLocator = "/html/body/div/div[2]/main/div[2]/div[2]/div[4]/div/span";
-        element = driver.findElement(By.xpath(xpathLocator));
-        softAssert.assertEquals(element.getText(),
-                expected, "Element's text isn't proper or not found");
-        //element.click();
     }
 
     @Test(groups = {"exercise_1"}, priority = 80)
     public void iframeWithFrameButtonExistTest() {
-
         element = driver.findElement(By.id("frame"));
         softAssert.assertEquals(element.getText(),
                 "<p>Your browser does not support iframes.</p>",
