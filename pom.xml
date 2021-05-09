@@ -137,12 +137,12 @@
 
     <profiles>
         <profile>
-            <id>2.1 Exercise_1.Test</id>
+            <id>2.1 ExerciseOne.Test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <testng.suite.file>${testng.configs.path}/Exercise1Test.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/ExerciseOneTest.xml</testng.suite.file>
             </properties>
         </profile>
 

@@ -7,7 +7,7 @@
             </run>
         </groups>
         <classes>
-            <class name="ru.training.at.hw2.ex1.OpenSiteByUrlTest"/>
+            <class name="ru.training.at.hw2.ex1.ExerciseOne"/>
         </classes>
     </test>
 </suite>
