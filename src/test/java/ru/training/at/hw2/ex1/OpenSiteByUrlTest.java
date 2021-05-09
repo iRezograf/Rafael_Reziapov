@@ -28,8 +28,8 @@ public class OpenSiteByUrlTest {
         // Версия 90.0.4430.93
         driverPath = "C:\\Users\\rezog\\driver\\chromedriver.exe";
         testedSite = "https://jdi-testing.github.io/jdi-light/index.html";
-        System.setProperty("webdriver.chrome.driver", driverPath);
-        driver = new ChromeDriver();
+        //System.setProperty("webdriver.chrome.driver", driverPath);
+        //driver = new ChromeDriver();
         softAssert = new SoftAssert();
 
     }
