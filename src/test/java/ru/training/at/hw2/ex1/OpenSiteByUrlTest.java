@@ -31,6 +31,7 @@ public class OpenSiteByUrlTest {
         System.setProperty("webdriver.chrome.driver", driverPath);
         driver = new ChromeDriver();
         softAssert = new SoftAssert();
+
     }
 
     @AfterClass(groups = {"exercise_1"})
@@ -47,7 +48,7 @@ public class OpenSiteByUrlTest {
     @Test(groups = {"exercise_1"}, priority = 20)
     public void browserTitleTest() {
         driver.navigate().to(testedSite);
-        softAssert.assertEquals(driver.getTitle(),
+        Assert.assertEquals(driver.getTitle(),
                 "Home Page");
 
     }
@@ -72,7 +73,7 @@ public class OpenSiteByUrlTest {
     @Test(groups = {"exercise_1"}, priority = 40)
     public void usernameIsLogginedTest() {
         element = driver.findElement(By.id("user-name"));
-        softAssert.assertEquals(element.getText(), "ROMAN IOVLEV");
+        Assert.assertEquals(element.getText(), "ROMAN IOVLEV");
     }
 
     @Test(groups = {"exercise_1"}, priority = 50)
@@ -80,45 +81,40 @@ public class OpenSiteByUrlTest {
 
         List<WebElement> elements = driver.findElements(By.tagName("li")).subList(0, 3);
 
-        softAssert.assertEquals(elements.get(0).getText(), "HOME");
-        softAssert.assertEquals(elements.get(1).getText(), "CONTACT FORM");
-        softAssert.assertEquals(elements.get(2).getText(), "SERVICE");
+        Assert.assertEquals(elements.get(0).getText(), "HOME");
+        Assert.assertEquals(elements.get(1).getText(), "CONTACT FORM");
+        Assert.assertEquals(elements.get(2).getText(), "SERVICE");
 
         element = driver.findElement(By.cssSelector(
                 "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(4)"));
-        softAssert.assertEquals(element.getText(), "METALS & COLORS");
+        Assert.assertEquals(element.getText(), "METALS & COLORS");
 
         // Alternative method
         element = driver.findElement(By.xpath(
                 "/html/body/header/div/nav/ul[1]/li[4]/a"));
-        softAssert.assertEquals(element.getText(), "METALS & COLORS");
+        Assert.assertEquals(element.getText(), "METALS & COLORS");
     }
 
     @Test(groups = {"exercise_1"}, priority = 60)
     public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
         element = driver.findElement(By.id("epam-logo"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
         element = driver.findElement(By.id("user-icon"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
-        //element = driver.findElement(By.xpath("/html/body/header/div/nav/div[3]/span"));
         element = driver.findElement(By.cssSelector("span.icon-search"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
-        // drop-down profile menu open
-        //element = driver.findElement(By.xpath("/html/body/header/div/nav/ul[2]/li/a"));
         element = driver.findElement(By.cssSelector("span.caret"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
-        // Logout
-        //element = driver.findElement(
-        //        By.xpath("/html/body/header/div/nav/ul[2]/li/div/div/button/i"));
         element = driver.findElement(By.cssSelector("i.fa.fa-sign-out"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-        // also, it is possible:
+        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+
+        /* also, it is possible: */
         element = driver.findElement(By.cssSelector("i.fa-sign-out"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
     }
 
     @Test(groups = {"exercise_1"}, priority = 70,
@@ -126,20 +122,33 @@ public class OpenSiteByUrlTest {
             dataProviderClass = DpForUnderFourIconsTexts.class)
     public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(int index,
                                                                            String expected) {
-
         element = driver.findElement(By.cssSelector(
                 ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
         Assert.assertEquals(element.getText(),
                 expected, "Element's text isn't proper or not found");
-
     }
 
     @Test(groups = {"exercise_1"}, priority = 80)
     public void iframeWithFrameButtonExistTest() {
-        element = driver.findElement(By.id("frame"));
-        softAssert.assertEquals(element.getText(),
-                "<p>Your browser does not support iframes.</p>",
-                "Element's text isn't proper or not found");
+        element = driver.findElement(By.xpath("//iframe[@id='frame']"));
+        Assert.assertNotNull(element);
+    }
+
+    @Test(groups = {"exercise_1"}, priority = 80)
+    public void thereIsFrameButtonInTheIframeTest() {
+        //element = driver.findElement(By.xpath("//div[@class='card-body']/input"));
+        //List<WebElement> elements = driver.findElements(By.xpath(
+        // "//div[@class='card-body']/*[3]"));
+        List<WebElement> elements = driver.findElements(By.xpath(
+                "//div[@class='card-body'][1]//input[@id='frame-button"));
+        //element = driver.findElement(By.xpath(
+        // "//div[@class='card-body'][1]//input[@id='frame-button']"));
+        System.out.println(elements.get(1).getText());
+
+
+        //element = driver.findElement(By.xpath("//div[@class='card-body']/*[3]"));
+        //Assert.assertNotNull(element);
+
     }
 }
 
