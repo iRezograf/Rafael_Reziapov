@@ -22,6 +22,7 @@
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <assertj.core.version>3.19.0</assertj.core.version>
         <checkstyle.version>8.41.1</checkstyle.version>
+        <selenium.webdriver.common.version>0.9.7376</selenium.webdriver.common.version>
     </properties>
 
     <dependencies>
@@ -49,6 +50,12 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.webdriver</groupId>
+            <artifactId>webdriver-common</artifactId>
+            <version>${selenium.webdriver.common.version}</version>
         </dependency>
 
         <dependency>
