@@ -146,9 +146,6 @@ public class OpenSiteByUrlTest {
         System.out.println(elements.get(1).getText());
 
 
-        //element = driver.findElement(By.xpath("//div[@class='card-body']/*[3]"));
-        //Assert.assertNotNull(element);
-
     }
 }
 
