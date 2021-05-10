@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Exercise1Tests">
-    <test name="Exercise1Tests">
+<suite name="Exercise2Tests">
+    <test name="Exercise2Tests">
         <groups>
             <run>
                 <include name="exercise_2"/>

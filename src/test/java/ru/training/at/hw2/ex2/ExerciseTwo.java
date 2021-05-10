@@ -5,14 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import ru.training.at.hw2.ex1.dataproviders.DpForLeftSectionTexts;
-import ru.training.at.hw2.ex1.dataproviders.DpForUnderFourIconsTexts;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ExerciseTwo {
     WebDriver driver;
@@ -36,24 +35,23 @@ public class ExerciseTwo {
 
     @AfterClass(groups = {"exercise_2"})
     public void tearDown() {
-        driver.quit();
+        //driver.quit();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 10)
+    @Test(groups = {"exercise_2"}, priority = 110)
     public void openSiteByUrlTest() {
         driver.navigate().to(testedSite);
         driver.getTitle();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 20)
+    @Test(groups = {"exercise_2"}, priority = 120)
     public void browserTitleTest() {
         driver.navigate().to(testedSite);
         softAssert.assertEquals(driver.getTitle(),
                 "Home Page");
-
     }
 
-    @Test(groups = {"exercise_2"}, priority = 30)
+    @Test(groups = {"exercise_2"}, priority = 130)
     public void performLoginTest() {
         driver.manage().window().maximize();
 
@@ -70,7 +68,7 @@ public class ExerciseTwo {
         element.click();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 40)
+    @Test(groups = {"exercise_2"}, priority = 140)
     public void usernameIsLogginedTest() {
         element = driver.findElement(By.id("user-name"));
         ExpectedConditions.textToBePresentInElement(element, "ROMAN IOVLEV!");
@@ -78,117 +76,85 @@ public class ExerciseTwo {
         softAssert.assertEquals(element.getText(), "ROMAN IOVLEV");
     }
 
-    @Test(groups = {"exercise_2"}, priority = 50)
-    public void headerHaveProperTextsTest() {
+    @Test(groups = {"exercise_2"}, priority = 150)
+    public void openMenuServiceDifferentElementsTest() {
+        // Open drop down menu SERVICE
+        element = driver.findElement(By.cssSelector(
+                "ul.uui-navigation.nav.navbar-nav.m-l8>li.dropdown"));
+        element.click();
 
-        List<WebElement> elements = driver.findElements(By.tagName("li")).subList(0, 3);
+        //8th p. of menu DIFFERENT ELEMENTS choose
+        element = driver.findElement(By.cssSelector(
+                "ul.uui-navigation.nav.navbar-nav.m-l8>li.dropdown>ul li:nth-child(8)"));
+        element.click();
+    }
 
-        softAssert.assertEquals(elements.get(0).getText(), "HOME");
-        softAssert.assertEquals(elements.get(1).getText(), "CONTACT FORM");
-        softAssert.assertEquals(elements.get(2).getText(), "SERVICE");
+    @Test(groups = {"exercise_2"}, priority = 155)
+    public void checkElementsTest() {
+        //Select checkboxes Water
+        element = driver.findElement(By.cssSelector(
+        "div.main-content > div > div:nth-child(2) >label:nth-child(1)"));
+        element.click();
+
+        //Select checkboxes Wind
+        element = driver.findElement(By.cssSelector(
+                "div.main-content > div > div:nth-child(2) >label:nth-child(3)"));
+        element.click();
+
+        // Select radio Selen
+        element = driver.findElement(By.cssSelector(
+                "div.main-content > div > div:nth-child(3) >label:nth-child(4)"));
+        element.click();
+
+        //Select dropdown colors
+        element = driver.findElement(By.cssSelector(
+                "div.main-content > div > div:nth-child(4)"));
+        element.click();
+
+        //Select dropdown Yellow color
+        element = driver.findElement(By.cssSelector(
+                "body > div > div.uui-main-container.page-inside >"
+                      + " main > div.main-content > div >"
+                      + " div.colors > select > option:nth-child(4)"));
+        element.click();
+
+        //return to Select dropdown colors, but colors was chosen, already
+        element = driver.findElement(By.cssSelector(
+                "div.main-content > div > div:nth-child(4)"));
+        element.click();
+    }
+
+    @Test(groups = {"exercise_2"}, priority = 160)
+    public void isLogCorrectTest() {
 
         element = driver.findElement(By.cssSelector(
-                "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(4)"));
-        softAssert.assertEquals(element.getText(), "METALS & COLORS");
+                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
+                        + "info-panel-body-log > div > ul li:nth-child(1)"));
+        Assert.assertEquals(element.getText().substring(9),
+                           "Colors: value changed to Yellow");
+        Assert.assertTrue(element.isDisplayed());
 
-        // Alternative method
-        element = driver.findElement(By.xpath(
-                "/html/body/header/div/nav/ul[1]/li[4]/a"));
-        softAssert.assertEquals(element.getText(), "METALS & COLORS");
-    }
-
-    @Test(groups = {"exercise_2"}, priority = 60)
-    public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
-        element = driver.findElement(By.id("epam-logo"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.id("user-icon"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector("span.icon-search"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector("span.caret"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector("i.fa.fa-sign-out"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        /* also, it is possible: */
-        element = driver.findElement(By.cssSelector("i.fa-sign-out"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-    }
-
-    @Test(groups = {"exercise_2"}, priority = 65)
-    public void fourIconsInHomePageExistsTest() {
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-practise"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-custom"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-multi"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-base"));
-        softAssert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-    }
-
-    @Test(groups = {"exercise_2"}, priority = 75,
-            dataProvider = "DpForUnderFourIconsTexts",
-            dataProviderClass = DpForUnderFourIconsTexts.class)
-    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(int index,
-                                                                           String expected) {
         element = driver.findElement(By.cssSelector(
-                ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
-        softAssert.assertEquals(element.getText(),
-                expected, "Element's text isn't proper or not found");
-    }
+                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
+                        + "info-panel-body-log > div > ul li:nth-child(2)"));
+        Assert.assertEquals(element.getText().substring(9),
+                "metal: value changed to Selen");
+        Assert.assertTrue(element.isDisplayed());
 
-    @Test(groups = {"exercise_2"}, priority = 80)
-    public void iframeWithFrameButtonExistTest() {
-        String iframeWithFrameButton = "//iframe[@id='frame']";
-        WebElement iframe = driver.findElement(By.xpath(iframeWithFrameButton));
-        // check that element exist
-        softAssert.assertNotNull(element);
-    }
+        element = driver.findElement(By.cssSelector(
+                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
+                        + "info-panel-body-log > div > ul li:nth-child(3)"));
+        Assert.assertEquals(element.getText().substring(9),
+                "Wind: condition changed to true");
+        Assert.assertTrue(element.isDisplayed());
 
-    @Test(groups = {"exercise_2"}, priority = 85)
-    public void thereIsFrameButtonInTheIframeTest() {
-        // 1.Looking for iframe
-        String iframeWithFrameButton = "//iframe[@id='frame']";
-        WebElement iframe = driver.findElement(By.xpath(iframeWithFrameButton));
-        //2. Switch to iframe
-        driver.switchTo().frame(iframe);
-        //3. Looking for element in iframe
-        String frameButton = "frame-button";
-        element = driver.findElement(By.id(frameButton));
-        // check that element exist
-        softAssert.assertNotNull(element);
-    }
+        element = driver.findElement(By.cssSelector(
+                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
+                        + "info-panel-body-log > div > ul li:nth-child(4)"));
+        Assert.assertEquals(element.getText().substring(9),
+                "Water: condition changed to true");
+        Assert.assertTrue(element.isDisplayed());
 
-    @Test(groups = {"exercise_2"}, priority = 90)
-    public void switchToOriginalWindowBackTest() {
-        driver.switchTo().defaultContent();
-        //Driver has focus on the original window,
-        //for example we available to find expected "Home Page"
-        String expacted = "HOME";
-        element = driver.findElement(By.tagName("li"));
-        softAssert.assertEquals(element.getText(), expacted);
-    }
-
-
-    @Test(groups = {"exercise_2"}, priority = 95,
-            dataProvider = "DpForLeftSectionTexts",
-            dataProviderClass = DpForLeftSectionTexts.class)
-    public void thereAreFiveItemsInTheLeftSectionTest(int index, String expected) {
-        element = driver.findElement(
-                By.cssSelector(".sidebar-menu.left>li:nth-child(" + index + ")"));
-        softAssert.assertEquals(element.getText(), expected,
-                "Element's text isn't proper or not found");
-
-        // Browser close in: tearDown() {driver.quit();};
     }
 
 }
