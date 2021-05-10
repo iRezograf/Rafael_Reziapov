@@ -6,9 +6,9 @@ public class DpForUnderFourIconsTexts {
     @DataProvider(name = "DpForUnderFourIconsTexts")
     public Object[][] createData() {
         /*
-            1,2,3,4 - is child's element index
-            element = driver.findElement(By.cssSelector(
-                ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
+        //    1,2,3,4 - is child's element index
+        //    element = driver.findElement(By.cssSelector(
+        //        ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
          */
         return new Object[][]{
                 {1, "To include good practices\n"
