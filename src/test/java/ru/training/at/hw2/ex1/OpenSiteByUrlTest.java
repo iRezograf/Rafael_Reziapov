@@ -25,7 +25,7 @@ public class OpenSiteByUrlTest {
 
     @BeforeClass(groups = {"exercise_1"})
     public void setUp() {
-        // Версия 90.0.4430.93
+        // Версия   90.0.4430.93
         driverPath = "C:\\Users\\rezog\\driver\\chromedriver.exe";
         testedSite = "https://jdi-testing.github.io/jdi-light/index.html";
         System.setProperty("webdriver.chrome.driver", driverPath);
