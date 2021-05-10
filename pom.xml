@@ -138,11 +138,18 @@
     <profiles>
         <profile>
             <id>2.1 ExerciseOne.Test</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/ExerciseOneTest.xml</testng.suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>2.2 ExerciseTwo.Test</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <testng.suite.file>${testng.configs.path}/ExerciseOneTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/ExerciseTwoTest.xml</testng.suite.file>
             </properties>
         </profile>
 
