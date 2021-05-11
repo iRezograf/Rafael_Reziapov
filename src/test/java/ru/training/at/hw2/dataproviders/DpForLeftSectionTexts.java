@@ -1,4 +1,4 @@
-package ru.training.at.hw2.ex1.dataproviders;
+package ru.training.at.hw2.dataproviders;
 
 import org.testng.annotations.DataProvider;
 

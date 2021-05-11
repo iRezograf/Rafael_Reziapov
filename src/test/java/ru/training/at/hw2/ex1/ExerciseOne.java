@@ -9,8 +9,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.training.at.hw2.ex1.dataproviders.DpForLeftSectionTexts;
-import ru.training.at.hw2.ex1.dataproviders.DpForUnderFourIconsTexts;
+import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
+import ru.training.at.hw2.dataproviders.DpForLeftSectionTexts;
+import ru.training.at.hw2.dataproviders.DpForUnderFourIconsTexts;
+
+import java.util.ArrayList;
 
 import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
@@ -18,6 +21,7 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 public class ExerciseOne {
     WebDriver driver;
     WebElement element;
+    DataStoreForHomeworkTwo dp;
 
     //String driverPath;
     String testedSite;
@@ -29,8 +33,9 @@ public class ExerciseOne {
         //driverPath = "C:\\Users\\rezog\\driver\\chromedriver.exe";
         //System.setProperty("webdriver.chrome.driver", driverPath);
         //WebDriver driver = new ChromeDriver()
-
-        testedSite = "https://jdi-testing.github.io/jdi-light/index.html";
+        dp = new DataStoreForHomeworkTwo();
+        //testedSite = "https://jdi-testing.github.io/jdi-light/index.html";
+        testedSite = dp.getSiteUrl();
 
         WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
@@ -41,21 +46,34 @@ public class ExerciseOne {
         driver.quit();
     }
 
-    @Test(groups = {"exercise_1"}, priority = 10)
+        @Test(groups = {"exercise_1"})
+        public void allExerciseOneTest() {
+            openSiteByUrlTest();
+            browserTitleTest();
+            performLoginTest();
+            usernameIsLogginedTest();
+            headerHaveProperTextsTest();
+            fourImagesOnTheIndexPageAndTheyAreDisplayed();
+            fourIconsInHomePageExistsTest();
+            fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest();
+            iframeWithFrameButtonExistTest();
+            thereIsFrameButtonInTheIframeTest();
+            switchToOriginalWindowBackTest();
+        }
+
+    //@Test(groups = {"exercise_1"}, priority = 10)
     public void openSiteByUrlTest() {
         driver.navigate().to(testedSite);
         driver.getTitle();
     }
 
-    @Test(groups = {"exercise_1"}, priority = 20)
+    //@Test(groups = {"exercise_1"}, priority = 20)
     public void browserTitleTest() {
         driver.navigate().to(testedSite);
-        Assert.assertEquals(driver.getTitle(),
-                "Home Page");
-
+        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
     }
 
-    @Test(groups = {"exercise_1"}, priority = 30)
+    //@Test(groups = {"exercise_1"}, priority = 30)
     public void performLoginTest() {
         driver.manage().window().maximize();
 
@@ -63,7 +81,7 @@ public class ExerciseOne {
         element.click();
 
         element = driver.findElement(By.id("name"));
-        element.sendKeys("Roman");
+        element.sendKeys(dp.getUserName());
 
         element = driver.findElement(By.id("password"));
         element.sendKeys("Jdi1234");
@@ -72,13 +90,13 @@ public class ExerciseOne {
         element.click();
     }
 
-    @Test(groups = {"exercise_1"}, priority = 40)
+    //@Test(groups = {"exercise_1"}, priority = 40)
     public void usernameIsLogginedTest() {
         element = driver.findElement(By.id("user-name"));
         Assert.assertEquals(element.getText(), "ROMAN IOVLEV");
     }
 
-    @Test(groups = {"exercise_1"}, priority = 50)
+    //@Test(groups = {"exercise_1"}, priority = 50)
     public void headerHaveProperTextsTest() {
 
         element = driver.findElement(By.cssSelector(
@@ -102,7 +120,7 @@ public class ExerciseOne {
         Assert.assertTrue(element.isDisplayed());
     }
 
-    @Test(groups = {"exercise_1"}, priority = 60)
+    //@Test(groups = {"exercise_1"}, priority = 60)
     public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
         element = driver.findElement(By.id("epam-logo"));
         Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
@@ -124,7 +142,7 @@ public class ExerciseOne {
         Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
     }
 
-    @Test(groups = {"exercise_1"}, priority = 65)
+    //@Test(groups = {"exercise_1"}, priority = 65)
     public void fourIconsInHomePageExistsTest() {
         element = driver.findElement(By.cssSelector(".icons-benefit.icon-practise"));
         Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
@@ -140,18 +158,18 @@ public class ExerciseOne {
 
     }
 
-    @Test(groups = {"exercise_1"}, priority = 75,
-            dataProvider = "DpForUnderFourIconsTexts",
-            dataProviderClass = DpForUnderFourIconsTexts.class)
-    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(int index,
-                                                                           String expected) {
-        element = driver.findElement(By.cssSelector(
-                ".row.clerafix.benefits>.col-sm-3:nth-child(" + index + ")"));
-        Assert.assertEquals(element.getText(),
-                expected, "Element's text isn't proper or not found");
+    //@Test(groups = {"exercise_1"}, priority = 75)
+    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest() {
+        ArrayList<String> actual = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            element = driver.findElement(By.cssSelector(
+                    ".row.clerafix.benefits>.col-sm-3:nth-child(" + i + ")"));
+            actual.add(element.getText());
+        }
+        Assert.assertTrue(actual.equals(dp.getTextUnderIconsList()));
     }
 
-    @Test(groups = {"exercise_1"}, priority = 80)
+    //@Test(groups = {"exercise_1"}, priority = 80)
     public void iframeWithFrameButtonExistTest() {
         String iframeWithFrameButton = "//iframe[@id='frame']";
         WebElement iframe = driver.findElement(By.xpath(iframeWithFrameButton));
@@ -159,7 +177,7 @@ public class ExerciseOne {
         Assert.assertNotNull(element);
     }
 
-    @Test(groups = {"exercise_1"}, priority = 85)
+    //@Test(groups = {"exercise_1"}, priority = 85)
     public void thereIsFrameButtonInTheIframeTest() {
         // 1.Looking for iframe
         String iframeWithFrameButton = "//iframe[@id='frame']";
@@ -173,7 +191,7 @@ public class ExerciseOne {
         Assert.assertNotNull(element);
     }
 
-    @Test(groups = {"exercise_1"}, priority = 90)
+    //@Test(groups = {"exercise_1"}, priority = 90)
     public void switchToOriginalWindowBackTest() {
         driver.switchTo().defaultContent();
         //Driver has focus on the original window,
@@ -184,17 +202,17 @@ public class ExerciseOne {
     }
 
 
-    @Test(groups = {"exercise_1"}, priority = 95,
-            dataProvider = "DpForLeftSectionTexts",
-            dataProviderClass = DpForLeftSectionTexts.class)
-    public void thereAreFiveItemsInTheLeftSectionTest(int index, String expected) {
-        element = driver.findElement(
-                By.cssSelector(".sidebar-menu.left>li:nth-child(" + index + ")"));
-        Assert.assertEquals(element.getText(), expected,
-                "Element's text isn't proper or not found");
+    //@Test(groups = {"exercise_1"}, priority = 95,
+    //        dataProvider = "DpForLeftSectionTexts",
+    //        dataProviderClass = DpForLeftSectionTexts.class)
+    //public void thereAreFiveItemsInTheLeftSectionTest(int index, String expected) {
+    //    element = driver.findElement(
+    //            By.cssSelector(".sidebar-menu.left>li:nth-child(" + index + ")"));
+    //    Assert.assertEquals(element.getText(), expected,
+    //            "Element's text isn't proper or not found");
 
-        // Browser close in: tearDown() {driver.quit();};
-    }
+    // Browser close in: tearDown() {driver.quit();};
+    //}
 
 }
 
