@@ -14,9 +14,7 @@ public class DataStoreForHomeworkTwo {
     ArrayList<String> textOfHeaderMenuButtonsList;
     ArrayList<String> textUnderIconsList;
     ArrayList<String> textInLeftSectionMenuButtonList;
-    ArrayList<String> textSelectedCheckBoxList;
-    ArrayList<String> textSelectedRadioList;
-    ArrayList<String> textSelectedDropDownList;
+    ArrayList<String> textFromLogList;
 
     public DataStoreForHomeworkTwo() {
         this.siteUrl = "https://jdi-testing.github.io/jdi-light/index.html";
@@ -45,9 +43,24 @@ public class DataStoreForHomeworkTwo {
                     + "some external projects),\n"
                     + "wish to get more…");
         this.textUnderIconsList = textUnderIconsList;
-        this.textInLeftSectionMenuButtonList = null;
-        this.textSelectedCheckBoxList = null;
-        this.textSelectedRadioList = null;
-        this.textSelectedDropDownList = null;
+
+        textInLeftSectionMenuButtonList = new ArrayList<>();;
+        textInLeftSectionMenuButtonList.add("Home");
+        textInLeftSectionMenuButtonList.add("Contact form");
+        textInLeftSectionMenuButtonList.add("Service");
+        textInLeftSectionMenuButtonList.add("Metals & Colors");
+        textInLeftSectionMenuButtonList.add("Elements packs");
+        this.textInLeftSectionMenuButtonList = textInLeftSectionMenuButtonList;
+
+        textFromLogList = new ArrayList<>();
+        textFromLogList.add("Colors: value changed to Yellow");
+        textFromLogList.add("metal: value changed to Selen");
+        textFromLogList.add("Wind: condition changed to true");
+        textFromLogList.add("Water: condition changed to true");
+        this.textFromLogList = textFromLogList;
+
+
+
+
     }
 }

@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
 
 import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
@@ -17,22 +17,11 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 public class ExerciseTwo {
     WebDriver driver;
     WebElement element;
-
-    //String driverPath;
-    String testedSite;
-
-    String actual;
-    String expected;
+    DataStoreForHomeworkTwo dp;
 
     @BeforeClass(groups = {"exercise_2"})
     public void setUp() {
-        //Not recommended:  is machine-dependent
-        //Версия 90.0.4430.93
-        //driverPath = "C:\\Users\\rezog\\driver\\chromedriver.exe"
-        //System.setProperty("webdriver.chrome.driver", driverPath)
-        //WebDriver driver = new ChromeDriver()
-
-        testedSite = "https://jdi-testing.github.io/jdi-light/index.html";
+        dp = new DataStoreForHomeworkTwo();
 
         WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
@@ -43,20 +32,27 @@ public class ExerciseTwo {
         driver.quit();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 110)
+    @Test(groups = {"exercise_2"})
+    public void allExerciseTwoTest() {
+        openSiteByUrlTest();
+        browserTitleTest();
+        performLoginTest();
+        usernameIsLogginedTest();
+        openMenuServiceDifferentElementsTest();
+        checkElementsTest();
+        isLogCorrectTest();
+    }
+
     public void openSiteByUrlTest() {
-        driver.navigate().to(testedSite);
+        driver.navigate().to(dp.getSiteUrl());
         driver.getTitle();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 120)
     public void browserTitleTest() {
-        driver.navigate().to(testedSite);
-        Assert.assertEquals(driver.getTitle(),
-                "Home Page");
+        driver.navigate().to(dp.getSiteUrl());
+        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
     }
 
-    @Test(groups = {"exercise_2"}, priority = 130)
     public void performLoginTest() {
         driver.manage().window().maximize();
 
@@ -64,24 +60,21 @@ public class ExerciseTwo {
         element.click();
 
         element = driver.findElement(By.id("name"));
-        element.sendKeys("Roman");
+        element.sendKeys(dp.getUserName());
 
         element = driver.findElement(By.id("password"));
-        element.sendKeys("Jdi1234");
+        element.sendKeys(dp.getPassword());
 
         element = driver.findElement(By.id("login-button"));
         element.click();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 140)
     public void usernameIsLogginedTest() {
         element = driver.findElement(By.id("user-name"));
-        ExpectedConditions.textToBePresentInElement(element, "ROMAN IOVLEV!");
 
-        Assert.assertEquals(element.getText(), "ROMAN IOVLEV");
+        Assert.assertEquals(element.getText(), dp.getUserNameAfterLogged());
     }
 
-    @Test(groups = {"exercise_2"}, priority = 150)
     public void openMenuServiceDifferentElementsTest() {
         // Open drop down menu SERVICE
         element = driver.findElement(By.cssSelector(
@@ -94,7 +87,6 @@ public class ExerciseTwo {
         element.click();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 155)
     public void checkElementsTest() {
         //Select checkboxes Water
         //label.label-checkbox - it is checkbox
@@ -132,45 +124,14 @@ public class ExerciseTwo {
         element.click();
     }
 
-    @Test(groups = {"exercise_2"}, priority = 160)
     public void isLogCorrectTest() {
-
-        element = driver.findElement(By.cssSelector(
-                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
-                        + "info-panel-body-log > div > ul li:nth-child(1)"));
-        actual = element.getText();
-        // Here and below ".contains" used because in Log include Date !
-        expected = "Colors: value changed to Yellow";
-        Assert.assertTrue(actual.contains(expected));
-        Assert.assertTrue(element.isDisplayed());
-
-        element = driver.findElement(By.cssSelector(
-                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
-                        + "info-panel-body-log > div > ul li:nth-child(2)"));
-        actual = element.getText();
-        expected = "metal: value changed to Selen";
-        Assert.assertTrue(actual.contains(expected));
-        Assert.assertTrue(element.isDisplayed());
-
-        element = driver.findElement(By.cssSelector(
-                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
-                        + "info-panel-body-log > div > ul li:nth-child(3)"));
-        actual = element.getText();
-        expected = "Wind: condition changed to true";
-        Assert.assertTrue(actual.contains(expected));
-        Assert.assertTrue(element.isDisplayed());
-
-        element = driver.findElement(By.cssSelector(
-                "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
-                        + "info-panel-body-log > div > ul li:nth-child(4)"));
-        actual = element.getText();
-        expected = "Water: condition changed to true";
-        Assert.assertTrue(actual.contains(expected));
-        Assert.assertTrue(element.isDisplayed());
+        for (int i = 1; i <= 4; i++) {
+            element = driver.findElement(By.cssSelector(
+                    "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
+                            + "info-panel-body-log > div > ul li:nth-child(" + i + ")"));
+            Assert.assertTrue(element.getText().contains(dp.getTextFromLogList().get(i - 1)));
+        }
     }
-
 }
-
-
 
 
