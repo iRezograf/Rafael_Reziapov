@@ -1,6 +1,6 @@
 package ru.training.at.hw1.calculator;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.training.at.hw1.dataproviders.SubDoubleDataPositiveTestProvider;
 import ru.training.at.hw1.dataproviders.SubLongDataPositiveTestProvider;
 
