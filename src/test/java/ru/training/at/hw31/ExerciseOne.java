@@ -1,10 +1,8 @@
 package ru.training.at.hw31;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -12,10 +10,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
+import ru.training.at.hw31.util.DriverManager;
 
 import java.util.concurrent.TimeUnit;
-
-import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
 
 public class ExerciseOne {
@@ -24,30 +21,21 @@ public class ExerciseOne {
     private DataStoreForHomeworkTwo dp;
 
     private WebDriverWait webDriverWait;
-    WebDriver webDriver;
 
-    public void startDriver() {
-        WebDriverManager.getInstance(CHROME).setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts()
-                .implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    @BeforeClass(groups = {"exercise_1"})
+    @BeforeClass(groups = {"exercise_hw3"})
     public void setUp() {
         dp = new DataStoreForHomeworkTwo();
-        startDriver();
+        driver = DriverManager.getWebDriverInstance();
     }
 
-    @AfterClass(groups = {"exercise_1"})
+    @AfterClass(groups = {"exercise_hw3"})
     public void tearDown() {
         dp = null;
-        driver.quit();
+        DriverManager.closeWebBrowser();
     }
 
         
-    @Test(groups = {"exercise_1"})
+    @Test(groups = {"exercise_hw3"})
     public void allExerciseOneTest() {
         openSiteByUrlTest();
         browserTitleTest();
@@ -64,18 +52,21 @@ public class ExerciseOne {
     }
 
     public void openSiteByUrlTest() {
+        //Example
+        //element = driver.findElement(By.xpath("//span[text() = 'Home']"));
+        //element.click();
+        //webDriverWait = new WebDriverWait(driver, 10);
+        //webDriverWait.until(ExpectedConditions.visibilityOf(element));
+        //Example
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts()
+                .implicitlyWait(10, TimeUnit.SECONDS);
+
         driver.navigate().to(dp.getSiteUrl());
         driver.getTitle();
 
-
-        driver.navigate().to("https://www.epam.com");
-        element = driver.findElement(By.xpath("//span[text() = 'Home']"));
-        element.click();
-
-        webDriverWait = new WebDriverWait(webDriver, 10);
-        webDriverWait.until(ExpectedConditions.visibilityOf(element));
-        Assert.assertEquals("EPAM | Enterprise Software Development, Design & Consulting",
-                webDriver.getTitle());
+        Assert.assertEquals(driver.getTitle(), "Home Page");
     }
 
     public void browserTitleTest() {
