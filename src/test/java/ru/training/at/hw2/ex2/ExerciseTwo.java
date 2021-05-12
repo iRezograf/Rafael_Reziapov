@@ -29,7 +29,8 @@ public class ExerciseTwo {
 
     @AfterClass(groups = {"exercise_2"})
     public void tearDown() {
-        driver.quit();
+
+        //driver.quit();
     }
 
     @Test(groups = {"exercise_2"})
@@ -88,39 +89,43 @@ public class ExerciseTwo {
     }
 
     public void checkElementsTest() {
+
         //Select checkboxes Water
-        //label.label-checkbox - it is checkbox
-        //label:nth-child(1) - it are elements of
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(2)>label:nth-child(1)"));
+        // Full path
+        // "//div[@class='checkbox-row']
+        // /label[contains(string(), 'Water')]/input[@type='checkbox']"));
+
+        // It may be shortly
+        element = driver.findElement(By.xpath(
+                "//label[contains(string(), 'Water')]/input[@type='checkbox']"));
         element.click();
 
         //label.label-checkbox
         //Select checkboxes Wind
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(2) >label:nth-child(3)"));
+        element = driver.findElement(By.xpath(
+                "//label[contains(string(), 'Wind')]/input[@type='checkbox']"));
         element.click();
 
         // Select radio Selen
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(3) >label:nth-child(4)"));
+        element = driver.findElement(By.xpath(
+                "//label[contains(string(), 'Selen')]/input[@type='radio']"));
         element.click();
 
         //Select dropdown colors
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(4)"));
+        element = driver.findElement(By.xpath(
+                "//div[@class='colors']//select[@class='uui-form-element']"));
         element.click();
 
         //Select dropdown Yellow color
-        element = driver.findElement(By.cssSelector(
-                "body > div > div.uui-main-container.page-inside >"
-                      + " main > div.main-content > div >"
-                      + " div.colors > select > option:nth-child(4)"));
+        //"//div[@class='main-content-hg']/div
+        // [@class='colors']//select[@class='uui-form-element']/option[text()='Yellow']"));
+        // attention! element.findElement (sic!)
+        element = element.findElement(By.xpath("//option[text()='Yellow']"));
         element.click();
 
         //return to Select dropdown colors, but colors was chosen, already
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(4)"));
+        element = driver.findElement(By.xpath(
+                "//div[@class='main-content-hg']/div[@class='colors']"));
         element.click();
     }
 
