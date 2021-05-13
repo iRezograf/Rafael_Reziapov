@@ -1,46 +1,50 @@
-package ru.training.at.hw31;
+package ru.training.at.hw3;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
-import ru.training.at.hw31.util.DriverManager;
+import ru.training.at.hw3.util.DriverManager;
 
 import java.util.concurrent.TimeUnit;
 
 
 public class ExerciseOne {
+    public static LoginPage loginPage;
+    public static HeaderMenu headerMenu;
+
     private WebDriver driver;
     private WebElement element;
     private DataStoreForHomeworkTwo dp;
 
-    private WebDriverWait webDriverWait;
 
     @BeforeClass(groups = {"exercise_hw3"})
     public void setUp() {
         dp = new DataStoreForHomeworkTwo();
         driver = DriverManager.getWebDriverInstance();
+        loginPage = new LoginPage(driver);
+        headerMenu = new HeaderMenu(driver);
+        driver.manage().window().maximize();
+        driver.manage().timeouts()
+                .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @AfterClass(groups = {"exercise_hw3"})
     public void tearDown() {
         dp = null;
-        DriverManager.closeWebBrowser();
+        //DriverManager.closeWebBrowser();
     }
 
         
     @Test(groups = {"exercise_hw3"})
     public void allExerciseOneTest() {
         openSiteByUrlTest();
-        browserTitleTest();
         performLoginTest();
-        usernameIsLogginedTest();
+        //usernameIsLogginedTest();
         headerHaveProperTextsTest();
         fourImagesOnTheIndexPageAndTheyAreDisplayed();
         fourIconsInHomePageExistsTest();
@@ -59,52 +63,40 @@ public class ExerciseOne {
         //webDriverWait.until(ExpectedConditions.visibilityOf(element));
         //Example
 
-        driver.manage().window().maximize();
-        driver.manage().timeouts()
-                .implicitlyWait(10, TimeUnit.SECONDS);
-
-        driver.navigate().to(dp.getSiteUrl());
-        driver.getTitle();
-
-        Assert.assertEquals(driver.getTitle(), "Home Page");
-    }
-
-    public void browserTitleTest() {
-        driver.navigate().to(dp.getSiteUrl());
-        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
+        driver.navigate().to(dp.getSiteUrl().getPath());
+        Assert.assertEquals(driver.getTitle(), dp.getSiteUrl().getName());
     }
 
     public void performLoginTest() {
-        driver.manage().window().maximize();
+        loginPage.clickImgUser();
+        loginPage.inputFieldLogin(dp.getUserName().getName());
 
-        element = driver.findElement(By.id("user-icon"));
-        element.click();
-
-        element = driver.findElement(By.id("name"));
-        element.sendKeys(dp.getUserName());
-
-        element = driver.findElement(By.id("password"));
-        element.sendKeys(dp.getPassword());
-
-        element = driver.findElement(By.id("login-button"));
-        element.click();
+        loginPage.inputFieldPassword(dp.getPassword().getName());
+        loginPage.clickBtnEnter();
+        String actual = loginPage.getUserName();
+        Assert.assertEquals(actual, dp.getUserNameAfterLogged().getName());
     }
 
-    public void usernameIsLogginedTest() {
-        element = driver.findElement(By.id("user-name"));
-        Assert.assertEquals(element.getText(), dp.getUserNameAfterLogged());
-    }
 
     public void headerHaveProperTextsTest() {
-        for (int i = 1; i <= 4; i++) {
-            element = driver.findElement(By.cssSelector(
-                    "ul.uui-navigation.nav.navbar-nav.m-l8 >li:nth-child(" + i + ")"));
-            Assert.assertEquals(element.getText(),
-                    dp.getTextOfHeaderMenuButtonsList().get(i - 1));
-        }
+        Assert.assertEquals(headerMenu.getHeaderMenuItemHome(),
+                dp.getTextOfHeaderMenuButtonsList().get(0));
+
+        Assert.assertEquals(headerMenu.getHeaderMenuItemContactForm(),
+                dp.getTextOfHeaderMenuButtonsList().get(1));
+
+        Assert.assertEquals(headerMenu.getHeaderMenuItemService(),
+                dp.getTextOfHeaderMenuButtonsList().get(2));
+
+        Assert.assertEquals(headerMenu.getHeaderMenuItemMetalColors(),
+                dp.getTextOfHeaderMenuButtonsList().get(3));
+
+        headerMenu.clickHeaderMenuItemService();
+
     }
 
     public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
+        /*
         element = driver.findElement(By.id("epam-logo"));
         Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
@@ -117,8 +109,12 @@ public class ExerciseOne {
         element = driver.findElement(By.cssSelector("span.caret"));
         Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
 
+
+         */
         element = driver.findElement(By.cssSelector("i.fa.fa-sign-out"));
         Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+
+
     }
 
     public void fourIconsInHomePageExistsTest() {

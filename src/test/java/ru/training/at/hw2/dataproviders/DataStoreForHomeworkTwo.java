@@ -1,27 +1,39 @@
 package ru.training.at.hw2.dataproviders;
 
 import lombok.Getter;
+import lombok.Setter;
+import ru.training.at.hw3.util.DataAtom;
 
 import java.util.ArrayList;
 
+@Setter
 @Getter
 public class DataStoreForHomeworkTwo {
-    String siteUrl;
-    String browserTitle;
-    String userName;
-    String password;
-    String userNameAfterLogged;
+    DataAtom siteUrl;
+    DataAtom browserTitle;
+    DataAtom userName;
+    DataAtom password;
+    DataAtom userNameAfterLogged;
     ArrayList<String> textOfHeaderMenuButtonsList;
     ArrayList<String> textUnderIconsList;
     ArrayList<String> textInLeftSectionMenuButtonList;
     ArrayList<String> textFromLogList;
 
     public DataStoreForHomeworkTwo() {
-        this.siteUrl = "https://jdi-testing.github.io/jdi-light/index.html";
-        this.browserTitle = "Home Page";
-        this.userName = "Roman";
-        this.password = "Jdi1234";
-        this.userNameAfterLogged = "ROMAN IOVLEV";
+        this.siteUrl.setPath("https://jdi-testing.github.io/jdi-light/index.html");
+        this.siteUrl.setName("Home Page");
+
+        this.browserTitle.setPath("https://jdi-testing.github.io/jdi-light/index.html");
+        this.browserTitle.setName("Home Page");
+
+        this.userName.setPath("//*[@id='name']");
+        this.userName.setName("Roman");
+
+        this.password.setPath("//*[@id='password']");
+        this.password.setName("Jdi1234");
+
+        this.userNameAfterLogged.setPath("//*[@id='user-name']");
+        this.userNameAfterLogged.setName("ROMAN IOVLEV");
 
         textOfHeaderMenuButtonsList = new ArrayList<>();
         textOfHeaderMenuButtonsList.add("HOME");
@@ -58,9 +70,5 @@ public class DataStoreForHomeworkTwo {
         textFromLogList.add("Wind: condition changed to true");
         textFromLogList.add("Water: condition changed to true");
         this.textFromLogList = textFromLogList;
-
-
-
-
     }
 }
