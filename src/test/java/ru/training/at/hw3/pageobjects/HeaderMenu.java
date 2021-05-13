@@ -1,4 +1,4 @@
-package ru.training.at.hw3;
+package ru.training.at.hw3.pageobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

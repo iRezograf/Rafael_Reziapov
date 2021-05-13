@@ -8,14 +8,21 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
+import ru.training.at.hw3.pageobjects.*;
 import ru.training.at.hw3.util.DriverManager;
 
 import java.util.concurrent.TimeUnit;
 
 
 public class ExerciseOne {
-    public static LoginPage loginPage;
-    public static HeaderMenu headerMenu;
+    private static LoginPage loginPage;
+    private static HeaderMenu headerMenu;
+    private static HeaderImg headerImg;
+    private static BenefitIcon benefitIcon;
+    private static BenefitText benefitText;
+    private static FramePage framePage;
+    private static LeftMenu leftMenu;
+
 
     private WebDriver driver;
     private WebElement element;
@@ -25,9 +32,17 @@ public class ExerciseOne {
     @BeforeClass(groups = {"exercise_hw3"})
     public void setUp() {
         dp = new DataStoreForHomeworkTwo();
+
         driver = DriverManager.getWebDriverInstance();
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
+        headerImg = new HeaderImg(driver);
+        benefitIcon = new BenefitIcon(driver);
+        benefitText = new BenefitText(driver);
+        framePage = new FramePage(driver);
+        leftMenu = new LeftMenu(driver);
+
+
         driver.manage().window().maximize();
         driver.manage().timeouts()
                 .implicitlyWait(10, TimeUnit.SECONDS);
@@ -63,22 +78,24 @@ public class ExerciseOne {
         //webDriverWait.until(ExpectedConditions.visibilityOf(element));
         //Example
 
-        driver.navigate().to(dp.getSiteUrl().getPath());
-        Assert.assertEquals(driver.getTitle(), dp.getSiteUrl().getName());
+        driver.navigate().to(dp.getSiteUrl());
+        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
     }
 
     public void performLoginTest() {
         loginPage.clickImgUser();
-        loginPage.inputFieldLogin(dp.getUserName().getName());
+        loginPage.inputFieldLogin(dp.getUserName());
 
-        loginPage.inputFieldPassword(dp.getPassword().getName());
+        loginPage.inputFieldPassword(dp.getPassword());
         loginPage.clickBtnEnter();
         String actual = loginPage.getUserName();
-        Assert.assertEquals(actual, dp.getUserNameAfterLogged().getName());
+        Assert.assertEquals(actual, dp.getUserNameAfterLogged());
     }
 
 
     public void headerHaveProperTextsTest() {
+
+        // ArrayList<String> textOfHeaderMenuButtonsList
         Assert.assertEquals(headerMenu.getHeaderMenuItemHome(),
                 dp.getTextOfHeaderMenuButtonsList().get(0));
 
@@ -96,67 +113,52 @@ public class ExerciseOne {
     }
 
     public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
-        /*
-        element = driver.findElement(By.id("epam-logo"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.id("user-icon"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector("span.icon-search"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-        element = driver.findElement(By.cssSelector("span.caret"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-
-         */
-        element = driver.findElement(By.cssSelector("i.fa.fa-sign-out"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
-
-
+        Assert.assertTrue(headerImg.getEpamLogo().isDisplayed(),
+                "Element isn't displayed or found");
+        Assert.assertTrue(headerImg.getUserIcon().isDisplayed(),
+                "Element isn't displayed or found");
+        Assert.assertTrue(headerImg.getIconSearch().isDisplayed(),
+                "Element isn't displayed or found");
+        Assert.assertTrue(headerImg.getSpanCaret().isDisplayed(),
+                "Element isn't displayed or found");
     }
 
     public void fourIconsInHomePageExistsTest() {
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-practise"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(benefitIcon.getBenefitPractice().isDisplayed(),
+                "Element isn't displayed or found");
 
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-custom"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(benefitIcon.getBenefitCustom().isDisplayed(),
+                "Element isn't displayed or found");
 
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-multi"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(benefitIcon.getBenefitMulti().isDisplayed(),
+                "Element isn't displayed or found");
 
-        element = driver.findElement(By.cssSelector(".icons-benefit.icon-base"));
-        Assert.assertTrue(element.isDisplayed(), "Element isn't displayed or found");
+        Assert.assertTrue(benefitIcon.getBenefitBase().isDisplayed(),
+                "Element isn't displayed or found");
     }
 
     public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest() {
-        for (int i = 1; i <= 4; i++) {
-            element = driver.findElement(By.cssSelector(
-                    ".row.clerafix.benefits>.col-sm-3:nth-child(" + i + ")"));
-            Assert.assertEquals(element.getText(), dp.getTextUnderIconsList().get(i - 1));
-        }
+        // ArrayList<String> textUnderIconsList 0-3
+        Assert.assertEquals(benefitText.getTextOfBenefitPractise(),
+                dp.getTextUnderIconsList().get(0));
+
+        Assert.assertEquals(benefitText.getTextOfBenefitFlexible(),
+                dp.getTextUnderIconsList().get(1));
+
+        Assert.assertEquals(benefitText.getTextOfBenefitMultiplatform(),
+                dp.getTextUnderIconsList().get(2));
+
+        Assert.assertEquals(benefitText.getTextOfBenefitBase(),
+                dp.getTextUnderIconsList().get(3));
     }
 
     public void iframeWithFrameButtonExistTest() {
-        String iframeWithFrameButton = "//iframe[@id='frame']";
-        WebElement iframe = driver.findElement(By.xpath(iframeWithFrameButton));
-        // check that element exist
-        Assert.assertNotNull(iframe);
+        Assert.assertNotNull(framePage.open());
     }
 
     public void thereIsFrameButtonInTheIframeTest() {
-        // 1.Looking for iframe
-        String iframeWithFrameButton = "//iframe[@id='frame']";
-        WebElement iframe = driver.findElement(By.xpath(iframeWithFrameButton));
-        //2. Switch to iframe
-        driver.switchTo().frame(iframe);
-        //3. Looking for element in iframe
-        String frameButton = "frame-button";
-        element = driver.findElement(By.id(frameButton));
-        // check that element exist
-        Assert.assertNotNull(element);
+        Assert.assertTrue(framePage.exist());
+        //framePage.getFrameButton().click();
     }
 
     public void switchToOriginalWindowBackTest() {
@@ -165,12 +167,18 @@ public class ExerciseOne {
     }
 
     public void thereAreFiveItemsInTheLeftSectionTest() {
-        for (int i = 1; i <= 5; i++) {
-            element = driver.findElement(
-                    By.cssSelector(".sidebar-menu.left>li:nth-child(" + i + ")"));
-            Assert.assertEquals(element.getText(),
-                    dp.getTextInLeftSectionMenuButtonList().get(i - 1));
-        }
+
+        Assert.assertEquals(leftMenu.getTextLeftMenuItemHome(),
+                dp.getTextInLeftSectionMenuButtonList().get(0));
+        Assert.assertEquals(leftMenu.getTextLeftMenuItemContactForm(),
+                dp.getTextInLeftSectionMenuButtonList().get(1));
+        Assert.assertEquals(leftMenu.getLeftMenuItemService(),
+                dp.getTextInLeftSectionMenuButtonList().get(2));
+        Assert.assertEquals(leftMenu.getTextLeftMenuItemMetalsAndColors(),
+                dp.getTextInLeftSectionMenuButtonList().get(3));
+        Assert.assertEquals(leftMenu.getTextLeftMenuItemElementsPacks(),
+                dp.getTextInLeftSectionMenuButtonList().get(4));
+
         // Browser close in: tearDown() {driver.quit();};
     }
 

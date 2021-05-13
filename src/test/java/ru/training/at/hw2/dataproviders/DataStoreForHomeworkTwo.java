@@ -9,31 +9,22 @@ import java.util.ArrayList;
 @Setter
 @Getter
 public class DataStoreForHomeworkTwo {
-    DataAtom siteUrl;
-    DataAtom browserTitle;
-    DataAtom userName;
-    DataAtom password;
-    DataAtom userNameAfterLogged;
+    String siteUrl;
+    String browserTitle;
+    String userName;
+    String password;
+    String userNameAfterLogged;
     ArrayList<String> textOfHeaderMenuButtonsList;
     ArrayList<String> textUnderIconsList;
     ArrayList<String> textInLeftSectionMenuButtonList;
     ArrayList<String> textFromLogList;
 
     public DataStoreForHomeworkTwo() {
-        this.siteUrl.setPath("https://jdi-testing.github.io/jdi-light/index.html");
-        this.siteUrl.setName("Home Page");
-
-        this.browserTitle.setPath("https://jdi-testing.github.io/jdi-light/index.html");
-        this.browserTitle.setName("Home Page");
-
-        this.userName.setPath("//*[@id='name']");
-        this.userName.setName("Roman");
-
-        this.password.setPath("//*[@id='password']");
-        this.password.setName("Jdi1234");
-
-        this.userNameAfterLogged.setPath("//*[@id='user-name']");
-        this.userNameAfterLogged.setName("ROMAN IOVLEV");
+        this.siteUrl = "https://jdi-testing.github.io/jdi-light/index.html";
+        this.browserTitle = "Home Page";
+        this.userName = "Roman";
+        this.password = "Jdi1234";
+        this.userNameAfterLogged = "ROMAN IOVLEV";
 
         textOfHeaderMenuButtonsList = new ArrayList<>();
         textOfHeaderMenuButtonsList.add("HOME");

@@ -52,6 +52,7 @@ public class ExerciseOne {
     public void openSiteByUrlTest() {
         driver.navigate().to(dp.getSiteUrl());
         driver.getTitle();
+
     }
 
     public void browserTitleTest() {

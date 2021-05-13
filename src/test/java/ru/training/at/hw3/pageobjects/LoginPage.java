@@ -1,4 +1,4 @@
-package ru.training.at.hw3;
+package ru.training.at.hw3.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,16 +7,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
 
 public class LoginPage {
     public WebDriver driver;
-    public DataStoreForHomeworkTwo dp;
-
-
 
     public LoginPage(WebDriver driver) {
-        dp = new DataStoreForHomeworkTwo();
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
