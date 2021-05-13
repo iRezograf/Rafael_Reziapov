@@ -1,4 +1,4 @@
-package ru.training.at.hw31.util;
+package ru.training.at.hw3.util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

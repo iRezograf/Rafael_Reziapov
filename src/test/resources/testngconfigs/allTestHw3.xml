@@ -7,8 +7,8 @@
             </run>
         </groups>
         <classes>
-            <class name="ru.training.at.hw31.ExerciseOne"/>
-            <!--class name="ru.training.at.hw31.ExerciseTwo"/-->
+            <class name="ru.training.at.hw3.ExerciseOne"/>
+            <!--class name="ru.training.at.hw3.ExerciseTwo"/-->
         </classes>
     </test>
 </suite>

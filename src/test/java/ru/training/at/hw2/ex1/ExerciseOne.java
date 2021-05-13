@@ -29,7 +29,7 @@ public class ExerciseOne {
 
     @AfterClass(groups = {"exercise_1"})
     public void tearDown() {
-        driver.quit();
+        //driver.quit();
     }
 
         
