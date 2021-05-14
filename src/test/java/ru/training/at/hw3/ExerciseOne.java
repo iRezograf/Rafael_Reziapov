@@ -1,7 +1,9 @@
 package ru.training.at.hw3;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -21,7 +23,6 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 public class ExerciseOne {
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
-    private HeaderImg headerImg;
     private BenefitIcon benefitIcon;
     private BenefitText benefitText;
     private FramePage framePage;
@@ -38,7 +39,6 @@ public class ExerciseOne {
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
-        headerImg = new HeaderImg(driver);
         benefitIcon = new BenefitIcon(driver);
         benefitText = new BenefitText(driver);
         framePage = new FramePage(driver);
@@ -53,7 +53,6 @@ public class ExerciseOne {
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
-        headerImg = null;
         benefitIcon = null;
         benefitText = null;
         framePage = null;
@@ -68,22 +67,22 @@ public class ExerciseOne {
         openSiteByUrlTest();
         performLoginTest();
         headerHaveProperTextsTest();
-        fourImagesOnTheIndexPageAndTheyAreDisplayed();
-        //fourIconsInHomePageExistsTest();
-        //fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest();
-        //iframeWithFrameButtonExistTest();
-        //thereIsFrameButtonInTheIframeTest();
-        //switchToOriginalWindowBackTest();
-        //thereAreFiveItemsInTheLeftSectionTest();
+        fourIconsInHomePageExistsTest();
+        fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(); //
+        iframeWithFrameButtonExistTest();
+        thereIsFrameButtonInTheIframeTest();
+        switchToOriginalWindowBackTest();
+        thereAreFiveItemsInTheLeftSectionTest();
     }
 
-    public void openSiteByUrlTest() {
+    private void openSiteByUrlTest() {
         driver.navigate().to(DataStore.getProperty("siteUrl"));
-        Assert.assertEquals(driver.getTitle(), DataStore.getProperty(
-                "browserTitle"));
+        Assert.assertEquals(
+                driver.getTitle(),
+                DataStore.getProperty("browserTitle"));
     }
 
-    public void performLoginTest() {
+    private void performLoginTest() {
         loginPage.clickImgUser();
         loginPage.inputFieldLogin(DataStore.getProperty("userName"));
 
@@ -94,33 +93,85 @@ public class ExerciseOne {
                 DataStore.getProperty("userNameAfterLogged"));
     }
 
-    public void headerHaveProperTextsTest() {
+    private void headerHaveProperTextsTest() {
+        Assert.assertEquals(
+                getActualHeaderMenuItemHome(),
+                getExpectHeaderMenuItemHome());
+        headerMenu.headerMenuItemService().click();
+    }
 
-        //List<String> expectedList = getExpectHeaderMenuItemHome();
-        //List<String> actualList = getActualHeaderMenuItemHome();
-        //Assert.assertTrue(expectedList.equals(actualList));
-        System.out.println(getActualHeaderMenuItemHome());
-        System.out.println(getExpectHeaderMenuItemHome());
-        System.out.println("--------");
-        Assert.assertEquals(getActualHeaderMenuItemHome(), getExpectHeaderMenuItemHome());
-        System.out.println("++++++++");
-        System.out.println(getActualHeaderMenuItemHome());
-        System.out.println(getExpectHeaderMenuItemHome());
-        /*
 
-        System.out.println("expectedList.equals(actualList):" + expectedList.equals(actualList));
-        Assert.assertEquals(headerMenu.getHeaderMenuItemHome(),
-                DataStore.getProperty("textOfHeaderMenuButtonsList1"));
-        Assert.assertEquals(headerMenu.getHeaderMenuItemContactForm(),
-                DataStore.getProperty("textOfHeaderMenuButtonsList2"));
-        Assert.assertEquals(headerMenu.getHeaderMenuItemService(),
-                DataStore.getProperty("textOfHeaderMenuButtonsList3"));
-        Assert.assertEquals(headerMenu.getHeaderMenuItemMetalColors(),
-                DataStore.getProperty("textOfHeaderMenuButtonsList4"));
-        */
+    private void fourIconsInHomePageExistsTest() {
+        String message = "Element isn't displayed or found";
+        Assert.assertTrue(benefitIcon.getBenefitPractice().isDisplayed(), message);
+        Assert.assertTrue(benefitIcon.getBenefitCustom().isDisplayed(), message);
+        Assert.assertTrue(benefitIcon.getBenefitMulti().isDisplayed(), message);
+        Assert.assertTrue(benefitIcon.getBenefitBase().isDisplayed(), message);
+    }
 
-        //headerMenu.HeaderMenuItemService().click();
+    private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest() {
 
+        Assert.assertEquals(
+                getActualTextsOnTheIndexPageUnderIconsAndTheyHaveProperText(),
+                getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
+
+    }
+
+    private void iframeWithFrameButtonExistTest() {
+        Assert.assertNotNull(framePage.open());
+    }
+
+    private void thereIsFrameButtonInTheIframeTest() {
+        Assert.assertTrue(framePage.exist());
+    }
+
+    private void switchToOriginalWindowBackTest() {
+        driver.switchTo().defaultContent();
+        Assert.assertEquals(
+                driver.getTitle(),
+                DataStore.getProperty("browserTitle"));
+    }
+
+    private void thereAreFiveItemsInTheLeftSectionTest() {
+        Assert.assertEquals(
+                getActualFiveItemsInTheLeftSection(),
+                getExceptedFiveItemsInTheLeftSection());
+
+    }
+
+    private List<String> getExceptedFiveItemsInTheLeftSection() {
+        String s1 = DataStore.getProperty("textInLeftSectionMenuButtonList1");
+        String s2 = DataStore.getProperty("textInLeftSectionMenuButtonList2");
+        String s3 = DataStore.getProperty("textInLeftSectionMenuButtonList3");
+        String s4 = DataStore.getProperty("textInLeftSectionMenuButtonList4");
+        String s5 = DataStore.getProperty("textInLeftSectionMenuButtonList5");
+        return Arrays.asList(s1, s2, s3, s4, s5);
+    }
+
+    private List<String> getActualFiveItemsInTheLeftSection() {
+        String s1 = leftMenu.getTextLeftMenuItemHome();
+        String s2 = leftMenu.getTextLeftMenuItemContactForm();
+        String s3 = leftMenu.getLeftMenuItemService();
+        String s4 = leftMenu.getTextLeftMenuItemMetalsAndColors();
+        String s5 = leftMenu.getTextLeftMenuItemElementsPacks();
+        return Arrays.asList(s1, s2, s3, s4, s5);
+    }
+
+    private List<String> getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText() {
+        String s1 = DataStore.getProperty("textUnderIconsList1");
+        String s2 = DataStore.getProperty("textUnderIconsList2");
+        String s3 = DataStore.getProperty("textUnderIconsList3");
+        String s4 = DataStore.getProperty("textUnderIconsList4");
+        //List<String> expectedList = Arrays.asList(s1, s2, s3, s4);
+        return Arrays.asList(s1, s2, s3, s4);
+    }
+
+    private List<String> getActualTextsOnTheIndexPageUnderIconsAndTheyHaveProperText() {
+        String s1 = benefitText.getTextOfBenefitPractise();
+        String s2 = benefitText.getTextOfBenefitFlexible();
+        String s3 = benefitText.getTextOfBenefitMultiplatform();
+        String s4 = benefitText.getTextOfBenefitBase();
+        return Arrays.asList(s1, s2, s3, s4);
     }
 
     private List<String> getActualHeaderMenuItemHome() {
@@ -128,8 +179,8 @@ public class ExerciseOne {
         String s2 = headerMenu.getHeaderMenuItemContactForm();
         String s3 = headerMenu.getHeaderMenuItemService();
         String s4 = headerMenu.getHeaderMenuItemMetalColors();
-        List<String> actualList = Arrays.asList(s1, s2, s3, s4);
-        return actualList;
+        //List<String> actualList = Arrays.asList(s1, s2, s3, s4);
+        return Arrays.asList(s1, s2, s3, s4);
     }
 
     private List<String> getExpectHeaderMenuItemHome() {
@@ -137,81 +188,11 @@ public class ExerciseOne {
         String s2 = DataStore.getProperty("textOfHeaderMenuButtonsList2");
         String s3 = DataStore.getProperty("textOfHeaderMenuButtonsList3");
         String s4 = DataStore.getProperty("textOfHeaderMenuButtonsList4");
-        List<String> expectedList = Arrays.asList(s1, s2, s3, s4);
-        return expectedList;
+        //List<String> expectedList = Arrays.asList(s1, s2, s3, s4);
+        return Arrays.asList(s1, s2, s3, s4);
     }
 
-    public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
-        softAssert.assertTrue(headerImg.getEpamLogo().isDisplayed(),
-                "Element isn't displayed or found");
-        softAssert.assertTrue(headerImg.getUserIcon().isDisplayed(),
-                "Element isn't displayed or found");
-        softAssert.assertTrue(headerImg.getIconSearch().isDisplayed(),
-                "Element isn't displayed or found");
-        softAssert.assertTrue(headerImg.getSpanCaret().isDisplayed(),
-                "Element isn't displayed or found");
-    }
-    /*
-    public void fourIconsInHomePageExistsTest() {
-        Assert.assertTrue(benefitIcon.getBenefitPractice().isDisplayed(),
-                "Element isn't displayed or found");
 
-        Assert.assertTrue(benefitIcon.getBenefitCustom().isDisplayed(),
-                "Element isn't displayed or found");
-
-        Assert.assertTrue(benefitIcon.getBenefitMulti().isDisplayed(),
-                "Element isn't displayed or found");
-
-        Assert.assertTrue(benefitIcon.getBenefitBase().isDisplayed(),
-                "Element isn't displayed or found");
-    }
-
-    public void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest() {
-        // ArrayList<String> textUnderIconsList 0-3
-        Assert.assertEquals(benefitText.getTextOfBenefitPractise(),
-                dp.getTextUnderIconsList().get(0));
-
-        Assert.assertEquals(benefitText.getTextOfBenefitFlexible(),
-                dp.getTextUnderIconsList().get(1));
-
-        Assert.assertEquals(benefitText.getTextOfBenefitMultiplatform(),
-                dp.getTextUnderIconsList().get(2));
-
-        Assert.assertEquals(benefitText.getTextOfBenefitBase(),
-                dp.getTextUnderIconsList().get(3));
-    }
-
-    public void iframeWithFrameButtonExistTest() {
-        Assert.assertNotNull(framePage.open());
-    }
-
-    public void thereIsFrameButtonInTheIframeTest() {
-        Assert.assertTrue(framePage.exist());
-        //framePage.getFrameButton().click();
-    }
-
-    public void switchToOriginalWindowBackTest() {
-        driver.switchTo().defaultContent();
-        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
-    }
-
-    public void thereAreFiveItemsInTheLeftSectionTest() {
-
-        Assert.assertEquals(leftMenu.getTextLeftMenuItemHome(),
-                dp.getTextInLeftSectionMenuButtonList().get(0));
-        Assert.assertEquals(leftMenu.getTextLeftMenuItemContactForm(),
-                dp.getTextInLeftSectionMenuButtonList().get(1));
-        Assert.assertEquals(leftMenu.getLeftMenuItemService(),
-                dp.getTextInLeftSectionMenuButtonList().get(2));
-        Assert.assertEquals(leftMenu.getTextLeftMenuItemMetalsAndColors(),
-                dp.getTextInLeftSectionMenuButtonList().get(3));
-        Assert.assertEquals(leftMenu.getTextLeftMenuItemElementsPacks(),
-                dp.getTextInLeftSectionMenuButtonList().get(4));
-
-        // Browser close in: tearDown() {driver.quit();};
-    }
-
-     */
 }
 
 

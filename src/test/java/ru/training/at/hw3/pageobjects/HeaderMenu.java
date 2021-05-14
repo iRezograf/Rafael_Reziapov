@@ -49,19 +49,4 @@ public class HeaderMenu {
         return headerMenuItemMetalColors.getText();
     }
 
-    //public List<WebElement> getHeaderMenu() {
-    //    return headerMenu;
-    //}
-
-    //public WebElement getHeaderMenuItem(int item) {
-    //    return headerMenu.get(item);
-    //}
-
-
-
-    // //li[contains(string(), 'Contact form')]/a[contains(@href,'')]
-
-    // //li[contains(string(), 'Service')]/a[contains(@href,'')] - click()
-
-    // //li[contains(string(), 'Metals & Colors')]/a[contains(@href,'')]
 }
