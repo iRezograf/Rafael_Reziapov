@@ -8,6 +8,5 @@ public class LoginPageDataOfTest {
     private String userName;
     private String password;
     private String userNameAfterLogged;
-    private List<String> list;
 
 }

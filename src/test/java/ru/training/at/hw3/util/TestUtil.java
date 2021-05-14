@@ -1,19 +1,16 @@
 package ru.training.at.hw3.util;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import ru.training.at.hw3.dp.LoginPageDataOfTest;
 import ru.training.at.hw3.dp.LoginPageDataProvider;
 
 @Test
 public class TestUtil {
 
-    @Test(dataProviderClass = LoginPageDataProvider.class,
-            dataProvider = "LoginPageDataProvider")
-    public void test(LoginPageDataOfTest input) {
-        System.out.println(input.getUserName());
-        Assert.assertEquals("Roman", input.getUserName());
-
+    @Test(dataProvider = "LoginPageDataProvider",
+            dataProviderClass = LoginPageDataProvider.class)
+    public void test(String input, String data) {
+        System.out.println(input + " " + data);
+        //Assert.assertEquals("Roman", input.getUserName());
     }
 
 }

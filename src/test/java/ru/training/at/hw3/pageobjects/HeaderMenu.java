@@ -41,8 +41,8 @@ public class HeaderMenu {
         return headerMenuItemService.getText();
     }
 
-    public void clickHeaderMenuItemService() {
-        headerMenuItemService.click();
+    public WebElement headerMenuItemService() {
+        return headerMenuItemService;
     }
 
     public String getHeaderMenuItemMetalColors() {
