@@ -26,10 +26,8 @@ public class ExerciseOne {
     private FramePage framePage;
     private LeftMenu leftMenu;
 
-
     private WebDriver driver;
     private SoftAssert softAssert;
-
 
     @BeforeClass(groups = {"exercise_hw3"})
     public void setUp() {
@@ -76,7 +74,6 @@ public class ExerciseOne {
         //thereIsFrameButtonInTheIframeTest();
         //switchToOriginalWindowBackTest();
         //thereAreFiveItemsInTheLeftSectionTest();
-
     }
 
     public void openSiteByUrlTest() {

@@ -23,6 +23,7 @@ public class ExerciseTwo {
     public void setUp() {
         dp = new DataStoreForHomeworkTwo();
 
+
         WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
     }
