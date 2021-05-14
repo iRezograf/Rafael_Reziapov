@@ -152,11 +152,24 @@
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTestHw3.xml</testng.suite.file>
             </properties>
+        </profile>
+
+        <profile>
+            <id>3.1 ExerciseOne.Hw3Test</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/TestHw31.xml</testng.suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>3.2 ExerciseTwo.Hw3Test</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/TestHw32.xml</testng.suite.file>
+            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-
 
         <profile>
             <id>2.1 ExerciseOne.Test</id>

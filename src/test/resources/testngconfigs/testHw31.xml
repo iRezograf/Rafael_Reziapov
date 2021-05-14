@@ -1,15 +1,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="allTestHW3">
-    <test name="allTestsHW3">
+<suite name="allTestHW3.1">
+    <test name="allTestsHW3.1">
         <groups>
             <run>
                 <include name="exercise_hw3.1"/>
-                <include name="exercise_hw3.2"/>
             </run>
         </groups>
         <classes>
             <class name="ru.training.at.hw3.ExerciseOne"/>
-            <class name="ru.training.at.hw3.ExerciseTwo"/>
         </classes>
     </test>
 </suite>

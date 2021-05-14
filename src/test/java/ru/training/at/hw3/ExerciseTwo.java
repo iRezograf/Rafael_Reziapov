@@ -10,6 +10,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
+import ru.training.at.hw3.dp.DataStore;
+import ru.training.at.hw3.pageobjects.LoginPage;
+
+import java.util.concurrent.TimeUnit;
 
 import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
@@ -17,26 +21,37 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 public class ExerciseTwo {
     WebDriver driver;
     WebElement element;
+    ExerciseOne exerciseOne;
+    private LoginPage loginPage;
     DataStoreForHomeworkTwo dp;
 
-    @BeforeClass(groups = {"exercise_2"})
+    @BeforeClass(groups = {"exercise_hw3.2"})
     public void setUp() {
+
+
         dp = new DataStoreForHomeworkTwo();
+        exerciseOne = new ExerciseOne();
 
 
         WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
+
+        loginPage = new LoginPage(driver);
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts()
+                .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exercise_2"})
+    @AfterClass(groups = {"exercise_hw3.2"})
     public void tearDown() {
+        dp = null;
         driver.quit();
     }
 
-    @Test(groups = {"exercise_2"})
+    @Test(groups = {"exercise_hw3.2"})
     public void allExerciseTwoTest() {
         openSiteByUrlTest();
-        browserTitleTest();
         performLoginTest();
         usernameIsLogginedTest();
         openMenuServiceDifferentElementsTest();
@@ -44,36 +59,28 @@ public class ExerciseTwo {
         isLogCorrectTest();
     }
 
-    public void openSiteByUrlTest() {
-        driver.navigate().to(dp.getSiteUrl());
-        driver.getTitle();
-    }
-
-    public void browserTitleTest() {
-        driver.navigate().to(dp.getSiteUrl());
-        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
+    private void openSiteByUrlTest() {
+        driver.navigate().to(DataStore.getProperty("siteUrl"));
+        Assert.assertEquals(
+                driver.getTitle(),
+                DataStore.getProperty("browserTitle"));
     }
 
     public void performLoginTest() {
-        driver.manage().window().maximize();
+        loginPage.clickImgUser();
+        loginPage.inputFieldLogin(DataStore.getProperty("userName"));
 
-        element = driver.findElement(By.id("user-icon"));
-        element.click();
-
-        element = driver.findElement(By.id("name"));
-        element.sendKeys(dp.getUserName());
-
-        element = driver.findElement(By.id("password"));
-        element.sendKeys(dp.getPassword());
-
-        element = driver.findElement(By.id("login-button"));
-        element.click();
+        loginPage.inputFieldPassword(DataStore.getProperty("password"));
+        loginPage.clickBtnEnter();
+        String actualUserNameAfterLogged = loginPage.getUserName();
+        Assert.assertEquals(actualUserNameAfterLogged,
+                DataStore.getProperty("userNameAfterLogged"));
     }
 
     public void usernameIsLogginedTest() {
-        element = driver.findElement(By.id("user-name"));
-
-        Assert.assertEquals(element.getText(), dp.getUserNameAfterLogged());
+        String actualUserNameAfterLogged = loginPage.getUserName();
+        Assert.assertEquals(actualUserNameAfterLogged,
+                DataStore.getProperty("userNameAfterLogged"));
     }
 
     public void openMenuServiceDifferentElementsTest() {

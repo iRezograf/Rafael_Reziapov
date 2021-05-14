@@ -31,7 +31,7 @@ public class ExerciseOne {
     private WebDriver driver;
     private SoftAssert softAssert;
 
-    @BeforeClass(groups = {"exercise_hw3"})
+    @BeforeClass(groups = {"exercise_hw3.1"})
     public void setUp() {
 
         WebDriverManager.getInstance(CHROME).setup();
@@ -49,7 +49,7 @@ public class ExerciseOne {
                 .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exercise_hw3"})
+    @AfterClass(groups = {"exercise_hw3.1.1"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
@@ -62,7 +62,7 @@ public class ExerciseOne {
     }
 
         
-    @Test(groups = {"exercise_hw3"})
+    @Test(groups = {"exercise_hw3.1.1"})
     public void allExerciseOneTest() {
         openSiteByUrlTest();
         performLoginTest();
@@ -75,14 +75,14 @@ public class ExerciseOne {
         thereAreFiveItemsInTheLeftSectionTest();
     }
 
-    private void openSiteByUrlTest() {
+    public void openSiteByUrlTest() {
         driver.navigate().to(DataStore.getProperty("siteUrl"));
         Assert.assertEquals(
                 driver.getTitle(),
                 DataStore.getProperty("browserTitle"));
     }
 
-    private void performLoginTest() {
+    public void performLoginTest() {
         loginPage.clickImgUser();
         loginPage.inputFieldLogin(DataStore.getProperty("userName"));
 

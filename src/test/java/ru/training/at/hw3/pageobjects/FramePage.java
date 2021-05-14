@@ -8,10 +8,10 @@ import org.openqa.selenium.support.PageFactory;
 public class FramePage {
     WebDriver driver;
 
-    @FindBy(xpath = "//iframe[@id='frame']")
+    @FindBy(id = "frame")
     WebElement iframeWithFrameButton;
 
-    @FindBy(xpath = "//*[@id = 'frame-button']")
+    @FindBy(id = "frame-button")
     WebElement frameButton = null;
 
     public FramePage(WebDriver driver) {

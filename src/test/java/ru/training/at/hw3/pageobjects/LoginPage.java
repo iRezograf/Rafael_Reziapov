@@ -16,19 +16,20 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    @FindBy (xpath = "//*[@id='user-icon']")
+    //@FindBy (xpath = "//*[@id='user-icon']")
+    @FindBy (id = "user-icon")
     private WebElement imgUser;
 
-    @FindBy (xpath = "//*[@id='name']")
+    @FindBy (id = "name")
     private  WebElement fieldLogin;
 
-    @FindBy (xpath = "//*[@id='password']")
+    @FindBy (id = "password")
     private  WebElement fieldPassword;
 
-    @FindBy (xpath = "//*[@id='login-button']")
+    @FindBy (id = "login-button")
     private  WebElement btnEnter;
 
-    @FindBy (xpath = "//*[@id='user-name']")
+    @FindBy (id = "user-name")
     private  WebElement loggedUserName;
 
 
