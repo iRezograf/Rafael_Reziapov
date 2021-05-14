@@ -1,39 +1,42 @@
 package ru.training.at.hw3;
 
-import org.openqa.selenium.By;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
+import org.testng.asserts.SoftAssert;
+import ru.training.at.hw3.dp.DataStore;
 import ru.training.at.hw3.pageobjects.*;
-import ru.training.at.hw3.util.DriverManager;
 
 import java.util.concurrent.TimeUnit;
 
+import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
+
 
 public class ExerciseOne {
-    private static LoginPage loginPage;
-    private static HeaderMenu headerMenu;
-    private static HeaderImg headerImg;
-    private static BenefitIcon benefitIcon;
-    private static BenefitText benefitText;
-    private static FramePage framePage;
-    private static LeftMenu leftMenu;
+    private LoginPage loginPage;
+    private HeaderMenu headerMenu;
+    private HeaderImg headerImg;
+    private BenefitIcon benefitIcon;
+    private BenefitText benefitText;
+    private FramePage framePage;
+    private LeftMenu leftMenu;
 
 
     private WebDriver driver;
-    private WebElement element;
-    private DataStoreForHomeworkTwo dp;
+    private SoftAssert softAssert;
 
 
     @BeforeClass(groups = {"exercise_hw3"})
     public void setUp() {
-        dp = new DataStoreForHomeworkTwo();
 
-        driver = DriverManager.getWebDriverInstance();
+        WebDriverManager.getInstance(CHROME).setup();
+        driver = new ChromeDriver();
+
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
         headerImg = new HeaderImg(driver);
@@ -42,7 +45,6 @@ public class ExerciseOne {
         framePage = new FramePage(driver);
         leftMenu = new LeftMenu(driver);
 
-
         driver.manage().window().maximize();
         driver.manage().timeouts()
                 .implicitlyWait(10, TimeUnit.SECONDS);
@@ -50,8 +52,15 @@ public class ExerciseOne {
 
     @AfterClass(groups = {"exercise_hw3"})
     public void tearDown() {
-        dp = null;
-        //DriverManager.closeWebBrowser();
+        loginPage = null;
+        headerMenu = null;
+        headerImg = null;
+        benefitIcon = null;
+        benefitText = null;
+        framePage = null;
+        leftMenu = null;
+
+        driver.quit();
     }
 
         
@@ -59,70 +68,63 @@ public class ExerciseOne {
     public void allExerciseOneTest() {
         openSiteByUrlTest();
         performLoginTest();
-        //usernameIsLogginedTest();
         headerHaveProperTextsTest();
         fourImagesOnTheIndexPageAndTheyAreDisplayed();
-        fourIconsInHomePageExistsTest();
-        fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest();
-        iframeWithFrameButtonExistTest();
-        thereIsFrameButtonInTheIframeTest();
-        switchToOriginalWindowBackTest();
-        thereAreFiveItemsInTheLeftSectionTest();
+        //fourIconsInHomePageExistsTest();
+        //fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest();
+        //iframeWithFrameButtonExistTest();
+        //thereIsFrameButtonInTheIframeTest();
+        //switchToOriginalWindowBackTest();
+        //thereAreFiveItemsInTheLeftSectionTest();
+
     }
 
     public void openSiteByUrlTest() {
-        //Example
-        //element = driver.findElement(By.xpath("//span[text() = 'Home']"));
-        //element.click();
-        //webDriverWait = new WebDriverWait(driver, 10);
-        //webDriverWait.until(ExpectedConditions.visibilityOf(element));
-        //Example
-
-        driver.navigate().to(dp.getSiteUrl());
-        Assert.assertEquals(driver.getTitle(), dp.getBrowserTitle());
+        driver.navigate().to(DataStore.getProperty("siteUrl"));
+        Assert.assertEquals(driver.getTitle(), DataStore.getProperty(
+                "browserTitle"));
     }
 
     public void performLoginTest() {
         loginPage.clickImgUser();
-        loginPage.inputFieldLogin(dp.getUserName());
+        loginPage.inputFieldLogin(DataStore.getProperty("userName"));
 
-        loginPage.inputFieldPassword(dp.getPassword());
+        loginPage.inputFieldPassword(DataStore.getProperty("password"));
         loginPage.clickBtnEnter();
-        String actual = loginPage.getUserName();
-        Assert.assertEquals(actual, dp.getUserNameAfterLogged());
+        String actualUserNameAfterLogged = loginPage.getUserName();
+        Assert.assertEquals(actualUserNameAfterLogged,
+                DataStore.getProperty("userNameAfterLogged"));
     }
-
 
     public void headerHaveProperTextsTest() {
 
-        // ArrayList<String> textOfHeaderMenuButtonsList
         Assert.assertEquals(headerMenu.getHeaderMenuItemHome(),
-                dp.getTextOfHeaderMenuButtonsList().get(0));
+                DataStore.getProperty("textOfHeaderMenuButtonsList1"));
 
         Assert.assertEquals(headerMenu.getHeaderMenuItemContactForm(),
-                dp.getTextOfHeaderMenuButtonsList().get(1));
+                DataStore.getProperty("textOfHeaderMenuButtonsList2"));
 
         Assert.assertEquals(headerMenu.getHeaderMenuItemService(),
-                dp.getTextOfHeaderMenuButtonsList().get(2));
+                DataStore.getProperty("textOfHeaderMenuButtonsList3"));
 
         Assert.assertEquals(headerMenu.getHeaderMenuItemMetalColors(),
-                dp.getTextOfHeaderMenuButtonsList().get(3));
+                DataStore.getProperty("textOfHeaderMenuButtonsList4"));
 
         headerMenu.clickHeaderMenuItemService();
 
     }
 
     public void fourImagesOnTheIndexPageAndTheyAreDisplayed() {
-        Assert.assertTrue(headerImg.getEpamLogo().isDisplayed(),
+        softAssert.assertTrue(headerImg.getEpamLogo().isDisplayed(),
                 "Element isn't displayed or found");
-        Assert.assertTrue(headerImg.getUserIcon().isDisplayed(),
+        softAssert.assertTrue(headerImg.getUserIcon().isDisplayed(),
                 "Element isn't displayed or found");
-        Assert.assertTrue(headerImg.getIconSearch().isDisplayed(),
+        softAssert.assertTrue(headerImg.getIconSearch().isDisplayed(),
                 "Element isn't displayed or found");
-        Assert.assertTrue(headerImg.getSpanCaret().isDisplayed(),
+        softAssert.assertTrue(headerImg.getSpanCaret().isDisplayed(),
                 "Element isn't displayed or found");
     }
-
+    /*
     public void fourIconsInHomePageExistsTest() {
         Assert.assertTrue(benefitIcon.getBenefitPractice().isDisplayed(),
                 "Element isn't displayed or found");
@@ -182,6 +184,7 @@ public class ExerciseOne {
         // Browser close in: tearDown() {driver.quit();};
     }
 
+     */
 }
 
 

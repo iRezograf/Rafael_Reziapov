@@ -1,12 +1,9 @@
 package ru.training.at.hw2.dataproviders;
 
 import lombok.Getter;
-import lombok.Setter;
-import ru.training.at.hw3.util.DataAtom;
 
 import java.util.ArrayList;
 
-@Setter
 @Getter
 public class DataStoreForHomeworkTwo {
     String siteUrl;
@@ -35,16 +32,16 @@ public class DataStoreForHomeworkTwo {
 
         textUnderIconsList = new ArrayList<>();
         textUnderIconsList.add("To include good practices\n"
-                    + "and ideas from successful\n"
-                    + "EPAM project");
+                + "and ideas from successful\n"
+                + "EPAM project");
         textUnderIconsList.add("To be flexible and\n"
-                    + "customizable");
+                + "customizable");
         textUnderIconsList.add("To be multiplatform");
         textUnderIconsList.add(
-            "Already have good base\n"
-                    + "(about 20 internal and\n"
-                    + "some external projects),\n"
-                    + "wish to get more…");
+                "Already have good base\n"
+                        + "(about 20 internal and\n"
+                        + "some external projects),\n"
+                        + "wish to get more…");
         this.textUnderIconsList = textUnderIconsList;
 
         textInLeftSectionMenuButtonList = new ArrayList<>();;

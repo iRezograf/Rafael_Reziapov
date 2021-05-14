@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class HeaderImg {
     public WebDriver driver;
 
-    @FindBy(xpath = "//*[@id='epam-logo']")
+    @FindBy(xpath = "//*[@id='epam-logo'!!!!!]")
     private WebElement epamLogo;
 
     @FindBy(xpath = "//*[@id='user-icon']")

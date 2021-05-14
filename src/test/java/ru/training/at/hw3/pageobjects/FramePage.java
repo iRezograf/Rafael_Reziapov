@@ -23,6 +23,7 @@ public class FramePage {
         driver.switchTo().frame(iframeWithFrameButton);
         return driver;
     }
+
     public boolean exist() {
         return (null != frameButton);
     }
