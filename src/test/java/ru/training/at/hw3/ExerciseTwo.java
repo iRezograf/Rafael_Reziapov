@@ -3,10 +3,10 @@ package ru.training.at.hw3;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import ru.training.at.hw3.dp.DataStore;
 import ru.training.at.hw3.pageobjects.DifferentElementsPage;
 import ru.training.at.hw3.pageobjects.HeaderMenu;
@@ -20,19 +20,16 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
 
 public class ExerciseTwo {
-    WebDriver driver;
-    ExerciseOne exerciseOne;
+    private SoftAssert softAssert;
+    private WebDriver driver;
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
     private DifferentElementsPage differentElementsPage;
 
+
     @BeforeClass(groups = {"exercise_hw3.2"})
     public void setUp() {
-
-
-        exerciseOne = new ExerciseOne();
-
-
+        softAssert = new SoftAssert();
         WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
 
@@ -50,6 +47,7 @@ public class ExerciseTwo {
         loginPage = null;
         headerMenu = null;
         differentElementsPage = null;
+        softAssert = null;
         driver.quit();
     }
 
@@ -65,34 +63,34 @@ public class ExerciseTwo {
 
     private void openSiteByUrlTest() {
         driver.navigate().to(DataStore.getProperty("siteUrl"));
-        Assert.assertEquals(
+        softAssert.assertEquals(
                 driver.getTitle(),
                 DataStore.getProperty("browserTitle"));
     }
 
-    public void performLoginTest() {
+    private void performLoginTest() {
         loginPage.clickImgUser();
         loginPage.inputFieldLogin(DataStore.getProperty("userName"));
 
         loginPage.inputFieldPassword(DataStore.getProperty("password"));
         loginPage.clickBtnEnter();
         String actualUserNameAfterLogged = loginPage.getUserName();
-        Assert.assertEquals(actualUserNameAfterLogged,
+        softAssert.assertEquals(actualUserNameAfterLogged,
                 DataStore.getProperty("userNameAfterLogged"));
     }
 
-    public void usernameIsLogginedTest() {
+    private void usernameIsLogginedTest() {
         String actualUserNameAfterLogged = loginPage.getUserName();
-        Assert.assertEquals(actualUserNameAfterLogged,
+        softAssert.assertEquals(actualUserNameAfterLogged,
                 DataStore.getProperty("userNameAfterLogged"));
     }
 
-    public void openMenuServiceDifferentElementsTest() {
+    private void openMenuServiceDifferentElementsTest() {
         headerMenu.clickHeaderMenuItemService();
         headerMenu.clickHeaderMenuItemDifferentElements();
     }
 
-    public void checkElementsTest() {
+    private void checkElementsTest() {
         differentElementsPage.clickCheckboxWater();
         differentElementsPage.clickCheckboxWind();
         differentElementsPage.clickRadioSelen();
@@ -100,14 +98,14 @@ public class ExerciseTwo {
         differentElementsPage.clickDropdownYellow();
     }
 
-    public void isLogCorrectTest() {
+    private void isLogCorrectTest() {
         // used "contains" for separate string
         // instead "equal" for whole list
         // because actual string contains time.
         // We can't synchronise the time.
 
         for (int i = 0; i < 4; i++) {
-            Assert.assertTrue(getActualLogList().get(i)
+            softAssert.assertTrue(getActualLogList().get(i)
                               .contains(
                               getExceptedLogList().get(i)));
         }

@@ -25,13 +25,13 @@ public class ExerciseOne {
     private BenefitText benefitText;
     private FramePage framePage;
     private LeftMenu leftMenu;
-
-    private WebDriver driver;
     private SoftAssert softAssert;
+    private WebDriver driver;
+
 
     @BeforeClass(groups = {"exercise_hw3.1"})
     public void setUp() {
-
+        softAssert = new SoftAssert();
         WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
 
@@ -55,6 +55,7 @@ public class ExerciseOne {
         benefitText = null;
         framePage = null;
         leftMenu = null;
+        softAssert = null;
 
         driver.quit();
     }
@@ -73,26 +74,26 @@ public class ExerciseOne {
         thereAreFiveItemsInTheLeftSectionTest();
     }
 
-    public void openSiteByUrlTest() {
+    private void openSiteByUrlTest() {
         driver.navigate().to(DataStore.getProperty("siteUrl"));
-        Assert.assertEquals(
+        softAssert.assertEquals(
                 driver.getTitle(),
                 DataStore.getProperty("browserTitle"));
     }
 
-    public void performLoginTest() {
+    private void performLoginTest() {
         loginPage.clickImgUser();
         loginPage.inputFieldLogin(DataStore.getProperty("userName"));
 
         loginPage.inputFieldPassword(DataStore.getProperty("password"));
         loginPage.clickBtnEnter();
         String actualUserNameAfterLogged = loginPage.getUserName();
-        Assert.assertEquals(actualUserNameAfterLogged,
+        softAssert.assertEquals(actualUserNameAfterLogged,
                 DataStore.getProperty("userNameAfterLogged"));
     }
 
     private void headerHaveProperTextsTest() {
-        Assert.assertEquals(
+        softAssert.assertEquals(
                 getActualHeaderMenuItemHome(),
                 getExpectHeaderMenuItemHome());
         headerMenu.headerMenuItemService().click();
@@ -101,37 +102,37 @@ public class ExerciseOne {
 
     private void fourIconsInHomePageExistsTest() {
         String message = "Element isn't displayed or found";
-        Assert.assertTrue(benefitIcon.getBenefitPractice().isDisplayed(), message);
-        Assert.assertTrue(benefitIcon.getBenefitCustom().isDisplayed(), message);
-        Assert.assertTrue(benefitIcon.getBenefitMulti().isDisplayed(), message);
-        Assert.assertTrue(benefitIcon.getBenefitBase().isDisplayed(), message);
+        softAssert.assertTrue(benefitIcon.getBenefitPractice().isDisplayed(), message);
+        softAssert.assertTrue(benefitIcon.getBenefitCustom().isDisplayed(), message);
+        softAssert.assertTrue(benefitIcon.getBenefitMulti().isDisplayed(), message);
+        softAssert.assertTrue(benefitIcon.getBenefitBase().isDisplayed(), message);
     }
 
     private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest() {
 
-        Assert.assertEquals(
+        softAssert.assertEquals(
                 getActualTextsOnTheIndexPageUnderIconsAndTheyHaveProperText(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
 
     }
 
     private void iframeWithFrameButtonExistTest() {
-        Assert.assertNotNull(framePage.open());
+        softAssert.assertNotNull(framePage.open());
     }
 
     private void thereIsFrameButtonInTheIframeTest() {
-        Assert.assertTrue(framePage.exist());
+        softAssert.assertTrue(framePage.exist());
     }
 
     private void switchToOriginalWindowBackTest() {
         driver.switchTo().defaultContent();
-        Assert.assertEquals(
+        softAssert.assertEquals(
                 driver.getTitle(),
                 DataStore.getProperty("browserTitle"));
     }
 
     private void thereAreFiveItemsInTheLeftSectionTest() {
-        Assert.assertEquals(
+        softAssert.assertEquals(
                 getActualFiveItemsInTheLeftSection(),
                 getExceptedFiveItemsInTheLeftSection());
 
