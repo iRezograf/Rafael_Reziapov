@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
 import ru.training.at.hw3.dp.DataStore;
 import ru.training.at.hw3.pageobjects.DifferentElementsPage;
 import ru.training.at.hw3.pageobjects.HeaderMenu;
@@ -26,13 +25,11 @@ public class ExerciseTwo {
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
     private DifferentElementsPage differentElementsPage;
-    DataStoreForHomeworkTwo dp;
 
     @BeforeClass(groups = {"exercise_hw3.2"})
     public void setUp() {
 
 
-        dp = new DataStoreForHomeworkTwo();
         exerciseOne = new ExerciseOne();
 
 
@@ -53,7 +50,6 @@ public class ExerciseTwo {
         loginPage = null;
         headerMenu = null;
         differentElementsPage = null;
-        dp = null;
         driver.quit();
     }
 
