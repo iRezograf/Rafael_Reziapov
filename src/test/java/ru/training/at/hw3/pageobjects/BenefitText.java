@@ -1,6 +1,5 @@
 package ru.training.at.hw3.pageobjects;
 
-import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

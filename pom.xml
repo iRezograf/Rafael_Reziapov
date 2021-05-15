@@ -157,14 +157,14 @@
         <profile>
             <id>3.1 ExerciseOne.Hw3Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/TestHw31.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/t.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
             <id>3.2 ExerciseTwo.Hw3Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/TestHw32.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/testHw32.xml</testng.suite.file>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -174,14 +174,14 @@
         <profile>
             <id>2.1 ExerciseOne.Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/ExerciseOneTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/exerciseOneTest.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
             <id>2.2 ExerciseTwo.Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/ExerciseTwoTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/exerciseTwoTest.xml</testng.suite.file>
             </properties>
         </profile>
 

@@ -1,9 +1,7 @@
 package ru.training.at.hw3;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -11,8 +9,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.training.at.hw2.dataproviders.DataStoreForHomeworkTwo;
 import ru.training.at.hw3.dp.DataStore;
+import ru.training.at.hw3.pageobjects.DifferentElementsPage;
+import ru.training.at.hw3.pageobjects.HeaderMenu;
 import ru.training.at.hw3.pageobjects.LoginPage;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
@@ -20,9 +22,10 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
 public class ExerciseTwo {
     WebDriver driver;
-    WebElement element;
     ExerciseOne exerciseOne;
     private LoginPage loginPage;
+    private HeaderMenu headerMenu;
+    private DifferentElementsPage differentElementsPage;
     DataStoreForHomeworkTwo dp;
 
     @BeforeClass(groups = {"exercise_hw3.2"})
@@ -37,6 +40,8 @@ public class ExerciseTwo {
         driver = new ChromeDriver();
 
         loginPage = new LoginPage(driver);
+        headerMenu = new HeaderMenu(driver);
+        differentElementsPage = new DifferentElementsPage(driver);
 
         driver.manage().window().maximize();
         driver.manage().timeouts()
@@ -45,6 +50,9 @@ public class ExerciseTwo {
 
     @AfterClass(groups = {"exercise_hw3.2"})
     public void tearDown() {
+        loginPage = null;
+        headerMenu = null;
+        differentElementsPage = null;
         dp = null;
         driver.quit();
     }
@@ -84,62 +92,47 @@ public class ExerciseTwo {
     }
 
     public void openMenuServiceDifferentElementsTest() {
-        // Open drop down menu SERVICE
-        element = driver.findElement(By.cssSelector(
-                "ul.uui-navigation.nav.navbar-nav.m-l8>li.dropdown"));
-        element.click();
-
-        //8th p. of menu DIFFERENT ELEMENTS choose
-        element = driver.findElement(By.cssSelector(
-                "ul.uui-navigation.nav.navbar-nav.m-l8>li.dropdown>ul li:nth-child(8)"));
-        element.click();
+        headerMenu.clickHeaderMenuItemService();
+        headerMenu.clickHeaderMenuItemDifferentElements();
     }
 
     public void checkElementsTest() {
-        //Select checkboxes Water
-        //label.label-checkbox - it is checkbox
-        //label:nth-child(1) - it are elements of
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(2)>label:nth-child(1)"));
-        element.click();
-
-        //label.label-checkbox
-        //Select checkboxes Wind
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(2) >label:nth-child(3)"));
-        element.click();
-
-        // Select radio Selen
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(3) >label:nth-child(4)"));
-        element.click();
-
-        //Select dropdown colors
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(4)"));
-        element.click();
-
-        //Select dropdown Yellow color
-        element = driver.findElement(By.cssSelector(
-                "body > div > div.uui-main-container.page-inside >"
-                      + " main > div.main-content > div >"
-                      + " div.colors > select > option:nth-child(4)"));
-        element.click();
-
-        //return to Select dropdown colors, but colors was chosen, already
-        element = driver.findElement(By.cssSelector(
-                "div.main-content > div > div:nth-child(4)"));
-        element.click();
+        differentElementsPage.clickCheckboxWater();
+        differentElementsPage.clickCheckboxWind();
+        differentElementsPage.clickRadioSelen();
+        differentElementsPage.clickDropdownColors();
+        differentElementsPage.clickDropdownYellow();
     }
 
     public void isLogCorrectTest() {
-        for (int i = 1; i <= 4; i++) {
-            element = driver.findElement(By.cssSelector(
-                    "#mCSB_2_container > section:nth-child(1) > div.info-panel-body."
-                            + "info-panel-body-log > div > ul li:nth-child(" + i + ")"));
-            Assert.assertTrue(element.getText().contains(dp.getTextFromLogList().get(i - 1)));
+        // used "contains" for separate string
+        // instead "equal" for whole list
+        // because actual string contains time.
+        // We can't synchronise the time.
+
+        for (int i = 0; i < 4; i++) {
+            Assert.assertTrue(getActualLogList().get(i)
+                              .contains(
+                              getExceptedLogList().get(i)));
         }
     }
+
+    private List<String> getActualLogList() {
+        String s1 = differentElementsPage.getStringYellow().getText();
+        String s2 = differentElementsPage.getStringSelen().getText();
+        String s3 = differentElementsPage.getStringWind().getText();
+        String s4 = differentElementsPage.getStringWater().getText();
+        return Arrays.asList(s1, s2, s3, s4);
+    }
+
+    private List<String> getExceptedLogList() {
+        String s1 = DataStore.getProperty("textFromLogList1");
+        String s2 = DataStore.getProperty("textFromLogList2");
+        String s3 = DataStore.getProperty("textFromLogList3");
+        String s4 = DataStore.getProperty("textFromLogList4");
+        return Arrays.asList(s1, s2, s3, s4);
+    }
+
 }
 
 

@@ -16,7 +16,6 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    //@FindBy (xpath = "//*[@id='user-icon']")
     @FindBy (id = "user-icon")
     private WebElement imgUser;
 

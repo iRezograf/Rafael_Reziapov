@@ -8,9 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 public class HeaderMenu {
     public WebDriver driver;
 
-    //@FindBy (xpath = "//ul [contains(@class,'')]/li")
-    //private List<WebElement> headerMenu;
-
     @FindBy (xpath = "//li[contains(string(), 'Home')]/a[contains(@href,'')]")
     private WebElement headerMenuItemHome;
 
@@ -22,6 +19,9 @@ public class HeaderMenu {
 
     @FindBy (xpath = "//li[contains(string(), 'Metals & Colors')]/a[contains(@href,'')]")
     private WebElement headerMenuItemMetalColors;
+
+    @FindBy (xpath = "//*[@class='dropdown-menu']/li[contains(string(),'Different elements')]")
+    private WebElement headerMenuItemDifferentElements;
 
 
     public HeaderMenu(WebDriver driver) {
@@ -37,6 +37,8 @@ public class HeaderMenu {
         return headerMenuItemContactForm.getText();
     }
 
+
+    //Service
     public String getHeaderMenuItemService() {
         return headerMenuItemService.getText();
     }
@@ -45,8 +47,36 @@ public class HeaderMenu {
         return headerMenuItemService;
     }
 
+    public void clickHeaderMenuItemService() {
+        headerMenuItemService.click();
+    }
+
+    //MetalColors
     public String getHeaderMenuItemMetalColors() {
         return headerMenuItemMetalColors.getText();
     }
+
+    public WebElement headerMenuItemMetalColors() {
+        return headerMenuItemMetalColors;
+    }
+
+    public void clickHeaderMenuItemMetalColors() {
+        headerMenuItemMetalColors.click();
+    }
+
+    //DifferentElements
+    public String getHeaderMenuItemDifferentElements() {
+        return headerMenuItemDifferentElements.getText();
+    }
+
+    public void clickHeaderMenuItemDifferentElements() {
+        headerMenuItemDifferentElements.click();
+    }
+
+
+
+
+
+
 
 }
