@@ -2,6 +2,7 @@ package ru.training.at.hw3;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,6 +12,7 @@ import ru.training.at.hw3.dp.DataStore;
 import ru.training.at.hw3.pageobjects.DifferentElementsPage;
 import ru.training.at.hw3.pageobjects.HeaderMenu;
 import ru.training.at.hw3.pageobjects.LoginPage;
+import ru.training.at.hw3.util.DriverManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,17 +23,19 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
 public class ExerciseTwo {
     private SoftAssert softAssert;
-    private WebDriver driver;
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
     private DifferentElementsPage differentElementsPage;
+    private WebDriver driver;
+    private DriverManager driverManager;
 
 
     @BeforeClass(groups = {"exercise_hw3.2"})
     public void setUp() {
         softAssert = new SoftAssert();
-        WebDriverManager.getInstance(CHROME).setup();
-        driver = new ChromeDriver();
+
+        driverManager = new DriverManager();
+        driver = driverManager.setup();
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -104,19 +108,12 @@ public class ExerciseTwo {
         // because actual string contains time.
         // We can't synchronise the time.
 
-        for (int i = 0; i < 4; i++) {
-            softAssert.assertTrue(getActualLogList().get(i)
-                              .contains(
-                              getExceptedLogList().get(i)));
+        //for (int i = 0; i < 4; i++) {
+        int i = 0;
+        for (String actual : differentElementsPage.getLogListAsString()) {
+            softAssert.assertTrue(actual.contains(getExceptedLogList().get(i)));
+            i++;
         }
-    }
-
-    private List<String> getActualLogList() {
-        String s1 = differentElementsPage.getStringYellow().getText();
-        String s2 = differentElementsPage.getStringSelen().getText();
-        String s3 = differentElementsPage.getStringWind().getText();
-        String s4 = differentElementsPage.getStringWater().getText();
-        return Arrays.asList(s1, s2, s3, s4);
     }
 
     private List<String> getExceptedLogList() {

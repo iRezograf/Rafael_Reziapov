@@ -1,10 +1,14 @@
 package ru.training.at.hw3.pageobjects;
 
+
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DifferentElementsPage {
     WebDriver driver;
@@ -32,34 +36,16 @@ public class DifferentElementsPage {
     @FindBy(xpath = "//option[text()='Yellow']")
     WebElement dropdownYellow;
 
-    //return to Select dropdown colors, but colors was chosen, already
-
     //Select panel body list logs
     //There are our logs
-    @FindBy(xpath = "//*[@class='panel-body-list logs']")
-    WebElement logList;
-
-    // 4 string from logs
-    @Getter
-    @FindBy(xpath = "//*[@class='panel-body-list logs']/li[contains(string(),'Yellow')]")
-    WebElement stringYellow;
-
-    @Getter
-    @FindBy(xpath = "//*[@class='panel-body-list logs']/li[contains(string(),'Selen')]")
-    WebElement stringSelen;
-
-    @Getter
-    @FindBy(xpath = "//*[@class='panel-body-list logs']/li[contains(string(),'Wind')]")
-    WebElement stringWind;
-
-    @Getter
-    @FindBy(xpath = "//*[@class='panel-body-list logs']/li[contains(string(),'Water')]")
-    WebElement stringWater;
+    @FindBy(xpath = "//*[@class='panel-body-list logs']/li")
+    List<WebElement> logList;
 
     public DifferentElementsPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
+
 
     public void clickCheckboxWater() {
         checkboxWater.click();
@@ -81,7 +67,16 @@ public class DifferentElementsPage {
         dropdownYellow.click();
     }
 
-    public WebElement getLogList() {
+
+    public List<WebElement> getLogList() {
         return logList;
+    }
+
+    public List<String> getLogListAsString() {
+        List<String> list = new ArrayList<>();
+        for (WebElement element : logList) {
+            list.add(element.getText());
+        }
+        return list;
     }
 }

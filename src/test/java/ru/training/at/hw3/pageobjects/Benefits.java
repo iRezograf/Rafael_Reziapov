@@ -1,5 +1,6 @@
 package ru.training.at.hw3.pageobjects;
 
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,20 +9,25 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeftMenu {
-    WebDriver driver;
+@Getter
+public class Benefits {
+    public WebDriver driver;
 
-    @FindBy(css = "#mCSB_1_container > ul > li")
-    List<WebElement> leftMenu;
+    @FindBy(css = ".benefit-icon")
+    private List<WebElement> benefitIcons;
 
-    public LeftMenu(WebDriver driver) {
+    @FindBy(css = ".benefit-txt")
+    private List<WebElement> benefitTxt;
+
+
+    public Benefits(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public List<String> getLeftMenuAsString() {
+    public List<String> getBenefitTxtAsString() {
         List<String> list = new ArrayList<>();
-        for (WebElement element : leftMenu) {
+        for (WebElement element : benefitTxt) {
             list.add(element.getText());
         }
         return list;

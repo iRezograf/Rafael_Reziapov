@@ -50,7 +50,7 @@ public class LoginPage {
 
     public String getUserName() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='user-name']")));
+        wait.until(ExpectedConditions.visibilityOf(loggedUserName));
         String userName = loggedUserName.getText();
         return userName;
     }
