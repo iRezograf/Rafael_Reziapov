@@ -57,36 +57,44 @@ public class ExerciseTwo {
 
     @Test(groups = {"exercise_hw3.2"})
     public void allExerciseTwoTest() {
-        openSiteByUrlTest();
-        performLoginTest();
-        usernameIsLogginedTest();
-        openMenuServiceDifferentElementsTest();
-        checkElementsTest();
-        isLogCorrectTest();
-    }
-
-    private void openSiteByUrlTest() {
-        driver.navigate().to(DataStore.getProperty("siteUrl"));
-        softAssert.assertEquals(
-                driver.getTitle(),
+        openSiteByUrlTest(
+                DataStore.getProperty("siteUrl"),
                 DataStore.getProperty("browserTitle"));
+
+        performLoginTest(
+                DataStore.getProperty("userName"),
+                DataStore.getProperty("password"),
+                DataStore.getProperty("userNameAfterLogged"));
+
+        usernameIsLogginedTest(DataStore.getProperty("userNameAfterLogged"));
+
+        openMenuServiceDifferentElementsTest();
+
+        checkElementsTest();
+
+        isLogCorrectTest(differentElementsPage.getLogListAsString(), getExceptedLogList());
     }
 
-    private void performLoginTest() {
+    private void openSiteByUrlTest(final String siteUrl, final String expectedTitle) {
+        driver.navigate().to(siteUrl);
+        softAssert.assertEquals(driver.getTitle(), expectedTitle);
+    }
+
+    private void performLoginTest(final String name,
+                                  final String password,
+                                  final String expectedLoggedName) {
         loginPage.clickImgUser();
-        loginPage.inputFieldLogin(DataStore.getProperty("userName"));
+        loginPage.inputFieldLogin(name);
 
-        loginPage.inputFieldPassword(DataStore.getProperty("password"));
+        loginPage.inputFieldPassword(password);
         loginPage.clickBtnEnter();
-        String actualUserNameAfterLogged = loginPage.getUserName();
-        softAssert.assertEquals(actualUserNameAfterLogged,
-                DataStore.getProperty("userNameAfterLogged"));
+
+        softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
-    private void usernameIsLogginedTest() {
+    private void usernameIsLogginedTest(final String expectedLoggedName) {
         String actualUserNameAfterLogged = loginPage.getUserName();
-        softAssert.assertEquals(actualUserNameAfterLogged,
-                DataStore.getProperty("userNameAfterLogged"));
+        softAssert.assertEquals(actualUserNameAfterLogged, expectedLoggedName);
     }
 
     private void openMenuServiceDifferentElementsTest() {
@@ -102,16 +110,15 @@ public class ExerciseTwo {
         differentElementsPage.clickDropdownYellow();
     }
 
-    private void isLogCorrectTest() {
+    private void isLogCorrectTest(List<String> actualLogList, List<String> expectedLogList) {
         // used "contains" for separate string
         // instead "equal" for whole list
         // because actual string contains time.
         // We can't synchronise the time.
 
-        //for (int i = 0; i < 4; i++) {
         int i = 0;
-        for (String actual : differentElementsPage.getLogListAsString()) {
-            softAssert.assertTrue(actual.contains(getExceptedLogList().get(i)));
+        for (String actual : actualLogList) {
+            softAssert.assertTrue(actual.contains(expectedLogList.get(i)));
             i++;
         }
     }

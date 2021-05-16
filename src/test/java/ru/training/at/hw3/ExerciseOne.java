@@ -65,15 +65,30 @@ public class ExerciseOne {
         
     @Test(groups = {"exercise_hw3.1"})
     public void allExerciseOneTest() {
-        openSiteByUrlTest(DataStore.getProperty("siteUrl"), DataStore.getProperty("browserTitle"));
-        performLoginTest();
-        headerHaveProperTextsTest();
-        fourIconsInHomePageExistsTest();
-        fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(); //
-        iframeWithFrameButtonExistTest();
-        thereIsFrameButtonInTheIframeTest();
-        switchToOriginalWindowBackTest();
-        thereAreFiveItemsInTheLeftSectionTest();
+        openSiteByUrlTest(
+                DataStore.getProperty("siteUrl"),
+                DataStore.getProperty("browserTitle"));
+
+        performLoginTest(
+                DataStore.getProperty("userName"),
+                DataStore.getProperty("password"),
+                DataStore.getProperty("userNameAfterLogged"));
+
+        headerHaveProperTextsTest(
+                getActualHeaderMenuItemHome(),
+                getExpectedHeaderMenuItemHome());
+
+        fourIconsInHomePageExistsTest(benefits.getBenefitIcons());
+
+        fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(
+                benefits.getBenefitTxtAsString(),
+                getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
+        iframeWithFrameButtonExistTest(framePage);
+        thereIsFrameButtonInTheIframeTest(framePage);
+        switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
+        thereAreFiveItemsInTheLeftSectionTest(
+                leftMenu.getLeftMenuAsString(),
+                getExceptedFiveItemsInTheLeftSection());
     }
 
     private void openSiteByUrlTest(final String siteUrl, final String expectedTitle) {
@@ -81,58 +96,59 @@ public class ExerciseOne {
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
-    private void performLoginTest() {
+    private void performLoginTest(final String name,
+                                  final String password,
+                                  final String expectedLoggedName) {
         loginPage.clickImgUser();
-        loginPage.inputFieldLogin(DataStore.getProperty("userName"));
+        loginPage.inputFieldLogin(name);
 
-        loginPage.inputFieldPassword(DataStore.getProperty("password"));
+        loginPage.inputFieldPassword(password);
         loginPage.clickBtnEnter();
-        String actualUserNameAfterLogged = loginPage.getUserName();
-        softAssert.assertEquals(actualUserNameAfterLogged,
-                DataStore.getProperty("userNameAfterLogged"));
+
+        softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
-    private void headerHaveProperTextsTest() {
-        softAssert.assertEquals(
-                getActualHeaderMenuItemHome(),
-                getExpectHeaderMenuItemHome());
+    private void headerHaveProperTextsTest(List<String> actualHeaderMenuTxt,
+                                           List<String> expectedHeaderMenuTxt) {
+
+        softAssert.assertEquals(actualHeaderMenuTxt, expectedHeaderMenuTxt);
+
         headerMenu.headerMenuItemService().click();
     }
 
 
-    private void fourIconsInHomePageExistsTest() {
+
+    private void fourIconsInHomePageExistsTest(List<WebElement> benefitIcons) {
         String message = "Element isn't displayed or found";
-        for (WebElement element : benefits.getBenefitIcons()) {
+        for (WebElement element : benefitIcons) {
             softAssert.assertTrue(element.isDisplayed(), message);
         }
     }
 
-    private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest() {
-        softAssert.assertEquals(
-                benefits.getBenefitTxtAsString(),
-                getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
+    private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(
+            List<String> actualBenefitStrings,
+            List<String> expectedBenefitStrings) {
+
+        softAssert.assertEquals(actualBenefitStrings, expectedBenefitStrings);
     }
 
-    private void iframeWithFrameButtonExistTest() {
-        softAssert.assertNotNull(framePage.open());
+    private void iframeWithFrameButtonExistTest(FramePage frameWithFrameButton) {
+        softAssert.assertNotNull(frameWithFrameButton.open());
     }
 
-    private void thereIsFrameButtonInTheIframeTest() {
-        softAssert.assertTrue(framePage.exist());
+    private void thereIsFrameButtonInTheIframeTest(FramePage frameButton) {
+
+        softAssert.assertTrue(frameButton.exist());
     }
 
-    private void switchToOriginalWindowBackTest() {
+    private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
-        softAssert.assertEquals(
-                driver.getTitle(),
-                DataStore.getProperty("browserTitle"));
+        softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
-    private void thereAreFiveItemsInTheLeftSectionTest() {
-        softAssert.assertEquals(
-                leftMenu.getLeftMenuAsString(),
-                getExceptedFiveItemsInTheLeftSection());
-
+    private void thereAreFiveItemsInTheLeftSectionTest(List<String> actualLeftMenu,
+                                                       List<String> expectedLeftMenu) {
+        softAssert.assertEquals(actualLeftMenu, expectedLeftMenu);
     }
 
     private List<String> getExceptedFiveItemsInTheLeftSection() {
@@ -160,14 +176,13 @@ public class ExerciseOne {
         return Arrays.asList(s1, s2, s3, s4);
     }
 
-    private List<String> getExpectHeaderMenuItemHome() {
+    private List<String> getExpectedHeaderMenuItemHome() {
         String s1 = DataStore.getProperty("textOfHeaderMenuButtonsList1");
         String s2 = DataStore.getProperty("textOfHeaderMenuButtonsList2");
         String s3 = DataStore.getProperty("textOfHeaderMenuButtonsList3");
         String s4 = DataStore.getProperty("textOfHeaderMenuButtonsList4");
         return Arrays.asList(s1, s2, s3, s4);
     }
-
 
 }
 
