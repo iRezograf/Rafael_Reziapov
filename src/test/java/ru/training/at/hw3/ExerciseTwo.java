@@ -105,7 +105,8 @@ public class ExerciseTwo {
         differentElementsPage.clickDropdownYellow();
     }
 
-    private void isLogCorrectTest(List<String> actualLogList, List<String> expectedLogList) {
+    private void isLogCorrectTest(final List<String> actualLogList,
+                                  final List<String> expectedLogList) {
         // used "contains" for separate string
         // instead "equal" for whole list
         // because actual string contains time.

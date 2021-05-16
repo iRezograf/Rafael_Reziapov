@@ -103,8 +103,8 @@ public class ExerciseOne {
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
-    private void headerHaveProperTextsTest(List<String> actualHeaderMenuTxt,
-                                           List<String> expectedHeaderMenuTxt) {
+    private void headerHaveProperTextsTest(final List<String> actualHeaderMenuTxt,
+                                           final List<String> expectedHeaderMenuTxt) {
 
         softAssert.assertEquals(actualHeaderMenuTxt, expectedHeaderMenuTxt);
 
@@ -113,7 +113,7 @@ public class ExerciseOne {
 
 
 
-    private void fourIconsInHomePageExistsTest(List<WebElement> benefitIcons) {
+    private void fourIconsInHomePageExistsTest(final List<WebElement> benefitIcons) {
         String message = "Element isn't displayed or found";
         for (WebElement element : benefitIcons) {
             softAssert.assertTrue(element.isDisplayed(), message);
@@ -121,17 +121,17 @@ public class ExerciseOne {
     }
 
     private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(
-            List<String> actualBenefitStrings,
-            List<String> expectedBenefitStrings) {
+            final List<String> actualBenefitStrings,
+            final List<String> expectedBenefitStrings) {
 
         softAssert.assertEquals(actualBenefitStrings, expectedBenefitStrings);
     }
 
-    private void iframeWithFrameButtonExistTest(FramePage frameWithFrameButton) {
+    private void iframeWithFrameButtonExistTest(final FramePage frameWithFrameButton) {
         softAssert.assertNotNull(frameWithFrameButton.open());
     }
 
-    private void thereIsFrameButtonInTheIframeTest(FramePage frameButton) {
+    private void thereIsFrameButtonInTheIframeTest(final FramePage frameButton) {
 
         softAssert.assertTrue(frameButton.exist());
     }
@@ -141,8 +141,8 @@ public class ExerciseOne {
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
-    private void thereAreFiveItemsInTheLeftSectionTest(List<String> actualLeftMenu,
-                                                       List<String> expectedLeftMenu) {
+    private void thereAreFiveItemsInTheLeftSectionTest(final List<String> actualLeftMenu,
+                                                       final List<String> expectedLeftMenu) {
         softAssert.assertEquals(actualLeftMenu, expectedLeftMenu);
     }
 
