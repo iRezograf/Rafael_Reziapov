@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="allTestHW3.2">
+    <test name="allTestsHW3.2">
+        <groups>
+            <run>
+                <include name="exercise_hw3.2"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="ru.training.at.hw3.ExerciseTwo"/>
+        </classes>
+    </test>
+</suite>
+

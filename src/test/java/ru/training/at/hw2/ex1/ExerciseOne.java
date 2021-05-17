@@ -29,7 +29,7 @@ public class ExerciseOne {
 
     @AfterClass(groups = {"exercise_1"})
     public void tearDown() {
-        driver.quit();
+        //driver.quit();
     }
 
         
@@ -52,6 +52,7 @@ public class ExerciseOne {
     public void openSiteByUrlTest() {
         driver.navigate().to(dp.getSiteUrl());
         driver.getTitle();
+
     }
 
     public void browserTitleTest() {

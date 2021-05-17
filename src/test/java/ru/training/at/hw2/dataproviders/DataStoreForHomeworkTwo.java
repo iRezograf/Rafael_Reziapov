@@ -32,16 +32,16 @@ public class DataStoreForHomeworkTwo {
 
         textUnderIconsList = new ArrayList<>();
         textUnderIconsList.add("To include good practices\n"
-                    + "and ideas from successful\n"
-                    + "EPAM project");
+                + "and ideas from successful\n"
+                + "EPAM project");
         textUnderIconsList.add("To be flexible and\n"
-                    + "customizable");
+                + "customizable");
         textUnderIconsList.add("To be multiplatform");
         textUnderIconsList.add(
-            "Already have good base\n"
-                    + "(about 20 internal and\n"
-                    + "some external projects),\n"
-                    + "wish to get more…");
+                "Already have good base\n"
+                        + "(about 20 internal and\n"
+                        + "some external projects),\n"
+                        + "wish to get more…");
         this.textUnderIconsList = textUnderIconsList;
 
         textInLeftSectionMenuButtonList = new ArrayList<>();;
@@ -58,9 +58,5 @@ public class DataStoreForHomeworkTwo {
         textFromLogList.add("Wind: condition changed to true");
         textFromLogList.add("Water: condition changed to true");
         this.textFromLogList = textFromLogList;
-
-
-
-
     }
 }
