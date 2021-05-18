@@ -211,6 +211,17 @@ y                        <property>
             </properties>
         </profile>
 
+
+        <profile>
+            <id>HW4</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/Hw4Test.xml</testng.suite.file>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
         <profile>
             <id>3.1.ExerciseOne.Hw3Test</id>
             <properties>
@@ -223,9 +234,6 @@ y                        <property>
             <properties>
                 <testng.suite.file>${testng.configs.path}/testHw32.xml</testng.suite.file>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
 
         <profile>

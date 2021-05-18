@@ -1,6 +1,7 @@
 *.iml
 .idea
 etc.
+.allure
 
 # Maven
 target
