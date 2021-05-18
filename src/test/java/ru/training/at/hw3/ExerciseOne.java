@@ -1,5 +1,6 @@
 package ru.training.at.hw3;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
@@ -86,11 +87,14 @@ public class ExerciseOne {
                 getExceptedFiveItemsInTheLeftSection());
     }
 
+    @Step("Open site {siteUrl} c Title: {expectedTitle}")
     private void openSiteByUrlTest(final String siteUrl, final String expectedTitle) {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
+    @Step("Проверка login пользователя {expectedLoggedName} "
+          +  "c Login {name} и паролем {password}")
     private void performLoginTest(final String name,
                                   final String password,
                                   final String expectedLoggedName) {
