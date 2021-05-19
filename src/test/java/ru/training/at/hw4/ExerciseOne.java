@@ -11,7 +11,9 @@ import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
 import ru.training.at.hw4.pageobjects.*;
 import ru.training.at.hw4.util.DriverManager;
+import ru.training.at.hw4.util.GetAttachment;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,10 +42,8 @@ public class ExerciseOne {
         framePage = new FramePage(driver);
         leftMenu = new LeftMenu(driver);
 
-
         driver.manage().window().maximize();
-        //driver.manage().timeouts()
-        //        .implicitlyWait(10, TimeUnit.SECONDS);
+        // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
 
@@ -62,7 +62,7 @@ public class ExerciseOne {
         
     @Test(groups = {"exerciseHw41"})
     @Description("HW4  allExerciseOneTest")
-    public void allExerciseOneTest() {
+    public void allExerciseOneTest() throws IOException {
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
                 DataStore.getProperty("browserTitle"));
@@ -89,14 +89,17 @@ public class ExerciseOne {
                 getExceptedFiveItemsInTheLeftSection());
     }
 
-    @Step("Open site {siteUrl} c Title: {expectedTitle}")
-    private void openSiteByUrlTest(final String siteUrl, final String expectedTitle) {
+    @Step("Open site {siteUrl} with Title: {expectedTitle}")
+    private void openSiteByUrlTest(final String siteUrl,
+                                   final String expectedTitle) throws IOException {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
+        GetAttachment.getBytes("HomePage.png");
+
     }
 
-    @Step("Проверка login пользователя {expectedLoggedName} "
-          +  "c Login {name} и паролем {password}")
+    @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
+           + " {expectedLoggedName}")
     private void performLoginTest(final String name,
                                   final String password,
                                   final String expectedLoggedName) {
@@ -109,6 +112,7 @@ public class ExerciseOne {
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
+    @Step("Open site has follow menu items{actualHeaderMenuTxt}")
     private void headerHaveProperTextsTest(final List<String> actualHeaderMenuTxt,
                                            final List<String> expectedHeaderMenuTxt) {
 
@@ -184,7 +188,6 @@ public class ExerciseOne {
         String s4 = DataStore.getProperty("textOfHeaderMenuButtonsList4");
         return Arrays.asList(s1, s2, s3, s4);
     }
-
 }
 
 
