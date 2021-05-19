@@ -2,10 +2,15 @@ package ru.training.at.hw4;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
@@ -13,11 +18,12 @@ import ru.training.at.hw4.pageobjects.*;
 import ru.training.at.hw4.util.DriverManager;
 import ru.training.at.hw4.util.GetAttachment;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Listeners(ExerciseListener.class)
 public class ExerciseOne {
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
@@ -82,6 +88,7 @@ public class ExerciseOne {
                 benefits.getBenefitTxtAsString(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
+        //takeScreenShot();
         thereIsFrameButtonInTheIframeTest(framePage);
         switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
         thereAreFiveItemsInTheLeftSectionTest(
@@ -95,7 +102,6 @@ public class ExerciseOne {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
         GetAttachment.getBytes("HomePage.png");
-
     }
 
     @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
@@ -152,7 +158,25 @@ public class ExerciseOne {
     @Step("Try to return from Frame to HomePage")
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
-        softAssert.assertEquals(driver.getTitle(), expectedTitle);
+        softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
+        Assert.assertEquals(1,2);
+        /*
+        System.out.println(driver.getTitle());
+        if (null != driver) {
+            File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            System.out.println("driver is not null");
+            try {
+                //FileUtils.copyFile(file, new File(System.getProperty("user.dir")
+                //        + "\\" + methodName + ".png"));
+                FileUtils.copyFile(file, new File(System.getProperty("user.dir")
+                        + "\\b" + ".png"));
+                System.out.println("driver is not null");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+         */
     }
 
     @Step("Open site has left menu items{actualLeftMenu} anf expected: {expectedLeftMenu}")
@@ -192,6 +216,26 @@ public class ExerciseOne {
         String s3 = DataStore.getProperty("textOfHeaderMenuButtonsList3");
         String s4 = DataStore.getProperty("textOfHeaderMenuButtonsList4");
         return Arrays.asList(s1, s2, s3, s4);
+    }
+
+
+    public void failed(String methodName) {
+        //System.out.println("result.getMethod().getMethodName()");
+        System.out.println(methodName);
+        if (null != ExerciseOne.this.driver) {
+            File file = ((TakesScreenshot) ExerciseOne.this.driver).getScreenshotAs(OutputType.FILE);
+            System.out.println("driver is not null");
+            try {
+
+                //FileUtils.copyFile(file, new File(System.getProperty("user.dir")
+                //        + "\\" + methodName + ".png"));
+                FileUtils.copyFile(file, new File(System.getProperty("user.dir")
+                        + "\\b" + ".png"));
+                System.out.println("driver is not null");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
