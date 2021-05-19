@@ -61,7 +61,7 @@ public class ExerciseOne {
 
         
     @Test(groups = {"exerciseHw41"})
-    @Description("HW4  allExerciseOneTest")
+    @Description("Description from class ExerciseOne: HW4  allExerciseOneTest")
     public void allExerciseOneTest() throws IOException {
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
@@ -112,7 +112,8 @@ public class ExerciseOne {
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
-    @Step("Open site has follow menu items{actualHeaderMenuTxt}")
+    @Step("Open site has follow menu items{actualHeaderMenuTxt} "
+           + "and expected: {expectedHeaderMenuTxt}")
     private void headerHaveProperTextsTest(final List<String> actualHeaderMenuTxt,
                                            final List<String> expectedHeaderMenuTxt) {
 
@@ -122,7 +123,7 @@ public class ExerciseOne {
     }
 
 
-
+    @Step("Are here for icons and they are displayed?")
     private void fourIconsInHomePageExistsTest(final List<WebElement> benefitIcons) {
         String message = "Element isn't displayed or found";
         for (WebElement element : benefitIcons) {
@@ -130,6 +131,7 @@ public class ExerciseOne {
         }
     }
 
+    @Step("HomePage has 4 texts: {actualBenefitStrings} and expected: {expectedBenefitStrings}")
     private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(
             final List<String> actualBenefitStrings,
             final List<String> expectedBenefitStrings) {
@@ -137,20 +139,23 @@ public class ExerciseOne {
         softAssert.assertEquals(actualBenefitStrings, expectedBenefitStrings);
     }
 
+    @Step("Is here the frame with the Frame Button?")
     private void iframeWithFrameButtonExistTest(final FramePage frameWithFrameButton) {
         softAssert.assertNotNull(frameWithFrameButton.open());
     }
 
+    @Step("Is in the frame the Frame Button?")
     private void thereIsFrameButtonInTheIframeTest(final FramePage frameButton) {
-
         softAssert.assertTrue(frameButton.exist());
     }
 
+    @Step("Try to return from Frame to HomePage")
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
+    @Step("Open site has left menu items{actualLeftMenu} anf expected: {expectedLeftMenu}")
     private void thereAreFiveItemsInTheLeftSectionTest(final List<String> actualLeftMenu,
                                                        final List<String> expectedLeftMenu) {
         softAssert.assertEquals(actualLeftMenu, expectedLeftMenu);

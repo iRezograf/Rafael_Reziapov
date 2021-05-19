@@ -1,5 +1,7 @@
 package ru.training.at.hw4;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,10 +12,14 @@ import ru.training.at.hw4.pageobjects.DifferentElementsPage;
 import ru.training.at.hw4.pageobjects.HeaderMenu;
 import ru.training.at.hw4.pageobjects.LoginPage;
 import ru.training.at.hw4.util.DriverManager;
+import ru.training.at.hw4.util.GetAttachment;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static ru.training.at.hw4.util.GetAttachment.getBytes;
 
 
 public class ExerciseTwo {
@@ -51,7 +57,8 @@ public class ExerciseTwo {
     }
 
     @Test(groups = {"exerciseHw41"})
-    public void allExerciseTwoTest() {
+    @Description("Description from class ExerciseOne: HW4  allExerciseTwoTest")
+    public void allExerciseTwoTest() throws IOException {
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
                 DataStore.getProperty("browserTitle"));
@@ -70,11 +77,14 @@ public class ExerciseTwo {
         isLogCorrectTest(differentElementsPage.getLogListAsString(), getExceptedLogList());
     }
 
+    @Step("Open site {siteUrl} with Title: {expectedTitle}")
     private void openSiteByUrlTest(final String siteUrl, final String expectedTitle) {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
+    @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
+            + " {expectedLoggedName}")
     private void performLoginTest(final String name,
                                   final String password,
                                   final String expectedLoggedName) {
@@ -87,26 +97,33 @@ public class ExerciseTwo {
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
+    @Step("User loggined and we can see LoggedName: {expectedLoggedName}")
     private void usernameIsLogginedTest(final String expectedLoggedName) {
         String actualUserNameAfterLogged = loginPage.getUserName();
         softAssert.assertEquals(actualUserNameAfterLogged, expectedLoggedName);
     }
 
+    @Step("Open menu Service Different Elements")
     private void openMenuServiceDifferentElementsTest() {
         headerMenu.clickHeaderMenuItemService();
         headerMenu.clickHeaderMenuItemDifferentElements();
     }
 
+    @Step("Open menu Service Different Elements and check elements")
     private void checkElementsTest() {
         differentElementsPage.clickCheckboxWater();
         differentElementsPage.clickCheckboxWind();
         differentElementsPage.clickRadioSelen();
         differentElementsPage.clickDropdownColors();
         differentElementsPage.clickDropdownYellow();
+
     }
 
+    @Step("Check that elements was checked. Expected: {expectedLogList} "
+          +  "and actual checked: {actualLogList}")
     private void isLogCorrectTest(final List<String> actualLogList,
-                                  final List<String> expectedLogList) {
+                                  final List<String> expectedLogList) throws IOException {
+        GetAttachment.getBytes("Jenkins.png");
         // used "contains" for separate string
         // instead "equal" for whole list
         // because actual string contains time.
@@ -117,6 +134,8 @@ public class ExerciseTwo {
             softAssert.assertTrue(actual.contains(expectedLogList.get(i)));
             i++;
         }
+
+
     }
 
     private List<String> getExceptedLogList() {
