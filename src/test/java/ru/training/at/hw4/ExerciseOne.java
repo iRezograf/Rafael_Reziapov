@@ -26,8 +26,8 @@ public class ExerciseOne {
     private LeftMenu leftMenu;
     private SoftAssert softAssert;
     private WebDriver driver;
-    private DriverManager driverManager;
 
+    DriverManager driverManager;
 
     @BeforeClass(groups = {"exerciseHw41"})
     public void setUp() {
