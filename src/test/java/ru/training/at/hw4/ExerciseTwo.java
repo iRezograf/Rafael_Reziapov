@@ -19,8 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static ru.training.at.hw4.util.GetAttachment.getBytes;
-
 
 public class ExerciseTwo {
     private SoftAssert softAssert;
@@ -28,8 +26,8 @@ public class ExerciseTwo {
     private HeaderMenu headerMenu;
     private DifferentElementsPage differentElementsPage;
     private WebDriver driver;
-    private DriverManager driverManager;
 
+    DriverManager driverManager;
 
     @BeforeClass(groups = {"exerciseHw42"})
     public void setUp() {
@@ -110,20 +108,22 @@ public class ExerciseTwo {
     }
 
     @Step("Open menu Service Different Elements and check elements")
-    private void checkElementsTest() {
+    private void checkElementsTest() throws IOException {
         differentElementsPage.clickCheckboxWater();
         differentElementsPage.clickCheckboxWind();
         differentElementsPage.clickRadioSelen();
         differentElementsPage.clickDropdownColors();
         differentElementsPage.clickDropdownYellow();
 
+        GetAttachment.getBytes("Jenk.png");
+
     }
 
     @Step("Check that elements was checked. Expected: {expectedLogList} "
           +  "and actual checked: {actualLogList}")
     private void isLogCorrectTest(final List<String> actualLogList,
-                                  final List<String> expectedLogList) throws IOException {
-        GetAttachment.getBytes("Jenkins.png");
+                                  final List<String> expectedLogList) {
+
         // used "contains" for separate string
         // instead "equal" for whole list
         // because actual string contains time.
@@ -134,7 +134,6 @@ public class ExerciseTwo {
             softAssert.assertTrue(actual.contains(expectedLogList.get(i)));
             i++;
         }
-
 
     }
 
