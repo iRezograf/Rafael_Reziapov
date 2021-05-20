@@ -14,6 +14,8 @@ import java.util.Arrays;
 
 public class ExerciseListener  implements ITestListener {
 
+    ExerciseOne exerciseOne = new ExerciseOne();
+
     @Override
     public void onTestSuccess(ITestResult result) {
         //
@@ -34,7 +36,7 @@ public class ExerciseListener  implements ITestListener {
     public void onTestFailure(ITestResult result) {
         System.out.println("Failure of test cases and its details are : " + result.getName());
         Object driver = result.getTestContext().getAttribute("driver");
-
+        /*
         if (driver != null) {
             GetAttachment.makeStringAttachment(Arrays.asList(
                     "test context contains driver:",
@@ -50,8 +52,10 @@ public class ExerciseListener  implements ITestListener {
                 e.printStackTrace();
             }
         }
+
+         */
         //System.out.println("EEE: onTestFailure.exit")
-        //failed(result.getMethod().getMethodName(), driver)
+        //exerciseOne.failed(result.getMethod().getMethodName(), driver);
     }
 
 }

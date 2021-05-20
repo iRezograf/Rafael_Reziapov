@@ -8,6 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -36,11 +37,13 @@ public class ExerciseOne {
     DriverManager driverManager;
 
     @BeforeClass(groups = {"exerciseHw41"})
-    public void setUp() {
+    public void setUp(ITestContext context) {
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
+
+        context.setAttribute("driver", "some driverText");
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -156,17 +159,19 @@ public class ExerciseOne {
     }
 
     @Step("Try to return from Frame to HomePage")
-    @Test(expectedExceptions = NullPointerException.class)
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
         softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
+        GetAttachment.saveScreenshotPng(driver);
         Assert.assertEquals(1, 2);
+
     }
 
     @Step("Open site has left menu items{actualLeftMenu} anf expected: {expectedLeftMenu}")
     private void thereAreFiveItemsInTheLeftSectionTest(final List<String> actualLeftMenu,
                                                        final List<String> expectedLeftMenu) {
         softAssert.assertEquals(actualLeftMenu, expectedLeftMenu);
+        GetAttachment.makeStringAttachment(actualLeftMenu);
     }
 
     private List<String> getExceptedFiveItemsInTheLeftSection() {
@@ -202,35 +207,11 @@ public class ExerciseOne {
         return Arrays.asList(s1, s2, s3, s4);
     }
 
-    /*
-    public void failed_(String methodName, WebDriver webDriver) {
-        System.out.println("From failed(ITestResult result): " + methodName);
-        if (null != webDriver) {
-            File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-            System.out.println("driver is not null");
-            try {
-
-                //FileUtils.copyFile(file, new File(System.getProperty("user.dir")
-                //        + "\\" + methodName + ".png"));
-                FileUtils.copyFile(file, new File(System.getProperty("user.dir")
-                        + "\\b" + ".png"));
-                System.out.println("driver is not null");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("driver is NULL");
-        }
-    }
-
-     */
-
-
     protected void failed(String methodName, Object webDriver) {
         System.out.println("From failed(ITestResult result): " + methodName);
-
+        WebDriver driver = (WebDriver) (webDriver);
         if (driver != null) {
-            File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+            File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             System.out.println("driver is not null");
             try {
                 FileUtils.copyFile(file, new File(System.getProperty("user.dir")
@@ -240,7 +221,7 @@ public class ExerciseOne {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("kill yourself");
+            System.out.println("Let find something else...");
         }
     }
 
