@@ -24,7 +24,7 @@ public class GetAttachment {
                 resourceName));
     }
 
-    @Attachment
+    @Attachment(type = "List", value = " {collection}")
     public String makeStringAttachment(List<String> collection) {
         return collection.toString();
     }

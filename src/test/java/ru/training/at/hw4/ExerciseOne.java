@@ -7,7 +7,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -163,7 +162,7 @@ public class ExerciseOne {
         driver.switchTo().defaultContent();
         softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
         GetAttachment.saveScreenshotPng(driver);
-        Assert.assertEquals(1, 2);
+        softAssert.assertEquals(1, 2);
 
     }
 
