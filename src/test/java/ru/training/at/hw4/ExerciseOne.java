@@ -156,27 +156,11 @@ public class ExerciseOne {
     }
 
     @Step("Try to return from Frame to HomePage")
+    @Test(expectedExceptions = NullPointerException.class)
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
         softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
         Assert.assertEquals(1, 2);
-        /*
-        System.out.println(driver.getTitle());
-        if (null != driver) {
-            File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            System.out.println("driver is not null");
-            try {
-                //FileUtils.copyFile(file, new File(System.getProperty("user.dir")
-                //        + "\\" + methodName + ".png"));
-                FileUtils.copyFile(file, new File(System.getProperty("user.dir")
-                        + "\\b" + ".png"));
-                System.out.println("driver is not null");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-         */
     }
 
     @Step("Open site has left menu items{actualLeftMenu} anf expected: {expectedLeftMenu}")
@@ -242,17 +226,21 @@ public class ExerciseOne {
      */
 
 
-    protected void failed(String methodName) {
+    protected void failed(String methodName, Object webDriver) {
         System.out.println("From failed(ITestResult result): " + methodName);
 
-        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        System.out.println("driver is not null");
-        try {
-            FileUtils.copyFile(file, new File(System.getProperty("user.dir")
-                    + "\\b" + ".png"));
+        if (driver != null) {
+            File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
             System.out.println("driver is not null");
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                FileUtils.copyFile(file, new File(System.getProperty("user.dir")
+                        + "\\b" + ".png"));
+                System.out.println("driver is not null");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("kill yourself");
         }
     }
 
