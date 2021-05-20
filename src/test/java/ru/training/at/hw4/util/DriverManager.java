@@ -14,4 +14,11 @@ public class DriverManager {
         driver = new ChromeDriver();
         return driver;
     }
+    public WebDriver get() {
+        if(null == driver) {
+            return null;
+        }
+        return driver;
+    }
+
 }

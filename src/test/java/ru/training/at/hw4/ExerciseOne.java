@@ -31,7 +31,7 @@ public class ExerciseOne {
     private FramePage framePage;
     private LeftMenu leftMenu;
     private SoftAssert softAssert;
-    private WebDriver driver;
+    protected WebDriver driver;
 
     DriverManager driverManager;
 
@@ -159,7 +159,7 @@ public class ExerciseOne {
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
         softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
-        Assert.assertEquals(1,2);
+        Assert.assertEquals(1, 2);
         /*
         System.out.println(driver.getTitle());
         if (null != driver) {
@@ -218,12 +218,11 @@ public class ExerciseOne {
         return Arrays.asList(s1, s2, s3, s4);
     }
 
-
-    public void failed(String methodName) {
-        //System.out.println("result.getMethod().getMethodName()");
-        System.out.println(methodName);
-        if (null != ExerciseOne.this.driver) {
-            File file = ((TakesScreenshot) ExerciseOne.this.driver).getScreenshotAs(OutputType.FILE);
+    /*
+    public void failed_(String methodName, WebDriver webDriver) {
+        System.out.println("From failed(ITestResult result): " + methodName);
+        if (null != webDriver) {
+            File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
             System.out.println("driver is not null");
             try {
 
@@ -235,8 +234,28 @@ public class ExerciseOne {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            System.out.println("driver is NULL");
         }
     }
+
+     */
+
+
+    protected void failed(String methodName) {
+        System.out.println("From failed(ITestResult result): " + methodName);
+
+        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        System.out.println("driver is not null");
+        try {
+            FileUtils.copyFile(file, new File(System.getProperty("user.dir")
+                    + "\\b" + ".png"));
+            System.out.println("driver is not null");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
