@@ -206,7 +206,9 @@ public class ExerciseOne {
         return Arrays.asList(s1, s2, s3, s4);
     }
 
+    // Vladimir, I need help!
     protected void failed(String methodName, Object webDriver) {
+
         System.out.println("From failed(ITestResult result): " + methodName);
         WebDriver driver = (WebDriver) (webDriver);
         if (driver != null) {

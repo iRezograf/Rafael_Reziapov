@@ -1,20 +1,10 @@
 package ru.training.at.hw4;
 
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import ru.training.at.hw4.util.GetAttachment;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 
 public class ExerciseListener  implements ITestListener {
-
-    ExerciseOne exerciseOne = new ExerciseOne();
 
     @Override
     public void onTestSuccess(ITestResult result) {
@@ -32,11 +22,15 @@ public class ExerciseListener  implements ITestListener {
         System.out.println("Failure of test cases and its details are : " + result.getName());
     }
 
+    // Vladimir, I need help!
+    // ExerciseOne exerciseOne = new ExerciseOne()
     @Override
     public void onTestFailure(ITestResult result) {
         System.out.println("Failure of test cases and its details are : " + result.getName());
-        Object driver = result.getTestContext().getAttribute("driver");
-        /*
+
+        //Object driver = result.getTestContext().getAttribute("driver");
+
+        /* Vladimir, I need help!
         if (driver != null) {
             GetAttachment.makeStringAttachment(Arrays.asList(
                     "test context contains driver:",

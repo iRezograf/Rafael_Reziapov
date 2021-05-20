@@ -119,8 +119,8 @@ public class ExerciseTwo {
 
     }
 
-    @Step("Check that elements was checked. Expected: {expectedLogList} "
-          +  "and actual checked: {actualLogList}")
+    @Step("Check that elements was checked. "
+          +  "Actual checked: {actualLogList}")
     private void isLogCorrectTest(final List<String> actualLogList,
                                   final List<String> expectedLogList) {
 
@@ -134,7 +134,8 @@ public class ExerciseTwo {
             softAssert.assertTrue(actual.contains(expectedLogList.get(i)));
             i++;
         }
-
+        GetAttachment.makeStringAttachment(expectedLogList);
+        GetAttachment.saveScreenshotPng(driver);
     }
 
     private List<String> getExceptedLogList() {
