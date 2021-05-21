@@ -1,4 +1,4 @@
-package ru.training.at.hw4;
+package ru.training.at.hw5;
 
 
 import org.apache.commons.io.FileUtils;
@@ -7,13 +7,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import ru.training.at.hw4.util.GetAttachment;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ExerciseListener  implements ITestListener {
 

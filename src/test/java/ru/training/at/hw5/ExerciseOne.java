@@ -1,20 +1,19 @@
-package ru.training.at.hw4;
+package ru.training.at.hw5;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import ru.training.at.hw4.dp.DataStore;
-import ru.training.at.hw4.pageobjects.*;
-import ru.training.at.hw4.util.DriverManager;
-import ru.training.at.hw4.util.GetAttachment;
+import ru.training.at.hw5.dp.DataStore;
+import ru.training.at.hw5.pageobjects.*;
+import ru.training.at.hw5.util.DriverManager;
+import ru.training.at.hw5.util.GetAttachment;
 
 import java.io.IOException;
 import java.util.Arrays;
