@@ -5,10 +5,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
 import ru.training.at.hw4.pageobjects.*;
@@ -31,7 +28,7 @@ public class ExerciseOne {
 
     DriverManager driverManager;
 
-    @BeforeClass(groups = {"exerciseHw41"})
+    @BeforeMethod(groups = {"exerciseHw41"})
     public void setUp(ITestContext context) {
         context.setAttribute("driver", driver);
         softAssert = new SoftAssert();
@@ -49,15 +46,15 @@ public class ExerciseOne {
         // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exerciseHw41"})
+    @AfterMethod(groups = {"exerciseHw41"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
         benefits = null;
         framePage = null;
         leftMenu = null;
-        softAssert.assertAll();
         softAssert = null;
+
         driver.quit();
     }
 
@@ -84,11 +81,16 @@ public class ExerciseOne {
                 benefits.getBenefitTxtAsString(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
+
         thereIsFrameButtonInTheIframeTest(framePage);
+
         switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
+
         thereAreFiveItemsInTheLeftSectionTest(
                 leftMenu.getLeftMenuAsString(),
                 getExceptedFiveItemsInTheLeftSection());
+
+        softAssert.assertAll();
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")
@@ -156,7 +158,7 @@ public class ExerciseOne {
         // driver.getTitle() NOT EQUALS expectedTitle + "Shot"
         // Here it should be onTestFailure
         softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
-        GetAttachment.saveScreenshotPng(driver);
+        //GetAttachment.saveScreenshotPng(driver);
 
     }
 

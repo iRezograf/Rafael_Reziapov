@@ -3,9 +3,8 @@ package ru.training.at.hw4;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
 import ru.training.at.hw4.pageobjects.DifferentElementsPage;
@@ -29,10 +28,10 @@ public class ExerciseTwo {
 
     DriverManager driverManager;
 
-    @BeforeClass(groups = {"exerciseHw42"})
-    public void setUp() {
+    @BeforeMethod(groups = {"exerciseHw42"})
+    public void setUp(ITestContext context) {
+        context.setAttribute("driver", driver);
         softAssert = new SoftAssert();
-
         driverManager = new DriverManager();
         driver = driverManager.setup();
 
@@ -45,7 +44,7 @@ public class ExerciseTwo {
                 .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exerciseHw42"})
+    @AfterMethod(groups = {"exerciseHw42"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
@@ -54,7 +53,7 @@ public class ExerciseTwo {
         driver.quit();
     }
 
-    @Test(groups = {"exerciseHw41"})
+    @Test(groups = {"exerciseHw42"})
     @Description("Description from class ExerciseOne: HW4  allExerciseTwoTest")
     public void allExerciseTwoTest() throws IOException {
         openSiteByUrlTest(
@@ -73,6 +72,7 @@ public class ExerciseTwo {
         checkElementsTest();
 
         isLogCorrectTest(differentElementsPage.getLogListAsString(), getExceptedLogList());
+        softAssert.assertAll();
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")

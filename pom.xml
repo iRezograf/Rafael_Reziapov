@@ -37,6 +37,8 @@
         <!--allure-testng.version>2.13.9</allure-testng.version-->
         <allure-maven.version>2.10.0</allure-maven.version>
         <slf4j-simple.version>1.7.30</slf4j-simple.version>
+        <cucumber-java.version>6.10.4</cucumber-java.version>
+        <cucumber-testng.version>6.10.4</cucumber-testng.version>
     </properties>
 
     <dependencies>
@@ -92,6 +94,18 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j-simple.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber-testng.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-java.version}</version>
         </dependency>
 
         <dependency>
