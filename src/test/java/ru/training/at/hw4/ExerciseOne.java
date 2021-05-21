@@ -2,9 +2,6 @@ package ru.training.at.hw4;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestContext;
@@ -18,7 +15,6 @@ import ru.training.at.hw4.pageobjects.*;
 import ru.training.at.hw4.util.DriverManager;
 import ru.training.at.hw4.util.GetAttachment;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -37,12 +33,11 @@ public class ExerciseOne {
 
     @BeforeClass(groups = {"exerciseHw41"})
     public void setUp(ITestContext context) {
+        context.setAttribute("driver", driver);
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
-
-        context.setAttribute("driver", "some driverText");
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -52,7 +47,6 @@ public class ExerciseOne {
 
         driver.manage().window().maximize();
         // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
     }
 
     @AfterClass(groups = {"exerciseHw41"})
@@ -62,8 +56,8 @@ public class ExerciseOne {
         benefits = null;
         framePage = null;
         leftMenu = null;
+        softAssert.assertAll();
         softAssert = null;
-
         driver.quit();
     }
 
@@ -90,7 +84,6 @@ public class ExerciseOne {
                 benefits.getBenefitTxtAsString(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
-        //takeScreenShot();
         thereIsFrameButtonInTheIframeTest(framePage);
         switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
         thereAreFiveItemsInTheLeftSectionTest(
@@ -160,9 +153,10 @@ public class ExerciseOne {
     @Step("Try to return from Frame to HomePage")
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
+        // driver.getTitle() NOT EQUALS expectedTitle + "Shot"
+        // Here it should be onTestFailure
         softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
         GetAttachment.saveScreenshotPng(driver);
-        softAssert.assertEquals(1, 2);
 
     }
 
@@ -205,27 +199,6 @@ public class ExerciseOne {
         String s4 = DataStore.getProperty("textOfHeaderMenuButtonsList4");
         return Arrays.asList(s1, s2, s3, s4);
     }
-
-    // Vladimir, I need help!
-    protected void failed(String methodName, Object webDriver) {
-
-        System.out.println("From failed(ITestResult result): " + methodName);
-        WebDriver driver = (WebDriver) (webDriver);
-        if (driver != null) {
-            File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            System.out.println("driver is not null");
-            try {
-                FileUtils.copyFile(file, new File(System.getProperty("user.dir")
-                        + "\\b" + ".png"));
-                System.out.println("driver is not null");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Let find something else...");
-        }
-    }
-
 }
 
 
