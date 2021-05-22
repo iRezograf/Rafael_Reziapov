@@ -37,6 +37,8 @@
         <!--allure-testng.version>2.13.9</allure-testng.version-->
         <allure-maven.version>2.10.0</allure-maven.version>
         <slf4j-simple.version>1.7.30</slf4j-simple.version>
+        <cucumber-testng.version>6.9.1</cucumber-testng.version>
+        <cucumber-java.version>6.9.1</cucumber-java.version>
     </properties>
 
     <dependencies>
@@ -111,6 +113,18 @@
             -->
             <!--type>jar</type>
             <optional>true</optional-->
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber-testng.version}</version>
         </dependency>
     </dependencies>
 
@@ -212,14 +226,22 @@ y                        <property>
         </profile>
 
 
+
+        <profile>
+            <id>HW5</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/Hw5Test.xml</testng.suite.file>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
         <profile>
             <id>HW4</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/Hw4Test.xml</testng.suite.file>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
 
         <profile>

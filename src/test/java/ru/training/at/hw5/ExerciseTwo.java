@@ -3,9 +3,8 @@ package ru.training.at.hw5;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw5.dp.DataStore;
 import ru.training.at.hw5.pageobjects.DifferentElementsPage;
@@ -29,7 +28,7 @@ public class ExerciseTwo {
 
     DriverManager driverManager;
 
-    @BeforeClass(groups = {"exerciseHw42"})
+    @BeforeMethod(groups = {"exerciseHw52"})
     public void setUp() {
         softAssert = new SoftAssert();
 
@@ -45,7 +44,7 @@ public class ExerciseTwo {
                 .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exerciseHw42"})
+    @AfterMethod(groups = {"exerciseHw52"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
@@ -54,9 +53,11 @@ public class ExerciseTwo {
         driver.quit();
     }
 
-    @Test(groups = {"exerciseHw41"})
+    @Test(groups = {"exerciseHw52"})
     @Description("Description from class ExerciseOne: HW4  allExerciseTwoTest")
-    public void allExerciseTwoTest() throws IOException {
+    public void allExerciseTwoTest(ITestContext context) throws IOException {
+        context.setAttribute("driver", driver);
+
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
                 DataStore.getProperty("browserTitle"));
@@ -73,6 +74,7 @@ public class ExerciseTwo {
         checkElementsTest();
 
         isLogCorrectTest(differentElementsPage.getLogListAsString(), getExceptedLogList());
+        softAssert.assertAll();
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")
@@ -135,10 +137,12 @@ public class ExerciseTwo {
             i++;
         }
         GetAttachment.makeStringAttachment(expectedLogList);
-        GetAttachment.saveScreenshotPng(driver);
+        //GetAttachment.saveScreenshotPng(driver);
     }
 
     private List<String> getExceptedLogList() {
+        // textFromLogList1 replaced to textFromLogList2
+        // for fail assertion
         String s1 = DataStore.getProperty("textFromLogList1");
         String s2 = DataStore.getProperty("textFromLogList2");
         String s3 = DataStore.getProperty("textFromLogList3");

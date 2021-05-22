@@ -2,6 +2,7 @@ package ru.training.at.hw5;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestContext;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 @Listeners(ExerciseListener.class)
 public class ExerciseOne {
     private LoginPage loginPage;
@@ -92,16 +94,20 @@ public class ExerciseOne {
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")
-    private void openSiteByUrlTest(final String siteUrl,
+    public void openSiteByUrlTest(final String siteUrl,
                                    final String expectedTitle) throws IOException {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
         GetAttachment.getBytes("HomePage.png");
     }
 
+    public void openSiteByUrlTest() {
+        driver.navigate().to(DataStore.getProperty("siteUrl"));
+    }
+
     @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
            + " {expectedLoggedName}")
-    private void performLoginTest(final String name,
+    public void performLoginTest(final String name,
                                   final String password,
                                   final String expectedLoggedName) {
         loginPage.clickImgUser();
@@ -112,6 +118,20 @@ public class ExerciseOne {
 
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
+
+    public void inputName(final String name) {
+        loginPage.clickImgUser();
+        loginPage.inputFieldLogin(name);
+    }
+
+    public void inputPassword(final String password) {
+        loginPage.inputFieldPassword(password);
+    }
+
+    public void performLoginTest() {
+        loginPage.clickBtnEnter();
+    }
+
 
     @Step("Open site has follow menu items{actualHeaderMenuTxt} "
            + "and expected: {expectedHeaderMenuTxt}")
