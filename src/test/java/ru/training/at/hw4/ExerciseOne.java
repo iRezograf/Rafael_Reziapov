@@ -1,13 +1,15 @@
 package ru.training.at.hw4;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -32,13 +34,13 @@ public class ExerciseOne {
 
     DriverManager driverManager;
 
-    @BeforeClass(groups = {"exerciseHw41"})
+    @BeforeMethod(groups = {"exerciseHw41"})
     public void setUp(ITestContext context) {
-        context.setAttribute("driver", driver);
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
+        context.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -50,19 +52,22 @@ public class ExerciseOne {
         // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exerciseHw41"})
+    @AfterMethod(groups = {"exerciseHw41"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
         benefits = null;
         framePage = null;
         leftMenu = null;
-        softAssert.assertAll();
         softAssert = null;
+
         driver.quit();
     }
 
         
+
+    @Feature("Only first page is testing")
+    @Story("it will not be used in HW5")
     @Test(groups = {"exerciseHw41"})
     @Description("Description from class ExerciseOne: HW4  allExerciseOneTest")
     public void allExerciseOneTest() throws IOException {
@@ -85,11 +90,16 @@ public class ExerciseOne {
                 benefits.getBenefitTxtAsString(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
+
         thereIsFrameButtonInTheIframeTest(framePage);
+
         switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
+
         thereAreFiveItemsInTheLeftSectionTest(
                 leftMenu.getLeftMenuAsString(),
                 getExceptedFiveItemsInTheLeftSection());
+
+        softAssert.assertAll();
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")
@@ -201,6 +211,3 @@ public class ExerciseOne {
         return Arrays.asList(s1, s2, s3, s4);
     }
 }
-
-
-
