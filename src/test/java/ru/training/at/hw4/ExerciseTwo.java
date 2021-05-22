@@ -30,10 +30,11 @@ public class ExerciseTwo {
 
     @BeforeMethod(groups = {"exerciseHw42"})
     public void setUp(ITestContext context) {
-        context.setAttribute("driver", driver);
         softAssert = new SoftAssert();
+
         driverManager = new DriverManager();
         driver = driverManager.setup();
+        context.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
