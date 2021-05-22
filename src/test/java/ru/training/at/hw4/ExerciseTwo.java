@@ -1,10 +1,14 @@
 package ru.training.at.hw4;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
 import ru.training.at.hw4.pageobjects.DifferentElementsPage;
@@ -54,6 +58,8 @@ public class ExerciseTwo {
         driver.quit();
     }
 
+    @Feature("The first and Different Elements page is testing")
+    @Story("it will be used in HW5")
     @Test(groups = {"exerciseHw42"})
     @Description("Description from class ExerciseOne: HW4  allExerciseTwoTest")
     public void allExerciseTwoTest() throws IOException {
@@ -136,11 +142,12 @@ public class ExerciseTwo {
             i++;
         }
         GetAttachment.makeStringAttachment(expectedLogList);
-        GetAttachment.saveScreenshotPng(driver);
     }
 
     private List<String> getExceptedLogList() {
-        String s1 = DataStore.getProperty("textFromLogList1");
+        // I made a fail condition in this method
+        // I hope get screenshot in Allure
+        String s1 = DataStore.getProperty("textFromLogList2");
         String s2 = DataStore.getProperty("textFromLogList2");
         String s3 = DataStore.getProperty("textFromLogList3");
         String s4 = DataStore.getProperty("textFromLogList4");
