@@ -1,22 +1,28 @@
 package ru.training.at.hw5;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import ru.training.at.hw5.dp.DataStore;
-import ru.training.at.hw5.pageobjects.DifferentElementsPage;
-import ru.training.at.hw5.pageobjects.HeaderMenu;
-import ru.training.at.hw5.pageobjects.LoginPage;
-import ru.training.at.hw5.util.DriverManager;
-import ru.training.at.hw5.util.GetAttachment;
+import ru.training.at.hw4.dp.DataStore;
+import ru.training.at.hw4.pageobjects.DifferentElementsPage;
+import ru.training.at.hw4.pageobjects.HeaderMenu;
+import ru.training.at.hw4.pageobjects.LoginPage;
+import ru.training.at.hw4.util.DriverManager;
+import ru.training.at.hw4.util.GetAttachment;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 
 
 public class ExerciseTwo {
@@ -28,12 +34,13 @@ public class ExerciseTwo {
 
     DriverManager driverManager;
 
-    @BeforeMethod(groups = {"exerciseHw52"})
-    public void setUp() {
+    @BeforeMethod(groups = {"exerciseHw42"})
+    public void setUp(ITestContext context) {
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
+        context.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -44,7 +51,7 @@ public class ExerciseTwo {
                 .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterMethod(groups = {"exerciseHw52"})
+    @AfterMethod(groups = {"exerciseHw42"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
@@ -53,11 +60,11 @@ public class ExerciseTwo {
         driver.quit();
     }
 
-    @Test(groups = {"exerciseHw52"})
+    @Feature("The first and Different Elements page is testing")
+    @Story("it will be used in HW5")
+    @Test(groups = {"exerciseHw42"})
     @Description("Description from class ExerciseOne: HW4  allExerciseTwoTest")
-    public void allExerciseTwoTest(ITestContext context) throws IOException {
-        context.setAttribute("driver", driver);
-
+    public void allExerciseTwoTest() throws IOException {
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
                 DataStore.getProperty("browserTitle"));
@@ -83,6 +90,10 @@ public class ExerciseTwo {
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
     }
 
+    public void openSiteByUrlTest() {
+        driver.navigate().to(DataStore.getProperty("siteUrl"));
+    }
+
     @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
             + " {expectedLoggedName}")
     private void performLoginTest(final String name,
@@ -95,6 +106,19 @@ public class ExerciseTwo {
         loginPage.clickBtnEnter();
 
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
+    }
+
+    public void performLoginTest() {
+        loginPage.clickBtnEnter();
+    }
+
+    public void inputName(final String name) {
+        loginPage.clickImgUser();
+        loginPage.inputFieldLogin(name);
+    }
+
+    public void inputPassword(final String password) {
+        loginPage.inputFieldPassword(password);
     }
 
     @Step("User loggined and we can see LoggedName: {expectedLoggedName}")
@@ -137,13 +161,12 @@ public class ExerciseTwo {
             i++;
         }
         GetAttachment.makeStringAttachment(expectedLogList);
-        //GetAttachment.saveScreenshotPng(driver);
     }
 
     private List<String> getExceptedLogList() {
-        // textFromLogList1 replaced to textFromLogList2
-        // for fail assertion
-        String s1 = DataStore.getProperty("textFromLogList1");
+        // I made a fail condition in this method
+        // I hope get screenshot in Allure
+        String s1 = DataStore.getProperty("textFromLogList2");
         String s2 = DataStore.getProperty("textFromLogList2");
         String s3 = DataStore.getProperty("textFromLogList3");
         String s4 = DataStore.getProperty("textFromLogList4");

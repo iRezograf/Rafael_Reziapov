@@ -3,41 +3,56 @@ package ru.training.at.hw5.steps;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import ru.training.at.hw5.ExerciseOne;
-import ru.training.at.hw5.dp.DataStore;
+import org.testng.Assert;
+import ru.training.at.hw4.dp.DataStore;
+import ru.training.at.hw5.dp.TestContext;
+import ru.training.at.hw5.pageobjects.LoginPage;
 
 public class LoginTo {
-    ExerciseOne exerciseOne;
-
-
-    public LoginTo(ExerciseOne exerciseOne) {
-        this.exerciseOne = new ExerciseOne();
-    }
+    LoginPage loginPage;
 
 
     @When("I click on image User button")
     public void clickImgUser() {
-        exerciseOne.getLoginPage().clickImgUser();
+        loginPage = new LoginPage(TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER));
+        loginPage.clickImgUser();
     }
 
     @And("I input the {string} into field Login")
     public void inputLoginName(String name) {
-        exerciseOne.inputName(name);
+        loginPage = new LoginPage(TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER));
+        loginPage.inputFieldLogin(name);
+        //loginPage.inputFieldLogin(
+        //        DataStore.getProperty("userName"));
     }
 
     @And("I input the {string} into field Password")
     public void inputLoginPassword(String password) {
-        exerciseOne.inputPassword(password);
+        loginPage = new LoginPage(TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER));
+        loginPage.inputFieldPassword(password);
+        //loginPage.inputFieldPassword(
+        //        DataStore.getProperty("password"));
     }
 
     @And("I click 'Enter' button on the top right corner of the Home Page")
-    public void clickLoginButton () {
-        exerciseOne.getLoginPage().clickBtnEnter();
+    public void clickLoginButton() {
+        loginPage = new LoginPage(TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER));
+        loginPage.clickBtnEnter();
     }
 
-    @Then("Full 'username' should be displayed on the top right corner of the Home Page")
-    public void checkUserNameAfterLogged() {
-        System.out.println(DataStore.getProperty("userNameAfterLogged"));
+    @Then("Full {string} should be displayed on the top right corner of the Home Page")
+    public void checkUserNameAfterLogged(String userNameAfterLogged) {
+        loginPage = new LoginPage(
+        TestContext.getInstance()
+        .getTestObject(TestContext.WEB_DRIVER));
+        Assert.assertEquals(loginPage.getUserName(), userNameAfterLogged);
+        //Assert.assertEquals(
+        //        loginPage.getUserName(),
+        //        DataStore.getProperty("userNameAfterLogged"));
     }
 }
 

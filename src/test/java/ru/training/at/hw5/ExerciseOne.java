@@ -1,26 +1,26 @@
 package ru.training.at.hw5;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import lombok.Getter;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import ru.training.at.hw5.dp.DataStore;
-import ru.training.at.hw5.pageobjects.*;
-import ru.training.at.hw5.util.DriverManager;
-import ru.training.at.hw5.util.GetAttachment;
+import ru.training.at.hw4.dp.DataStore;
+import ru.training.at.hw4.pageobjects.*;
+import ru.training.at.hw4.util.DriverManager;
+import ru.training.at.hw4.util.GetAttachment;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@Getter
 @Listeners(ExerciseListener.class)
 public class ExerciseOne {
     private LoginPage loginPage;
@@ -33,13 +33,13 @@ public class ExerciseOne {
 
     DriverManager driverManager;
 
-    @BeforeClass(groups = {"exerciseHw41"})
+    @BeforeMethod(groups = {"exerciseHw41"})
     public void setUp(ITestContext context) {
-        context.setAttribute("driver", driver);
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
+        context.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -51,19 +51,22 @@ public class ExerciseOne {
         // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exerciseHw41"})
+    @AfterMethod(groups = {"exerciseHw41"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
         benefits = null;
         framePage = null;
         leftMenu = null;
-        softAssert.assertAll();
         softAssert = null;
+
         driver.quit();
     }
 
         
+
+    @Feature("Only first page is testing")
+    @Story("it will not be used in HW5")
     @Test(groups = {"exerciseHw41"})
     @Description("Description from class ExerciseOne: HW4  allExerciseOneTest")
     public void allExerciseOneTest() throws IOException {
@@ -86,28 +89,29 @@ public class ExerciseOne {
                 benefits.getBenefitTxtAsString(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
+
         thereIsFrameButtonInTheIframeTest(framePage);
+
         switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
+
         thereAreFiveItemsInTheLeftSectionTest(
                 leftMenu.getLeftMenuAsString(),
                 getExceptedFiveItemsInTheLeftSection());
+
+        softAssert.assertAll();
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")
-    public void openSiteByUrlTest(final String siteUrl,
+    private void openSiteByUrlTest(final String siteUrl,
                                    final String expectedTitle) throws IOException {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
         GetAttachment.getBytes("HomePage.png");
     }
 
-    public void openSiteByUrlTest() {
-        driver.navigate().to(DataStore.getProperty("siteUrl"));
-    }
-
     @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
            + " {expectedLoggedName}")
-    public void performLoginTest(final String name,
+    private void performLoginTest(final String name,
                                   final String password,
                                   final String expectedLoggedName) {
         loginPage.clickImgUser();
@@ -118,20 +122,6 @@ public class ExerciseOne {
 
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
-
-    public void inputName(final String name) {
-        loginPage.clickImgUser();
-        loginPage.inputFieldLogin(name);
-    }
-
-    public void inputPassword(final String password) {
-        loginPage.inputFieldPassword(password);
-    }
-
-    public void performLoginTest() {
-        loginPage.clickBtnEnter();
-    }
-
 
     @Step("Open site has follow menu items{actualHeaderMenuTxt} "
            + "and expected: {expectedHeaderMenuTxt}")
@@ -220,6 +210,3 @@ public class ExerciseOne {
         return Arrays.asList(s1, s2, s3, s4);
     }
 }
-
-
-
