@@ -219,7 +219,7 @@ y                        <property>
     <profiles>
 
         <profile>
-            <id>3. AllHw3Test</id>
+            <id>3. All</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTestHw3.xml</testng.suite.file>
             </properties>
@@ -230,7 +230,7 @@ y                        <property>
         <profile>
             <id>HW5</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/Hw5Test.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw5.xml</testng.suite.file>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -240,55 +240,55 @@ y                        <property>
         <profile>
             <id>HW4</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/Hw4Test.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw4.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
-            <id>3.1.ExerciseOne.Hw3Test</id>
+            <id>3.1.ExerciseOne</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/t.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw31.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
-            <id>3.2.ExerciseTwo.Hw3Test</id>
+            <id>3.2.ExerciseTwo</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/testHw32.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw32.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
-            <id>2.1 ExerciseOne.Test</id>
+            <id>2.1 ExerciseOne</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/exerciseOneTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw21.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
-            <id>2.2 ExerciseTwo.Test</id>
+            <id>2.2 ExerciseTwo</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/exerciseTwoTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw22.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
             <id>1.1 Add_Substract.Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/addsubstractTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw11.xml</testng.suite.file>
             </properties>
         </profile>
 
         <profile>
             <id>1.2 Multiply_Divide.Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/multiplydivideTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw12.xml</testng.suite.file>
             </properties>
         </profile>
         <profile>
             <id>1.0 All_Calculator.Test</id>
             <properties>
-                <testng.suite.file>${testng.configs.path}/allTest.xml</testng.suite.file>
+                <testng.suite.file>${testng.configs.path}/hw1.xml</testng.suite.file>
             </properties>
         </profile>
 

@@ -8,7 +8,7 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public void open(String url) {
-        open("index");
+    public void open() {
+        open("");
     }
 }

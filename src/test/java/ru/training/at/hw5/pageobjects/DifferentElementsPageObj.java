@@ -1,6 +1,7 @@
 package ru.training.at.hw5.pageobjects;
 
 
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,13 +10,20 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DifferentElementsPage {
-    WebDriver driver;
+@Getter
+public class DifferentElementsPageObj extends BasePage {
+
+    public DifferentElementsPageObj(WebDriver driver) {
+        super(driver);
+    }
+
+    // Title
+    @FindBy(css = "head > title")
+    WebElement headTitle;
 
     //Select checkboxes Water
     @FindBy(xpath = "//label[contains(string(), 'Water')]/input[@type='checkbox']")
     WebElement checkboxWater;
-
 
     //label.label-checkbox
     //Select checkboxes Wind
@@ -40,12 +48,7 @@ public class DifferentElementsPage {
     @FindBy(xpath = "//*[@class='panel-body-list logs']/li")
     List<WebElement> logList;
 
-    public DifferentElementsPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
-
-
+    /*
     public void clickCheckboxWater() {
         checkboxWater.click();
     }
@@ -66,6 +69,7 @@ public class DifferentElementsPage {
         dropdownYellow.click();
     }
 
+     */
 
     public List<WebElement> getLogList() {
         return logList;

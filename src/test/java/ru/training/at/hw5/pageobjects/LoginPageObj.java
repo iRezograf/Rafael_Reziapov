@@ -7,11 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class LoginPageObj extends BasePage {
-
-    public LoginPageObj(WebDriver driver) {
-        super(driver);
-    }
+public class LoginPageObj extends BaseComponent {
 
     @FindBy (id = "user-icon")
     private WebElement imgUser;
@@ -28,6 +24,9 @@ public class LoginPageObj extends BasePage {
     @FindBy (id = "user-name")
     private  WebElement loggedUserName;
 
+    public LoginPageObj(WebDriver driver) {
+        super(driver);
+    }
 
     public void clickImgUser() {
         this.imgUser.click();

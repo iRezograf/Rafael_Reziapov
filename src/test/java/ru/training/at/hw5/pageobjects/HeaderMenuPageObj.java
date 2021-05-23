@@ -11,7 +11,6 @@ public class HeaderMenuPageObj extends BasePage {
         super(driver);
     }
 
-
     @FindBy (xpath = "//li[contains(string(), 'Home')]/a[contains(@href,'')]")
     private WebElement headerMenuItemHome;
 
@@ -65,10 +64,15 @@ public class HeaderMenuPageObj extends BasePage {
         headerMenuItemMetalColors.click();
     }
 
-    //DifferentElements
+    //DifferentElementsStep
     public String getHeaderMenuItemDifferentElements() {
         return headerMenuItemDifferentElements.getText();
     }
+
+    public WebElement headerMenuItemDifferentElements() {
+        return headerMenuItemDifferentElements;
+    }
+
 
     public void clickHeaderMenuItemDifferentElements() {
         headerMenuItemDifferentElements.click();

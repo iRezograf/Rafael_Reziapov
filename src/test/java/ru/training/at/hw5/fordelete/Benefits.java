@@ -1,4 +1,4 @@
-package ru.training.at.hw5.pageobjects;
+package ru.training.at.hw5.fordelete;
 
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;

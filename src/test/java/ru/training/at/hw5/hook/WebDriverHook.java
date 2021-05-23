@@ -7,14 +7,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.training.at.hw5.dp.TestContext;
 
+import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
+
 public class WebDriverHook {
 
     private WebDriver driver;
 
     @Before
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
 
+        WebDriverManager.getInstance(CHROME).setup();
         driver = new ChromeDriver();
 
         TestContext.getInstance().setTestObject(TestContext.WEB_DRIVER, driver);
