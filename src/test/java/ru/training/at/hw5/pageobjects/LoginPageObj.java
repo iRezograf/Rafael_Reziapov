@@ -7,9 +7,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class LoginPage extends BasePage {
+public class LoginPageObj extends BasePage {
 
-    public LoginPage(WebDriver driver) {
+    public LoginPageObj(WebDriver driver) {
         super(driver);
     }
 

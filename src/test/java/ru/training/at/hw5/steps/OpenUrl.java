@@ -4,13 +4,13 @@ import io.cucumber.java.en.Given;
 import ru.training.at.hw5.dp.TestContext;
 import ru.training.at.hw5.pageobjects.HomePage;
 
-public class OpenTestUrl {
+public class OpenUrl {
 
-    @Given("EPAM test site URL is opened")
+    @Given("I open JDI GitHub site")
     public void loginToEpamTestUrl() {
         HomePage homePage = new HomePage(TestContext.getInstance()
                 .getTestObject(TestContext.WEB_DRIVER));
-        homePage.open();
+        homePage.open("index");
         //softAssert.assertEquals(driver.getTitle(), expectedTitle);
         //GetAttachment.getBytes("HomePage.png");
     }

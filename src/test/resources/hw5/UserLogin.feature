@@ -1,7 +1,9 @@
-Feature: EPAM Test site elements using feature
+Feature: JDI GitHub site elements test
 
-  Scenario: EPAM test URL. User login test.
-    Given EPAM test site URL is opened
+  Scenario: User login test
+
+    Given I open JDI GitHub site
+
     When I click on image User button
     And I input the 'Roman' into field Login
     And I input the 'Jdi1234' into field Password
