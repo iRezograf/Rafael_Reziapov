@@ -1,10 +1,13 @@
 package ru.training.at.hw4;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.ITestContext;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
@@ -29,12 +32,13 @@ public class ExerciseTwo {
 
     DriverManager driverManager;
 
-    @BeforeClass(groups = {"exerciseHw42"})
-    public void setUp() {
+    @BeforeMethod(groups = {"exerciseHw42"})
+    public void setUp(ITestContext context) {
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
+        context.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -45,7 +49,7 @@ public class ExerciseTwo {
                 .implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exerciseHw42"})
+    @AfterMethod(groups = {"exerciseHw42"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
@@ -54,7 +58,9 @@ public class ExerciseTwo {
         driver.quit();
     }
 
-    @Test(groups = {"exerciseHw41"})
+    @Feature("The first and Different Elements page is testing")
+    @Story("it will be used in HW5")
+    @Test(groups = {"exerciseHw42"})
     @Description("Description from class ExerciseOne: HW4  allExerciseTwoTest")
     public void allExerciseTwoTest() throws IOException {
         openSiteByUrlTest(
@@ -73,6 +79,7 @@ public class ExerciseTwo {
         checkElementsTest();
 
         isLogCorrectTest(differentElementsPage.getLogListAsString(), getExceptedLogList());
+        softAssert.assertAll();
     }
 
     @Step("Open site {siteUrl} with Title: {expectedTitle}")
@@ -135,11 +142,12 @@ public class ExerciseTwo {
             i++;
         }
         GetAttachment.makeStringAttachment(expectedLogList);
-        GetAttachment.saveScreenshotPng(driver);
     }
 
     private List<String> getExceptedLogList() {
-        String s1 = DataStore.getProperty("textFromLogList1");
+        // I made a fail condition in this method
+        // I hope get screenshot in Allure
+        String s1 = DataStore.getProperty("textFromLogList2");
         String s2 = DataStore.getProperty("textFromLogList2");
         String s3 = DataStore.getProperty("textFromLogList3");
         String s4 = DataStore.getProperty("textFromLogList4");
