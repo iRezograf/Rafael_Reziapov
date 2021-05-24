@@ -64,7 +64,7 @@ public class HeaderMenu {
         headerMenuItemMetalColors.click();
     }
 
-    //DifferentElements
+    //DifferentElementsStep
     public String getHeaderMenuItemDifferentElements() {
         return headerMenuItemDifferentElements.getText();
     }

@@ -5,8 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class HeaderMenu {
-    public WebDriver driver;
+public class HeaderMenuPageObj extends BasePage {
+
+    public HeaderMenuPageObj(WebDriver driver) {
+        super(driver);
+    }
 
     @FindBy (xpath = "//li[contains(string(), 'Home')]/a[contains(@href,'')]")
     private WebElement headerMenuItemHome;
@@ -23,11 +26,8 @@ public class HeaderMenu {
     @FindBy (xpath = "//*[@class='dropdown-menu']/li[contains(string(),'Different elements')]")
     private WebElement headerMenuItemDifferentElements;
 
-
-    public HeaderMenu(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
+    @FindBy (xpath = "//*[@class='dropdown-menu']/li[contains(string(),'User Table')]")
+    private WebElement headerMenuItemUserTable;
 
     public String getHeaderMenuItemHome() {
         return headerMenuItemHome.getText();
@@ -64,15 +64,24 @@ public class HeaderMenu {
         headerMenuItemMetalColors.click();
     }
 
-    //DifferentElements
+    //DifferentElementsStep
     public String getHeaderMenuItemDifferentElements() {
         return headerMenuItemDifferentElements.getText();
     }
+
+    public WebElement headerMenuItemDifferentElements() {
+        return headerMenuItemDifferentElements;
+    }
+
 
     public void clickHeaderMenuItemDifferentElements() {
         headerMenuItemDifferentElements.click();
     }
 
+    // User Table
+    public WebElement headerMenuItemUserTable() {
+        return headerMenuItemUserTable;
+    }
 
 
 

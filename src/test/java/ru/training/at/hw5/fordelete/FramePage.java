@@ -1,4 +1,4 @@
-package ru.training.at.hw5.pageobjects;
+package ru.training.at.hw5.fordelete;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
