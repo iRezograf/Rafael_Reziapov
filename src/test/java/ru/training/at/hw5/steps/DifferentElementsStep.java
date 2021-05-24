@@ -22,38 +22,38 @@ public class DifferentElementsStep  {
 
     @And("I click checkbox \"Water\"")
     public void clickCheckboxWater() {
-        DifferentElementsPageObj difElPg;
-        difElPg = new DifferentElementsPageObj(
+
+        DifferentElementsPageObj differentElementsPageObj;
+        differentElementsPageObj = new DifferentElementsPageObj(
                 TestContext.getInstance()
                 .getTestObject(TestContext.WEB_DRIVER));
-        new WebDriverWait(
-                TestContext.getInstance()
-                        .getTestObject(TestContext.WEB_DRIVER), 10)
-                .until(ExpectedConditions
-                        .titleContains(difElPg.getHeadTitle().getText()));
-
-        difElPg.open("different-elements.html");
-        System.out.println(difElPg.getHeadTitle().getText());
-
-        //new DifferentElementsPageObj(
-        //        TestContext.getInstance()
-        //                .getTestObject(TestContext.WEB_DRIVER))
-        //        .getHeadTitle()
-        //        .getText());
 
         new WebDriverWait(
                 TestContext.getInstance()
                 .getTestObject(TestContext.WEB_DRIVER), 10)
                 .until(ExpectedConditions
-                .elementToBeClickable(difElPg
+                .elementToBeClickable(differentElementsPageObj
                 .getCheckboxWater()))
                 .click();
-        System.out.println(
-                new DifferentElementsPageObj(
-                        TestContext.getInstance()
-                                .getTestObject(TestContext.WEB_DRIVER))
-                        .getHeadTitle()
-                        .getText());
+
+        /*
+        new WebDriverWait(TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER), 10)
+                .until(ExpectedConditions
+                .titleContains(differentElementsPageObj
+                .getHeadTitle().getText()));
+        System.out.println(differentElementsPageObj
+                .getHeadTitle().getText());
+         */
+
+        // RRA пока оставить закомментиорваным
+        // differentElementsPageObj.open("different-elements.html");
+        // RRA пока оставить закомментиорваным
+
+        /*
+        System.out.println(differentElementsPageObj.getHeadTitle().getText());
+         */
+
     }
 
     @And("I click checkbox \"Wind\"")
@@ -130,17 +130,16 @@ public class DifferentElementsStep  {
 
     @And("log rows should displayed their names, status and values are corresponding to selected")
     public void logRowsDisplayedAndCorresponding() {
-        assertThat(
-                new DifferentElementsPageObj(
-                        TestContext.getInstance()
-                                .getTestObject(TestContext.WEB_DRIVER))
-                .getLogListAsString()).isEqualTo(getExceptedLogList());
+
+        assertThat(getExceptedLogList()
+            .contains(new DifferentElementsPageObj(TestContext.getInstance()
+                    .getTestObject(TestContext.WEB_DRIVER))
+            .getLogListAsString()));
+
     }
 
     private List<String> getExceptedLogList() {
-        // I made a fail condition in this method
-        // I hope get screenshot in Allure
-        String s1 = DataStore.getProperty("textFromLogList2");
+        String s1 = DataStore.getProperty("textFromLogList1");
         String s2 = DataStore.getProperty("textFromLogList2");
         String s3 = DataStore.getProperty("textFromLogList3");
         String s4 = DataStore.getProperty("textFromLogList4");

@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import ru.training.at.hw5.dp.DataStore;
 import ru.training.at.hw5.dp.TestContext;
 import ru.training.at.hw5.pageobjects.HeaderMenuPageObj;
 import ru.training.at.hw5.pageobjects.LoginPageObj;
@@ -58,20 +59,13 @@ public class MainPageStep {
 
     @Given("I login as user \"Roman Iovlev\"")
     public void iloginAsUser() {
-        // Nothing to do because we already here
-        // from the first scenario
-        //LoginPageObj loginPageObj = new LoginPageObj(TestContext.getInstance()
-        //        .getTestObject(TestContext.WEB_DRIVER));
-        //loginPageObj.clickImgUser();
-        //loginPageObj.inputFieldLogin(DataStore.getProperty("userName"));
-        //loginPageObj.inputFieldPassword(DataStore.getProperty("password"));
-        //loginPageObj.clickBtnEnter();
-
-        System.out.println("I logged as"
-              +  new LoginPageObj(TestContext
-                .getInstance()
-                .getTestObject(TestContext.WEB_DRIVER))
-                .getLoggedUserName());
+        LoginPageObj loginPageObj = new LoginPageObj(
+                TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER));
+        loginPageObj.clickImgUser();
+        loginPageObj.inputFieldLogin(DataStore.getProperty("userName"));
+        loginPageObj.inputFieldPassword(DataStore.getProperty("password"));
+        loginPageObj.clickBtnEnter();
     }
 
     @When("I click on \"Service\" button in Header")
@@ -90,6 +84,7 @@ public class MainPageStep {
                 .getTestObject(TestContext.WEB_DRIVER))
                 .headerMenuItemDifferentElements()
                 .click();
+        // Continues in DifferentElementsStep ...
     }
 }
 
