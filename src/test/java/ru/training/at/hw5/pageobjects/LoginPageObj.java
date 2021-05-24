@@ -44,15 +44,11 @@ public class LoginPageObj extends BasePage {
         this.btnEnter.click();
     }
 
-    public String getUserName() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(loggedUserName));
+    public String getLoggedUserName() {
+        //WebDriverWait wait = new WebDriverWait(driver, 10);
+        //waiting.until(ExpectedConditions.visibilityOf(loggedUserName));
         String userName = loggedUserName.getText();
         return userName;
     }
-
-//    public void open(String url) {
-//        open(url);
-//    }
 
 }
