@@ -1,20 +1,27 @@
-package ru.training.at.hw3;
+package ru.training.at.hw4;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.ITestContext;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import ru.training.at.hw3.dp.DataStore;
-import ru.training.at.hw3.pageobjects.*;
-import ru.training.at.hw3.util.DriverManager;
+import ru.training.at.hw4.dp.DataStore;
+import ru.training.at.hw4.pageobjects.*;
+import ru.training.at.hw4.util.DriverManager;
+import ru.training.at.hw4.util.GetAttachment;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Listeners(ExerciseListener.class)
 public class ExerciseOne {
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
@@ -22,16 +29,17 @@ public class ExerciseOne {
     private FramePage framePage;
     private LeftMenu leftMenu;
     private SoftAssert softAssert;
-    private WebDriver driver;
-    private DriverManager driverManager;
+    protected WebDriver driver;
 
+    DriverManager driverManager;
 
-    @BeforeClass(groups = {"exercise_hw3.1"})
-    public void setUp() {
+    @BeforeMethod(groups = {"exerciseHw41"})
+    public void setUp(ITestContext context) {
         softAssert = new SoftAssert();
 
         driverManager = new DriverManager();
         driver = driverManager.setup();
+        context.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         headerMenu = new HeaderMenu(driver);
@@ -39,14 +47,11 @@ public class ExerciseOne {
         framePage = new FramePage(driver);
         leftMenu = new LeftMenu(driver);
 
-
         driver.manage().window().maximize();
-        //driver.manage().timeouts()
-        //        .implicitlyWait(10, TimeUnit.SECONDS);
-
+        // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterClass(groups = {"exercise_hw3.1"})
+    @AfterMethod(groups = {"exerciseHw41"})
     public void tearDown() {
         loginPage = null;
         headerMenu = null;
@@ -59,8 +64,12 @@ public class ExerciseOne {
     }
 
         
-    @Test(groups = {"exercise_hw3.1"})
-    public void allExerciseOneTest() {
+
+    @Feature("Only first page is testing")
+    @Story("it will not be used in HW5")
+    @Test(groups = {"exerciseHw41"})
+    @Description("Description from class ExerciseOne: HW4  allExerciseOneTest")
+    public void allExerciseOneTest() throws IOException {
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
                 DataStore.getProperty("browserTitle"));
@@ -80,21 +89,28 @@ public class ExerciseOne {
                 benefits.getBenefitTxtAsString(),
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
+
         thereIsFrameButtonInTheIframeTest(framePage);
+
         switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
+
         thereAreFiveItemsInTheLeftSectionTest(
                 leftMenu.getLeftMenuAsString(),
                 getExceptedFiveItemsInTheLeftSection());
+
+        softAssert.assertAll();
     }
 
-    @Step("Open site {siteUrl} c Title: {expectedTitle}")
-    private void openSiteByUrlTest(final String siteUrl, final String expectedTitle) {
+    @Step("Open site {siteUrl} with Title: {expectedTitle}")
+    private void openSiteByUrlTest(final String siteUrl,
+                                   final String expectedTitle) throws IOException {
         driver.navigate().to(siteUrl);
         softAssert.assertEquals(driver.getTitle(), expectedTitle);
+        GetAttachment.getBytes("HomePage.png");
     }
 
-    @Step("Проверка login пользователя {expectedLoggedName} "
-          +  "c Login {name} и паролем {password}")
+    @Step("User logon as: {name} with password: {password} and if OK we can seeLoggedName:"
+           + " {expectedLoggedName}")
     private void performLoginTest(final String name,
                                   final String password,
                                   final String expectedLoggedName) {
@@ -107,6 +123,8 @@ public class ExerciseOne {
         softAssert.assertEquals(loginPage.getUserName(), expectedLoggedName);
     }
 
+    @Step("Open site has follow menu items{actualHeaderMenuTxt} "
+           + "and expected: {expectedHeaderMenuTxt}")
     private void headerHaveProperTextsTest(final List<String> actualHeaderMenuTxt,
                                            final List<String> expectedHeaderMenuTxt) {
 
@@ -116,7 +134,7 @@ public class ExerciseOne {
     }
 
 
-
+    @Step("Are here for icons and they are displayed?")
     private void fourIconsInHomePageExistsTest(final List<WebElement> benefitIcons) {
         String message = "Element isn't displayed or found";
         for (WebElement element : benefitIcons) {
@@ -124,6 +142,7 @@ public class ExerciseOne {
         }
     }
 
+    @Step("HomePage has 4 texts: {actualBenefitStrings} and expected: {expectedBenefitStrings}")
     private void fourTextsOnTheIndexPageUnderIconsAndTheyHaveProperTextTest(
             final List<String> actualBenefitStrings,
             final List<String> expectedBenefitStrings) {
@@ -131,23 +150,31 @@ public class ExerciseOne {
         softAssert.assertEquals(actualBenefitStrings, expectedBenefitStrings);
     }
 
+    @Step("Is here the frame with the Frame Button?")
     private void iframeWithFrameButtonExistTest(final FramePage frameWithFrameButton) {
         softAssert.assertNotNull(frameWithFrameButton.open());
     }
 
+    @Step("Is in the frame the Frame Button?")
     private void thereIsFrameButtonInTheIframeTest(final FramePage frameButton) {
-
         softAssert.assertTrue(frameButton.exist());
     }
 
+    @Step("Try to return from Frame to HomePage")
     private void switchToOriginalWindowBackTest(final String expectedTitle) {
         driver.switchTo().defaultContent();
-        softAssert.assertEquals(driver.getTitle(), expectedTitle);
+        // driver.getTitle() NOT EQUALS expectedTitle + "Shot"
+        // Here it should be onTestFailure
+        softAssert.assertEquals(driver.getTitle(), expectedTitle + "Shot");
+        //GetAttachment.saveScreenshotPng(driver);
+
     }
 
+    @Step("Open site has left menu items{actualLeftMenu} anf expected: {expectedLeftMenu}")
     private void thereAreFiveItemsInTheLeftSectionTest(final List<String> actualLeftMenu,
                                                        final List<String> expectedLeftMenu) {
         softAssert.assertEquals(actualLeftMenu, expectedLeftMenu);
+        GetAttachment.makeStringAttachment(actualLeftMenu);
     }
 
     private List<String> getExceptedFiveItemsInTheLeftSection() {
@@ -182,8 +209,4 @@ public class ExerciseOne {
         String s4 = DataStore.getProperty("textOfHeaderMenuButtonsList4");
         return Arrays.asList(s1, s2, s3, s4);
     }
-
 }
-
-
-
