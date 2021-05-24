@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class LoginPageObj extends BaseComponent {
+public class LoginPageObj extends BasePage {
 
     @FindBy (id = "user-icon")
     private WebElement imgUser;
@@ -44,10 +44,11 @@ public class LoginPageObj extends BaseComponent {
         this.btnEnter.click();
     }
 
-    public String getUserName() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(loggedUserName));
+    public String getLoggedUserName() {
+        //WebDriverWait wait = new WebDriverWait(driver, 10);
+        //waiting.until(ExpectedConditions.visibilityOf(loggedUserName));
         String userName = loggedUserName.getText();
         return userName;
     }
+
 }
