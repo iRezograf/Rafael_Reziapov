@@ -8,8 +8,6 @@ public class DifferentElementsPage extends BasePage {
         super(driver);
     }
 
-    public void open(String url) {
-        open("different-elements");
-    }
+        //open("different-elements");
 
 }

@@ -15,7 +15,8 @@ public abstract class BasePage extends BaseComponent {
         //header = new HeaderComponent(driver);
     }
 
-    protected void open(String url) {
+    public void open(String url) {
         driver.navigate().to(BASE_URL + url);
+        driver.manage().window().maximize();
     }
 }

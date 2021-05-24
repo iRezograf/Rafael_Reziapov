@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class LoginPageObj extends BaseComponent {
+public class LoginPageObj extends BasePage {
 
     @FindBy (id = "user-icon")
     private WebElement imgUser;
@@ -50,4 +50,9 @@ public class LoginPageObj extends BaseComponent {
         String userName = loggedUserName.getText();
         return userName;
     }
+
+//    public void open(String url) {
+//        open(url);
+//    }
+
 }

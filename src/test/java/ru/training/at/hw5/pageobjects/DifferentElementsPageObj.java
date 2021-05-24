@@ -13,10 +13,6 @@ import java.util.List;
 @Getter
 public class DifferentElementsPageObj extends BasePage {
 
-    public DifferentElementsPageObj(WebDriver driver) {
-        super(driver);
-    }
-
     // Title
     @FindBy(css = "head > title")
     WebElement headTitle;
@@ -48,28 +44,9 @@ public class DifferentElementsPageObj extends BasePage {
     @FindBy(xpath = "//*[@class='panel-body-list logs']/li")
     List<WebElement> logList;
 
-    /*
-    public void clickCheckboxWater() {
-        checkboxWater.click();
+    public DifferentElementsPageObj(WebDriver driver) {
+        super(driver);
     }
-
-    public void clickCheckboxWind() {
-        checkboxWind.click();
-    }
-
-    public void clickRadioSelen() {
-        radioSelen.click();
-    }
-
-    public void clickDropdownColors() {
-        dropdownColors.click();
-    }
-
-    public void clickDropdownYellow() {
-        dropdownYellow.click();
-    }
-
-     */
 
     public List<WebElement> getLogList() {
         return logList;

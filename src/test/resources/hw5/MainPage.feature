@@ -14,6 +14,7 @@ Feature: JDI GitHub site elements test
   Scenario: Different Element Page Test
 
     Given I open JDI GitHub site
+    And   I login as user "Roman Iovlev"
 
     When I click on "Service" button in Header
     And I click on Different Elements" button in Service dropdown
