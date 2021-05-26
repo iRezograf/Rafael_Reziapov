@@ -11,7 +11,7 @@ import ru.training.at.hw5.pageobjects.LoginPageObj;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MainPageStep {
+public class HeaderPageStep {
 
     @Given("I open JDI GitHub site")
     public void loginToEpamTestUrl() {

@@ -11,6 +11,8 @@ import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 
 public class WebDriverHook {
 
+    public static String removeSpaces = "^ +| +$|( )+|(\\r\\n|\\n|\\r)";
+
     private WebDriver driver;
 
     @Before
