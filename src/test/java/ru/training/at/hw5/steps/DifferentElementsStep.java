@@ -43,7 +43,7 @@ public class DifferentElementsStep  {
          */
 
         // RRA пока оставить закомментиорваным
-        // differentElementsPageObj.open("different-elements.html");
+        // differentElementsPageObj.open(DataStore.getProperty("DifferentElementsWebPageTitle"));
         // RRA пока оставить закомментиорваным
 
         /*

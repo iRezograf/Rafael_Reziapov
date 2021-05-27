@@ -2,10 +2,12 @@ package ru.training.at.hw5.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import ru.training.at.hw5.dp.DataStore;
 import ru.training.at.hw5.dp.TestContext;
 import ru.training.at.hw5.pageobjects.UserTablePageObj;
 
@@ -23,13 +25,10 @@ public class UserTableStep {
     @Then("\"User Table\" page should be opened")
     public void userTablePageShouldBeOpened() {
         UserTablePageObj userTablePageObj;
-
-        userTablePageObj = new UserTablePageObj(
-                TestContext.getInstance()
-                        .getTestObject(TestContext.WEB_DRIVER));
-        // Object exist so page is open
-        assertThat(userTablePageObj.getUserTableList()).isNotEmpty();
-
+        WebDriver driver;
+        driver = TestContext.getInstance()
+                .getTestObject(TestContext.WEB_DRIVER);
+        Assert.assertEquals(driver.getTitle(), DataStore.getProperty("UserTableWebPageTitle"));
     }
 
     @And("6 Number Type Dropdowns should be displayed on Users Table on User Table Page")
@@ -182,8 +181,40 @@ public class UserTableStep {
         for (int i = 0; i < 3; i++) {
             //System.out.println("actual:" + actualList.get(i * 2 + 1));
             //System.out.println("expect:" + expected.get(i));
-            Assert.assertEquals(actualList.get(i * 2 + 1),expected.get(i));
+            Assert.assertEquals(actualList.get(i * 2 + 1), expected.get(i));
         }
+    }
 
+    @When("I select {string} checkbox for \"Sergey Ivan\"")
+    public void selectVipCheckboxForSergeyIvan(String vip) {
+        // get Access to actual
+        UserTablePageObj userTablePageObj;
+
+        userTablePageObj = new UserTablePageObj(
+                TestContext.getInstance()
+                        .getTestObject(TestContext.WEB_DRIVER));
+
+        //userTablePageObj.getCheckBoxIvan().click();
+        String numberCheckBoxForIvan = DataStore.getProperty(vip);
+        userTablePageObj
+                .getCheckBoxList()
+                .get(Integer.parseInt(numberCheckBoxForIvan))
+                .click();
+
+
+    }
+
+    @Then("I log row has \"Vip: condition changed to true\" text in log section")
+    public void logRowHasRequiredTextInLogSection() {
+        UserTablePageObj userTablePageObj;
+
+        userTablePageObj = new UserTablePageObj(
+                TestContext.getInstance()
+                        .getTestObject(TestContext.WEB_DRIVER));
+
+        List<String> actual = userTablePageObj.getLogListAsString();
+        String expected = DataStore.getProperty("textFromLogListVipIvan");
+
+        Assert.assertTrue(actual.get(0).contains(expected));
     }
 }

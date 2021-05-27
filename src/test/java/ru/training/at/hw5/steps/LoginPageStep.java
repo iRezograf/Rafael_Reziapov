@@ -16,7 +16,7 @@ public class LoginPageStep {
     public void loginToEpamTestUrl() {
         new LoginPageObj(TestContext.getInstance()
                 .getTestObject(TestContext.WEB_DRIVER))
-                .open("index.html");
+                .open(DataStore.getProperty("MainWebPageURL"));
     }
 
     @When("I click on image User button")
