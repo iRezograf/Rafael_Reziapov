@@ -28,7 +28,8 @@ And droplist should contain values in column Type for user Roman
   | User            |
   | Manager         |
 
-  Scenario: Only JDI GitHub site
+@Ex3
+  Scenario: Only JDI GitHub site. Ex3
 
     Given I open JDI GitHub site
     And I login as user "Roman Iovlev"

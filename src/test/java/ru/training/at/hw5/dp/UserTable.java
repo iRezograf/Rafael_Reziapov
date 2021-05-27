@@ -42,5 +42,6 @@ public class UserTable {
                + ", user='" + user + '\''
                + ", description='" + description + '\''
                + '}';
+
     }
 }

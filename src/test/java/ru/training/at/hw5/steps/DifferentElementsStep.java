@@ -2,17 +2,13 @@ package ru.training.at.hw5.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.training.at.hw4.dp.DataStore;
 import ru.training.at.hw5.dp.TestContext;
-import ru.training.at.hw5.pageobjects.BaseComponent;
-import ru.training.at.hw5.pageobjects.BasePage;
 import ru.training.at.hw5.pageobjects.DifferentElementsPageObj;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -132,8 +128,9 @@ public class DifferentElementsStep  {
     public void logRowsDisplayedAndCorresponding() {
 
         assertThat(getExceptedLogList()
-            .contains(new DifferentElementsPageObj(TestContext.getInstance()
-                    .getTestObject(TestContext.WEB_DRIVER))
+            .contains(new DifferentElementsPageObj(TestContext
+            .getInstance()
+            .getTestObject(TestContext.WEB_DRIVER))
             .getLogListAsString()));
 
     }

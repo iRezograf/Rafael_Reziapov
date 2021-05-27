@@ -6,12 +6,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import ru.training.at.hw5.dp.DataStore;
 import ru.training.at.hw5.dp.TestContext;
-import ru.training.at.hw5.pageobjects.HeaderMenuPageObj;
 import ru.training.at.hw5.pageobjects.LoginPageObj;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MainPageStep {
+public class LoginPageStep {
 
     @Given("I open JDI GitHub site")
     public void loginToEpamTestUrl() {
@@ -66,33 +65,6 @@ public class MainPageStep {
         loginPageObj.inputFieldLogin(DataStore.getProperty("userName"));
         loginPageObj.inputFieldPassword(DataStore.getProperty("password"));
         loginPageObj.clickBtnEnter();
-    }
-
-    @When("I click on \"Service\" button in Header")
-    public void clickOnServiceButtonInHeader() {
-        new HeaderMenuPageObj(
-                TestContext.getInstance()
-                .getTestObject(TestContext.WEB_DRIVER))
-                .headerMenuItemService()
-                .click();
-    }
-
-    @And("I click on Different Elements\" button in Service dropdown")
-    public void clickOnDifferentElementsButtonInServiceDropdown() {
-        new HeaderMenuPageObj(
-                TestContext.getInstance()
-                .getTestObject(TestContext.WEB_DRIVER))
-                .headerMenuItemDifferentElements()
-                .click();
-        // Continues in DifferentElementsStep ...
-    }
-
-    @And("I click on \"User Table\" button in Service dropdown")
-    public void clickOnUserTableButtonInService() {
-        HeaderMenuPageObj headerMenuPageObj = new HeaderMenuPageObj(
-                TestContext.getInstance()
-                        .getTestObject(TestContext.WEB_DRIVER));
-        headerMenuPageObj.headerMenuItemUserTable().click();
     }
 }
 
