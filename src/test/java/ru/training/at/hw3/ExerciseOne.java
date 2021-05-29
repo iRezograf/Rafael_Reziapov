@@ -63,7 +63,7 @@ public class ExerciseOne {
     public void allExerciseOneTest() {
         openSiteByUrlTest(
                 DataStore.getProperty("siteUrl"),
-                DataStore.getProperty("browserTitle"));
+                DataStore.getProperty("MainWebPageTitle"));
 
         performLoginTest(
                 DataStore.getProperty("userName"),
@@ -81,7 +81,7 @@ public class ExerciseOne {
                 getExpectedTextsOnTheIndexPageUnderIconsAndTheyHaveProperText());
         iframeWithFrameButtonExistTest(framePage);
         thereIsFrameButtonInTheIframeTest(framePage);
-        switchToOriginalWindowBackTest(DataStore.getProperty("browserTitle"));
+        switchToOriginalWindowBackTest(DataStore.getProperty("MainWebPageTitle"));
         thereAreFiveItemsInTheLeftSectionTest(
                 leftMenu.getLeftMenuAsString(),
                 getExceptedFiveItemsInTheLeftSection());

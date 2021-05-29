@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import ru.training.at.hw4.dp.DataStore;
@@ -22,13 +23,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
+@Listeners(ExerciseListener.class)
 public class ExerciseTwo {
     private SoftAssert softAssert;
     private LoginPage loginPage;
     private HeaderMenu headerMenu;
     private DifferentElementsPage differentElementsPage;
-    private WebDriver driver;
+    protected WebDriver driver;
 
     DriverManager driverManager;
 
