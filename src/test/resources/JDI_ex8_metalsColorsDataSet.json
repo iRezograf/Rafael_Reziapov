@@ -11,7 +11,7 @@
     "elements": ["Earth", "Wind"],
     "color": "Green",
     "metals": "Silver",
-    "vegetables": ["Tomato", "Vegetables"]
+      "vegetables": ["Tomato", "Vegetables"]
   },
   "data_3": {
     "summary": [7,8],
