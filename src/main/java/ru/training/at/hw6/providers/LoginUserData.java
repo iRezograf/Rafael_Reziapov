@@ -7,10 +7,11 @@ import lombok.Setter;
 import lombok.Value;
 
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class LoginUserData {
-    String PageURL;     //"index.html"
-    String PageTitle;   //"Home Page"
+    String pageUrl;     //"index.html"
+    String pageTitle;   //"Home Page"
     String userName;    //"Roman"
     String password;    //"Jdi1234"
     String userNameAfterLogged;    //"ROMAN IOVLEV"

@@ -1,11 +1,17 @@
 package ru.training.at.hw6.forms;
 
+import com.epam.jdi.light.elements.complex.Checklist;
 import com.epam.jdi.light.elements.complex.Combobox;
 import com.epam.jdi.light.elements.complex.DataList;
 import com.epam.jdi.light.elements.complex.dropdown.Dropdown;
+import com.epam.jdi.light.elements.pageobjects.annotations.FindBy;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.JDropdown;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.UI;
+import com.epam.jdi.light.ui.html.elements.common.Button;
+import com.epam.jdi.light.ui.html.elements.common.Checkbox;
 import com.epam.jdi.light.ui.html.elements.complex.RadioButtons;
+
+import java.util.List;
 
 public class MetalsAndColorsForm  {
 
@@ -26,4 +32,20 @@ public class MetalsAndColorsForm  {
             list = "li",
             expand = ".caret")
     public static Dropdown metals;
+
+    @JDropdown(root = "div[ui=droplist]",
+            value = ".filter-option",
+            list = "li",
+            expand = ".caret")
+    public static Dropdown vegetables;
+
+    //@FindBy(css = "#elements-checklist")
+    @JDropdown(root = "#elements-checklist]",
+            value = ".filter-option",
+            list = "p",
+            expand = ".caret")
+    public Checklist elements;
+
+    @FindBy(css = "#submit-button")
+    public Button submitButton;
 }
