@@ -9,16 +9,6 @@ import java.util.List;
 @Setter
 public class MetalsAndColorsData {
 
-    /* Example from JSon
-      "data_1": {
-    "summary": [1,2],
-    "elements": ["Water", "Fire"],
-    "color": "Red",
-    "metals": "Gold",
-    "vegetables": ["Cucumber"]
-    },
-    */
-
     private String name;
     private MetalsAndColors metalsAndColors;
 

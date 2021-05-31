@@ -45,7 +45,6 @@ public class JsonDataParser {
                 metalsAndColorsData = new MetalsAndColorsData();
                 metalsAndColorsData.setName(Data_bodyInJson);
                 metalsAndColorsData.setMetalsAndColors(metalsAndColors);
-                System.out.println(metalsAndColorsData);
                 metalsAndColors = null;
 
                 list.add(metalsAndColorsData);
@@ -59,4 +58,42 @@ public class JsonDataParser {
         }
     return metalsAndColorsDataList;
     }
+
+    public Object[][] getDataFromFile() {
+        JSONParser parser = new JSONParser();
+
+        int countOfRootGets = Integer.parseInt(DataStore
+                .getProperty("Data_endNumberInJson"))
+                - Integer.parseInt(DataStore
+                .getProperty("Data_startNumberInJson")) + 1;
+        int Data_NumberFieldInForm = Integer.parseInt(DataStore
+                .getProperty("Data_NumberFieldInForm"));
+
+        Object obj[][] = new Object[countOfRootGets][Data_NumberFieldInForm];
+
+        try (FileReader reader = new FileReader(
+                "src/test/resources/JDI_ex8_metalsColorsDataSet.json")) {
+
+            JSONObject rootJsonObj = (JSONObject) parser.parse(reader);
+
+            for (int i = 1; i < countOfRootGets; i++) {
+
+                // constract name like "data_1", "data_2" and etc
+                String Data_bodyInJson = DataStore.getProperty("Data_bodyInJson") + i;
+
+                JSONObject field = (JSONObject) rootJsonObj.get(Data_bodyInJson);
+
+                obj[i][0] = (List<String>) field.get("elements");
+                obj[i][1] = (String) field.get("color");
+                obj[i][2] = (String) field.get("metals");
+                obj[i][3] = (List<String>) field.get("vegetables");
+                obj[i][4] = (List<Integer>) field.get("summary");
+            }
+        } catch (Exception e) {
+            System.out.println("Parser Error: " + e.toString());
+        }
+        return obj;
+    }
+
+
 }

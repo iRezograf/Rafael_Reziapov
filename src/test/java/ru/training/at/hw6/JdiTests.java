@@ -5,7 +5,11 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.training.at.hw6.interfaces.TestsInit;
-import ru.training.at.hw6.providers.*;
+import ru.training.at.hw6.providers.DataStore;
+import ru.training.at.hw6.providers.LoginUserData;
+import ru.training.at.hw6.providers.MetalsAndColorsDataProvider;
+
+import java.util.List;
 
 import static ru.training.at.hw6.SiteJdi.homePage;
 import static ru.training.at.hw6.SiteJdi.metalsAndColorsForm;
@@ -24,17 +28,24 @@ public class JdiTests implements TestsInit {
 
     @Test
     public void jdiTestRun() {
-        JsonDataParser parser = new JsonDataParser();
-
-        //MetalsAndColorsData metalsAndColorsData;
-        MetalsAndColorsDataList metalsAndColorsDataList = parser.parseFromFile();
-        System.out.println(metalsAndColorsDataList);
 
         //loginTest(loginUserData);
 
         //openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
 
         //fillMetalsAndColorsForm();
+
+    }
+
+
+    @Test(dataProvider = "MetalsAndColorsDataProvider",
+            dataProviderClass = MetalsAndColorsDataProvider.class)
+    public void checkDataProvider(List<String> elements
+            , String color
+            , String metals
+            , List<String> vegetables
+            , List<Integer> summary) {
+        System.out.println(summary);
     }
 
     public void openMenu(String menuName) {
