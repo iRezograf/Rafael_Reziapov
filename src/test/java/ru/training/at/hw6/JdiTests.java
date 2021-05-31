@@ -5,8 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.training.at.hw6.interfaces.TestsInit;
-import ru.training.at.hw6.providers.DataStore;
-import ru.training.at.hw6.providers.LoginUserData;
+import ru.training.at.hw6.providers.*;
 
 import static ru.training.at.hw6.SiteJdi.homePage;
 import static ru.training.at.hw6.SiteJdi.metalsAndColorsForm;
@@ -25,11 +24,17 @@ public class JdiTests implements TestsInit {
 
     @Test
     public void jdiTestRun() {
-        loginTest(loginUserData);
+        JsonDataParser parser = new JsonDataParser();
 
-        openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
+        //MetalsAndColorsData metalsAndColorsData;
+        MetalsAndColorsDataList metalsAndColorsDataList = parser.parseFromFile();
+        System.out.println(metalsAndColorsDataList);
 
-        fillMetalsAndColorsForm();
+        //loginTest(loginUserData);
+
+        //openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
+
+        //fillMetalsAndColorsForm();
     }
 
     public void openMenu(String menuName) {
