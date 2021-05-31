@@ -76,18 +76,19 @@ public class JsonDataParser {
 
             JSONObject rootJsonObj = (JSONObject) parser.parse(reader);
 
-            for (int i = 1; i < countOfRootGets; i++) {
+            for (int i = 0; i < countOfRootGets; i++) {
 
                 // constract name like "data_1", "data_2" and etc
-                String Data_bodyInJson = DataStore.getProperty("Data_bodyInJson") + i;
+                String Data_bodyInJson = DataStore.getProperty("Data_bodyInJson") + (i + 1);
 
                 JSONObject field = (JSONObject) rootJsonObj.get(Data_bodyInJson);
 
-                obj[i][0] = (List<String>) field.get("elements");
-                obj[i][1] = (String) field.get("color");
-                obj[i][2] = (String) field.get("metals");
-                obj[i][3] = (List<String>) field.get("vegetables");
-                obj[i][4] = (List<Integer>) field.get("summary");
+                obj[i][0] = (List<Integer>) field.get("summary");
+                obj[i][1] = (List<String>) field.get("elements");
+                obj[i][2] = (String) field.get("color");
+                obj[i][3] = (String) field.get("metals");
+                obj[i][4] = (List<String>) field.get("vegetables");
+
             }
         } catch (Exception e) {
             System.out.println("Parser Error: " + e.toString());

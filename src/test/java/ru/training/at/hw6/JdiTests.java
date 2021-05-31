@@ -26,27 +26,47 @@ public class JdiTests implements TestsInit {
         loginUserData.setUserNameAfterLogged(DataStore.getProperty("userNameAfterLogged"));
     }
 
-    @Test
+    @Test(priority = 10)
     public void jdiTestRun() {
 
-        //loginTest(loginUserData);
-
-        //openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
-
-        //fillMetalsAndColorsForm();
+        loginTest(loginUserData);
+        openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
 
     }
 
-
-    @Test(dataProvider = "MetalsAndColorsDataProvider",
+    @Test(priority = 20,
+            dataProvider = "MetalsAndColorsDataProvider",
             dataProviderClass = MetalsAndColorsDataProvider.class)
-    public void checkDataProvider(List<String> elements
+    public void fillMetalsAndColorsForm(List<Integer> summary
+            , List<String> elements
             , String color
             , String metals
-            , List<String> vegetables
-            , List<Integer> summary) {
+            , List<String> vegetables) {
+
+        //metalsAndColorsForm.customRadioOdd.select(3);
+        //metalsAndColorsForm.customRadioEven.select(2);
+
+        metalsAndColorsForm.metals.select(metals);
         System.out.println(summary);
+        System.out.println(elements);
+        System.out.println(color);
+        System.out.println(metals);
+        System.out.println(vegetables);
+
+
+        metalsAndColorsForm.colors.select(color);
+
+        // Only one value !
+        //metalsAndColorsForm.vegetables.select("Cucumber");
+        //metalsAndColorsForm.vegetables.select(2);
+        //metalsAndColorsForm.vegetables.select("Onion");
+
+        //metalsAndColorsForm.elements.select("Wind");
+        //metalsAndColorsForm.elements.select("Water");
+
+        metalsAndColorsForm.submitButton.click();
     }
+
 
     public void openMenu(String menuName) {
         homePage.headMenu.select(menuName); //"Metals & Colors");
@@ -63,25 +83,5 @@ public class JdiTests implements TestsInit {
         homePage.userName.assertThat().is().text(loginUserData.getUserNameAfterLogged());
     }
 
-    public void fillMetalsAndColorsForm() {
 
-        metalsAndColorsForm.customRadioOdd.select(3);
-        metalsAndColorsForm.customRadioEven.select(2);
-
-        metalsAndColorsForm.metals.select("Gold");
-        metalsAndColorsForm.metals.select("Selen");
-
-        metalsAndColorsForm.colors.select("Red");
-        metalsAndColorsForm.colors.select("Green");
-
-        // Only one value !
-        metalsAndColorsForm.vegetables.select("Cucumber");
-        metalsAndColorsForm.vegetables.select(2);
-        metalsAndColorsForm.vegetables.select("Onion");
-
-        metalsAndColorsForm.elements.select("Wind");
-        metalsAndColorsForm.elements.select("Water");
-
-        metalsAndColorsForm.submitButton.click();
-    }
 }
