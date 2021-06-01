@@ -6,8 +6,7 @@ public class MetalsAndColorsDataProvider {
     @DataProvider(name = "MetalsAndColorsDataProvider")
     public static Object[][] createData() {
         JsonDataParser parser = new JsonDataParser();
-        Object obj [][] = parser.getDataFromFile();
-        return obj;
+        return parser.getDataFromFile();
     }
 
 }

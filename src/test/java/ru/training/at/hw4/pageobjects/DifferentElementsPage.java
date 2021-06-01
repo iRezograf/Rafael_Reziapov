@@ -1,9 +1,9 @@
 package ru.training.at.hw4.pageobjects;
 
 
+import com.epam.jdi.light.elements.pageobjects.annotations.FindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;

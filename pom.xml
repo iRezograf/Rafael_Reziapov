@@ -246,6 +246,16 @@ y                        <property>
     <profiles>
 
         <profile>
+            <id>HW6</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/hw6.xml</testng.suite.file>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
             <id>3. All</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/allTestHw3.xml</testng.suite.file>
@@ -259,9 +269,6 @@ y                        <property>
             <properties>
                 <testng.suite.file>${testng.configs.path}/hw5.xml</testng.suite.file>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
 
         <profile>

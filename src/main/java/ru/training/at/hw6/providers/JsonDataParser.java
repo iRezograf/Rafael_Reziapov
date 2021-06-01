@@ -5,59 +5,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class JsonDataParser {
-
-    MetalsAndColorsDataList metalsAndColorsDataList;
-    MetalsAndColorsData metalsAndColorsData;
-    MetalsAndColors metalsAndColors;
-
-    public MetalsAndColorsDataList parseFromFile() {
-
-        metalsAndColorsDataList = new MetalsAndColorsDataList();
-
-        JSONParser parser = new JSONParser();
-
-        try (FileReader reader = new FileReader(
-                "src/test/resources/JDI_ex8_metalsColorsDataSet.json")) {
-
-            int countOfRootGets = Integer.parseInt(DataStore
-                    .getProperty("Data_endNumberInJson"))
-                  - Integer.parseInt(DataStore
-                    .getProperty("Data_startNumberInJson")) + 1;
-            List<MetalsAndColorsData> list = new ArrayList<>();
-            JSONObject rootJsonObj = (JSONObject) parser.parse(reader);
-            for (int i = 1; i <= countOfRootGets; i++) {
-
-                metalsAndColors = new MetalsAndColors();
-
-                String Data_bodyInJson = DataStore.getProperty("Data_bodyInJson") + i;
-                JSONObject field = (JSONObject) rootJsonObj.get(Data_bodyInJson);
-
-                metalsAndColors.setElements((List<String>) field.get("elements"));
-                metalsAndColors.setColor((String) field.get("color"));
-                metalsAndColors.setMetals((String) field.get("metals"));
-                metalsAndColors.setVegetables((List<String>) field.get("vegetables"));
-                metalsAndColors.setSummary((List<Integer>) field.get("summary"));
-
-                metalsAndColorsData = new MetalsAndColorsData();
-                metalsAndColorsData.setName(Data_bodyInJson);
-                metalsAndColorsData.setMetalsAndColors(metalsAndColors);
-                metalsAndColors = null;
-
-                list.add(metalsAndColorsData);
-                metalsAndColorsData = null;
-            }
-
-            metalsAndColorsDataList.setMetalsAndColorsDataList(list);
-
-        } catch (Exception e) {
-            System.out.println("Parser Error: " + e.toString());
-        }
-    return metalsAndColorsDataList;
-    }
 
     public Object[][] getDataFromFile() {
         JSONParser parser = new JSONParser();
@@ -66,10 +16,10 @@ public class JsonDataParser {
                 .getProperty("Data_endNumberInJson"))
                 - Integer.parseInt(DataStore
                 .getProperty("Data_startNumberInJson")) + 1;
-        int Data_NumberFieldInForm = Integer.parseInt(DataStore
+        int dataNumberFieldInForm = Integer.parseInt(DataStore
                 .getProperty("Data_NumberFieldInForm"));
 
-        Object obj[][] = new Object[countOfRootGets][Data_NumberFieldInForm];
+        Object[][] data = new Object[countOfRootGets][dataNumberFieldInForm];
 
         try (FileReader reader = new FileReader(
                 "src/test/resources/JDI_ex8_metalsColorsDataSet.json")) {
@@ -79,21 +29,22 @@ public class JsonDataParser {
             for (int i = 0; i < countOfRootGets; i++) {
 
                 // constract name like "data_1", "data_2" and etc
-                String Data_bodyInJson = DataStore.getProperty("Data_bodyInJson") + (i + 1);
+                String dataBodyInJson = DataStore.getProperty("Data_bodyInJson") + (i + 1);
 
-                JSONObject field = (JSONObject) rootJsonObj.get(Data_bodyInJson);
+                JSONObject field = (JSONObject) rootJsonObj.get(dataBodyInJson);
 
-                obj[i][0] = (List<Integer>) field.get("summary");
-                obj[i][1] = (List<String>) field.get("elements");
-                obj[i][2] = (String) field.get("color");
-                obj[i][3] = (String) field.get("metals");
-                obj[i][4] = (List<String>) field.get("vegetables");
+                data[i][0] = field.get("summary");
+
+                data[i][1] = field.get("elements");
+                data[i][2] = (String) field.get("color");
+                data[i][3] = (String) field.get("metals");
+                data[i][4] = field.get("vegetables");
 
             }
         } catch (Exception e) {
             System.out.println("Parser Error: " + e.toString());
         }
-        return obj;
+        return data;
     }
 
 

@@ -2,8 +2,6 @@ package ru.training.at.hw6.pages;
 
 import com.epam.jdi.light.elements.complex.Menu;
 import com.epam.jdi.light.elements.composite.WebPage;
-import com.epam.jdi.light.elements.pageobjects.annotations.Title;
-import com.epam.jdi.light.elements.pageobjects.annotations.Url;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.Css;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.UI;
 import com.epam.jdi.light.ui.html.elements.common.Button;
@@ -23,9 +21,6 @@ public class HomePage extends WebPage {
     public static Button loginButton;
     @UI("#user-name")
     public static Text userName;
-
-    @UI(".sidebar-menu span<[*'%s']<<")
-    public static Menu leftMenu;
 
     //body > header > div > nav > ul.uui-navigation.nav.navbar-nav.m-l8
     @Css("ul.uui-navigation.nav.navbar-nav.m-l8")
