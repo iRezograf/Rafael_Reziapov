@@ -1,4 +1,4 @@
-package ru.training.at.hw6.interfaces;
+package ru.training.at.hw6;
 
 
 import com.epam.jdi.light.driver.WebDriverUtils;
@@ -7,7 +7,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.training.at.hw6.SiteJdi;
 
-public interface TestsInit {
+public class TestsInit {
 
     @BeforeSuite(alwaysRun = true)
     static void beforeSuite() {
