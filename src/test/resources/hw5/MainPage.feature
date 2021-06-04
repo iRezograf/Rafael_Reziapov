@@ -1,6 +1,7 @@
-Feature: JDI GitHub site elements test
+@all
+Feature: JDI GitHub site elements test. Exercise 1
 
-  Scenario: User login test
+  Scenario: User login test 1.1
 
     Given I open JDI GitHub site
 
@@ -11,7 +12,7 @@ Feature: JDI GitHub site elements test
 
     Then Full 'ROMAN IOVLEV' should be displayed on the top right corner of the Home Page
 
-  Scenario: Different Element Page Test
+  Scenario: Different Element Page Test 1.2
 
     Given I open JDI GitHub site
     And   I login as user "Roman Iovlev"

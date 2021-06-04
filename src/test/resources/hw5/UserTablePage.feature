@@ -1,4 +1,4 @@
-@Ex2
+@all
 Feature: User Table Page test (Exercises 1,2)
 
 Scenario:User Table Page test

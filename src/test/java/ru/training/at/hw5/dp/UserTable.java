@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.util.Arrays;
 import java.util.List;
 
-import static ru.training.at.hw5.hook.WebDriverHook.removeSpaces;
+import static ru.training.at.hw5.util.DriverManager.removeSpaces;
 
 @Getter
 @Setter

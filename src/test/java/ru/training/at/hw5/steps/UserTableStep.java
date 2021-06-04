@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.training.at.hw5.hook.WebDriverHook.removeSpaces;
+import static ru.training.at.hw5.util.DriverManager.removeSpaces;
 
 public class UserTableStep {
 
@@ -24,7 +24,6 @@ public class UserTableStep {
 
     @Then("\"User Table\" page should be opened")
     public void userTablePageShouldBeOpened() {
-        UserTablePageObj userTablePageObj;
         WebDriver driver;
         driver = TestContext.getInstance()
                 .getTestObject(TestContext.WEB_DRIVER);
@@ -95,6 +94,9 @@ public class UserTableStep {
         // Second index - col
         //remove row with titles
         arg.remove(0);
+        // number of row and col should be equal to actual data
+        int row = arg.size();
+        int col = arg.get(0).size();
 
         // get Access to actual
         UserTablePageObj userTablePageObj;
@@ -106,14 +108,14 @@ public class UserTableStep {
         List<List<String>> s = getActualUserTableList(userTablePageObj);
         // to set identical structure with expected structure
         // remove col with type (index[1])
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < row; i++) {
             s.get(i).remove(1);
         }
 
         // In Scenario was error:
         // Hulksome description - without space
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 assertThat(s.get(i).get(j)).contains(arg.get(i).get(j));
             }
         }
