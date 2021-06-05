@@ -8,15 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class MetalsAndColors {
-    /* Example from JSon
-    {
-    "summary": [1,2],
-    "elements": ["Water", "Fire"],
-    "color": "Red",
-    "metals": "Gold",
-    "vegetables": ["Cucumber"]
-    }
-    */
 
     private List<Integer> summary;
     private List<String> elements;
