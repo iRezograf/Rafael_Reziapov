@@ -2,18 +2,15 @@ package ru.training.at.hw6.providers;
 
 
 import com.google.gson.Gson;
-import org.json.simple.parser.JSONParser;
-import org.junit.Test;
 
 import java.io.FileReader;
 
-public class JsonDParser {
+public class JsonDtParser {
 
-    @Test
-    public void parser() {
+    public  MetalsAndColorsData parser() {
 
         MetalsAndColorsData metalsAndColorsData;
-        MetalsAndColors metalsAndColors;
+        metalsAndColorsData = null;
 
         Gson gson = new Gson();
 
@@ -22,9 +19,10 @@ public class JsonDParser {
 
             metalsAndColorsData = gson.fromJson(reader, MetalsAndColorsData.class);
 
-
         } catch (Exception e) {
             System.out.println("Parser Error: " + e.toString());
         }
+        return metalsAndColorsData;
     }
+
 }

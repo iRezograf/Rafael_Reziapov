@@ -1,6 +1,7 @@
 package ru.training.at.hw6.forms;
 
 import com.epam.jdi.light.elements.complex.Checklist;
+import com.epam.jdi.light.elements.complex.WebList;
 import com.epam.jdi.light.elements.complex.dropdown.Dropdown;
 import com.epam.jdi.light.elements.pageobjects.annotations.FindBy;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.JDropdown;
@@ -9,6 +10,9 @@ import com.epam.jdi.light.ui.html.elements.common.Button;
 import com.epam.jdi.light.ui.html.elements.complex.RadioButtons;
 
 public class MetalsAndColorsForm  {
+
+    @UI(".panel-body-list.results")
+    public static WebList panelBodyListResults;
 
     @UI("[name=custom_radio_odd]")
     public static RadioButtons customRadioOdd;
@@ -39,8 +43,9 @@ public class MetalsAndColorsForm  {
             value = ".filter-option",
             list = "p",
             expand = ".caret")
-    public Checklist elements;
+    public static Checklist elements;
 
     @FindBy(css = "#submit-button")
-    public Button submitButton;
+    public static Button submitButton;
+
 }

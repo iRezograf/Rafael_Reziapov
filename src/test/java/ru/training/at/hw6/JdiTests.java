@@ -1,35 +1,56 @@
 package ru.training.at.hw6;
 
+import com.epam.jdi.light.driver.WebDriverUtils;
 import com.epam.jdi.light.elements.composite.WebPage;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import ru.training.at.hw6.entities.User;
+import ru.training.at.hw6.forms.LoginForm;
+import ru.training.at.hw6.forms.MetalsAndColorsForm;
+import ru.training.at.hw6.pages.HomePage;
 import ru.training.at.hw6.providers.DataStore;
-import ru.training.at.hw6.providers.LoginUserData;
 import ru.training.at.hw6.providers.MetalsAndColorsDataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.training.at.hw6.SiteJdi.*;
+import static com.epam.jdi.light.elements.init.PageFactory.initElements;
 
 
-public class JdiTests extends TestsInit{
-    LoginUserData loginUserData;
+public class JdiTests {
+
+    public User user;
+
+    @BeforeSuite(alwaysRun = true)
+    static void beforeSuite() {
+        initElements(SiteJdi.class);
+    }
+
+    @AfterSuite(alwaysRun = true)
+    static void afterSuite() {
+        WebDriverUtils.killAllSeleniumDrivers();
+    }
+
 
     @BeforeMethod()
     public void beforeMethod() {
-        loginUserData = new LoginUserData();
-        loginUserData.setUserName(DataStore.getProperty("userName"));
-        loginUserData.setPassword(DataStore.getProperty("password"));
-        loginUserData.setUserNameAfterLogged(DataStore.getProperty("userNameAfterLogged"));
+
+        user = new User();
+        user.setName(DataStore.getProperty("userName"));
+        user.setPassword(DataStore.getProperty("password"));
+        user.setUserName(DataStore.getProperty("userNameAfterLogged"));
+        System.out.println(user);
     }
 
     @Test(priority = 10)
     public void jdiTestRun() {
-
-        loginTest(loginUserData);
+        SiteJdi.open();
+        LoginForm.loginAs(user);
+        //Assert.assertTrue(LoginForm.isLogged(user));
         openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
 
     }
@@ -43,36 +64,36 @@ public class JdiTests extends TestsInit{
                                         String metals,
                                         List<String> vegetables) {
 
-        for (int i = 0; i < summary.size(); i++){
-            if ( summary.get( i).intValue() %  2 == 0) {
-                metalsAndColorsForm.customRadioEven.select(
+        for (int i = 0; i < summary.size(); i++) {
+            if (summary.get(i).intValue() %  2 == 0) {
+                MetalsAndColorsForm.customRadioEven.select(
                         (summary.get(i).intValue()) / 2);
             } else {
-                metalsAndColorsForm.customRadioOdd.select(
+                MetalsAndColorsForm.customRadioOdd.select(
                         (summary.get(i).intValue() + 1) / 2);
             }
         }
 
-        metalsAndColorsForm.metals.select(metals);
+        MetalsAndColorsForm.metals.select(metals);
 
-        metalsAndColorsForm.colors.select(color);
+        MetalsAndColorsForm.colors.select(color);
 
         for (String val : vegetables) {
-            metalsAndColorsForm.vegetables.select(val);
+            MetalsAndColorsForm.vegetables.select(val);
         }
 
         for (String val : elements) {
-            metalsAndColorsForm.elements.select(val);
+            MetalsAndColorsForm.elements.select(val);
         }
 
-        metalsAndColorsForm.submitButton.click();
+        MetalsAndColorsForm.submitButton.click();
     }
 
 
     @Test(priority = 50)
     public void lastResultAssertion() {
         List<String> actualResult = new ArrayList<>();
-        for (WebElement element : metalsAndColorsPage.panelBodyListResults) {
+        for (WebElement element : MetalsAndColorsForm.panelBodyListResults) {
             actualResult.add(element.getText());
         }
 
@@ -90,20 +111,9 @@ public class JdiTests extends TestsInit{
 
     public void openMenu(String menuName) {
         //"Metals & Colors");
-        homePage.headMenu.select(menuName);
+        HomePage.headMenu.select(menuName);
         Assert.assertEquals(WebPage.getTitle(),
                             DataStore.getProperty(menuName.replaceAll(" ", "")));
 
     }
-
-    public void loginTest(LoginUserData loginUserData) {
-        SiteJdi.open();
-        homePage.userIcon.click();
-        homePage.name.sendKeys(loginUserData.getUserName());
-        homePage.password.sendKeys(loginUserData.getPassword());
-        homePage.loginButton.click();
-        homePage.userName.assertThat().is().text(loginUserData.getUserNameAfterLogged());
-    }
-
-
 }

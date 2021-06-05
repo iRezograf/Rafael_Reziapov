@@ -1,12 +1,10 @@
 package ru.training.at.hw6.providers;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class MetalsAndColors {
 
     private List<Integer> summary;
@@ -15,14 +13,4 @@ public class MetalsAndColors {
     private String metals;
     private List<String> vegetables;
 
-    @Override
-    public String toString() {
-        return "MetalsAndColors{"
-             +   "summary=" + summary
-             +   ", elements=" + elements
-             +   ", color='" + color + '\''
-             +   ", metals='" + metals + '\''
-             +   ", vegetables=" + vegetables
-             +   '}';
-    }
 }

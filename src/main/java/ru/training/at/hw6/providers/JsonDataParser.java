@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
-import java.util.List;
 
 public class JsonDataParser {
 
@@ -28,21 +27,19 @@ public class JsonDataParser {
 
             for (int i = 0; i < countOfRootGets; i++) {
 
-                // constract name like "data_1", "data_2" and etc
                 String dataBodyInJson = DataStore.getProperty("Data_bodyInJson") + (i + 1);
 
                 JSONObject field = (JSONObject) rootJsonObj.get(dataBodyInJson);
 
                 data[i][0] = field.get("summary");
-
                 data[i][1] = field.get("elements");
-                data[i][2] = (String) field.get("color");
-                data[i][3] = (String) field.get("metals");
+                data[i][2] = field.get("color");
+                data[i][3] = field.get("metals");
                 data[i][4] = field.get("vegetables");
 
             }
         } catch (Exception e) {
-            System.out.println("Parser Error: " + e.toString());
+            System.out.println("Parser Error: " + e);
         }
         return data;
     }
