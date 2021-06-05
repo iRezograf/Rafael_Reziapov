@@ -19,7 +19,7 @@ public class JdiTests extends TestsInit{
     LoginUserData loginUserData;
 
     @BeforeMethod()
-    public void BeforeMethode() {
+    public void beforeMethod() {
         loginUserData = new LoginUserData();
         loginUserData.setUserName(DataStore.getProperty("userName"));
         loginUserData.setPassword(DataStore.getProperty("password"));
@@ -89,8 +89,10 @@ public class JdiTests extends TestsInit{
     }
 
     public void openMenu(String menuName) {
-        homePage.headMenu.select(menuName); //"Metals & Colors");
-        Assert.assertEquals(WebPage.getTitle(), "Metal and Colors");
+        //"Metals & Colors");
+        homePage.headMenu.select(menuName);
+        Assert.assertEquals(WebPage.getTitle(),
+                            DataStore.getProperty(menuName.replaceAll(" ", "")));
 
     }
 
