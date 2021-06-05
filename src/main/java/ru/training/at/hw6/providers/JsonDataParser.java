@@ -28,6 +28,7 @@ public class JsonDataParser {
                   - Integer.parseInt(DataStore
                     .getProperty("Data_startNumberInJson")) + 1;
             List<MetalsAndColorsData> list = new ArrayList<>();
+
             JSONObject rootJsonObj = (JSONObject) parser.parse(reader);
             for (int i = 1; i <= countOfRootGets; i++) {
 
@@ -43,8 +44,8 @@ public class JsonDataParser {
                 metalsAndColors.setSummary((List<Integer>) field.get("summary"));
 
                 metalsAndColorsData = new MetalsAndColorsData();
-                metalsAndColorsData.setName(Data_bodyInJson);
-                metalsAndColorsData.setMetalsAndColors(metalsAndColors);
+                //metalsAndColorsData.setName(Data_bodyInJson);
+                //metalsAndColorsData.setMetalsAndColors(metalsAndColors);
                 System.out.println(metalsAndColorsData);
                 metalsAndColors = null;
 
