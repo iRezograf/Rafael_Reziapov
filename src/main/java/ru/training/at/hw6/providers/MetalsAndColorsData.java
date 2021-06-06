@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class MetalsAndColorsData {
 
-    @SuppressWarnings("all")
     private MetalsAndColors data_1;
     private MetalsAndColors data_2;
     private MetalsAndColors data_3;

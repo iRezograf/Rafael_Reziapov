@@ -13,7 +13,7 @@ import ru.training.at.hw6.forms.LoginForm;
 import ru.training.at.hw6.forms.MetalsAndColorsForm;
 import ru.training.at.hw6.pages.HomePage;
 import ru.training.at.hw6.providers.DataStore;
-import ru.training.at.hw6.providers.MetalsAndColorsDataProvider;
+import ru.training.at.hw6.providers.MetalsAndColors;
 import ru.training.at.hw6.providers.MetalsAndColorsDtProvider;
 
 import java.util.ArrayList;
@@ -44,52 +44,15 @@ public class JdiTests {
         user.setName(DataStore.getProperty("userName"));
         user.setPassword(DataStore.getProperty("password"));
         user.setUserName(DataStore.getProperty("userNameAfterLogged"));
-        System.out.println(user);
     }
 
     @Test(priority = 10)
     public void jdiTestRun() {
         SiteJdi.open();
         LoginForm.loginAs(user);
-        //Assert.assertTrue(LoginForm.isLogged(user));
         openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
 
     }
-
-    @Test(priority = 20,
-            dataProvider = "MetalsAndColorsDataProvider",
-            dataProviderClass = MetalsAndColorsDataProvider.class)
-    public void fillMetalsAndColorsForm(List<Number> summary,
-                                        List<String> elements,
-                                        String color,
-                                        String metals,
-                                        List<String> vegetables) {
-
-        for (int i = 0; i < summary.size(); i++) {
-            if (summary.get(i).intValue() %  2 == 0) {
-                MetalsAndColorsForm.customRadioEven.select(
-                        (summary.get(i).intValue()) / 2);
-            } else {
-                MetalsAndColorsForm.customRadioOdd.select(
-                        (summary.get(i).intValue() + 1) / 2);
-            }
-        }
-
-        MetalsAndColorsForm.metals.select(metals);
-
-        MetalsAndColorsForm.colors.select(color);
-
-        for (String val : vegetables) {
-            MetalsAndColorsForm.vegetables.select(val);
-        }
-
-        for (String val : elements) {
-            MetalsAndColorsForm.elements.select(val);
-        }
-
-        MetalsAndColorsForm.submitButton.click();
-    }
-
 
     @Test(priority = 50)
     public void lastResultAssertion() {
@@ -116,5 +79,36 @@ public class JdiTests {
         Assert.assertEquals(WebPage.getTitle(),
                             DataStore.getProperty(menuName.replaceAll(" ", "")));
 
+    }
+
+    @Test(priority = 20,
+            dataProvider = "MetalsAndColorsDtProvider",
+            dataProviderClass = MetalsAndColorsDtProvider.class)
+    public void fillMetalsAndColors(MetalsAndColors metalsAndColors) {
+
+        for (int i = 0; i < metalsAndColors.getSummary().size(); i++) {
+            int radio = metalsAndColors.getSummary().get(i);
+            if (radio %  2 == 0) {
+                MetalsAndColorsForm.customRadioEven.select(
+                        radio / 2);
+            } else {
+                MetalsAndColorsForm.customRadioOdd.select(
+                        (radio + 1) / 2);
+            }
+        }
+
+        MetalsAndColorsForm.metals.select(metalsAndColors.getMetals());
+
+        MetalsAndColorsForm.colors.select(metalsAndColors.getColor());
+
+        for (String val : metalsAndColors.getVegetables()) {
+            MetalsAndColorsForm.vegetables.select(val);
+        }
+
+        for (String val : metalsAndColors.getElements()) {
+            MetalsAndColorsForm.elements.select(val);
+        }
+
+        MetalsAndColorsForm.submitButton.click();
     }
 }

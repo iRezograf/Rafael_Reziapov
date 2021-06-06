@@ -36,12 +36,4 @@ public class LoginForm {
         }
         loginButton.click();
     }
-
-    public static boolean isHidden() {
-        return !name.isDisplayed();
-    }
-
-    public static boolean isLogged(User user) {
-        return userName.toString().equals(user.getUserName());
-    }
 }
