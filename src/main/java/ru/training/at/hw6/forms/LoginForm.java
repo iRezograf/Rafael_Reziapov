@@ -7,7 +7,7 @@ import com.epam.jdi.light.ui.html.elements.common.Text;
 import com.epam.jdi.light.ui.html.elements.common.TextField;
 import ru.training.at.hw6.entities.User;
 
-public class LoginForm {
+public class LoginForm extends Form<User> {
 
     @UI("#user-icon")
     public static Link userIcon;

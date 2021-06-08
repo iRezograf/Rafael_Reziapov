@@ -8,6 +8,7 @@ import com.epam.jdi.light.elements.pageobjects.annotations.locators.JDropdown;
 import com.epam.jdi.light.elements.pageobjects.annotations.locators.UI;
 import com.epam.jdi.light.ui.html.elements.common.Button;
 import com.epam.jdi.light.ui.html.elements.complex.RadioButtons;
+import ru.training.at.hw6.providers.MetalsAndColors;
 
 public class MetalsAndColorsForm  {
 
@@ -47,5 +48,31 @@ public class MetalsAndColorsForm  {
 
     @FindBy(css = "#submit-button")
     public static Button submitButton;
+
+    public static void fillForm(MetalsAndColors metalsAndColors) {
+
+        for (int i = 0; i < metalsAndColors.getSummary().size(); i++) {
+            int radio = metalsAndColors.getSummary().get(i);
+            if (radio %  2 == 0) {
+                customRadioEven.select(
+                        radio / 2);
+            } else {
+                customRadioOdd.select(
+                        (radio + 1) / 2);
+            }
+        }
+
+        metals.select(metalsAndColors.getMetals());
+
+        colors.select(metalsAndColors.getColor());
+
+        for (String val : metalsAndColors.getVegetables()) {
+            vegetables.select(val);
+        }
+
+        for (String val : metalsAndColors.getElements()) {
+            elements.select(val);
+        }
+    }
 
 }

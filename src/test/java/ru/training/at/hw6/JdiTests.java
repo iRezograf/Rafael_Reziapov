@@ -24,7 +24,7 @@ import static com.epam.jdi.light.elements.init.PageFactory.initElements;
 
 public class JdiTests {
 
-    public User user;
+    public User roman;
 
     @BeforeSuite(alwaysRun = true)
     static void beforeSuite() {
@@ -39,18 +39,47 @@ public class JdiTests {
 
     @BeforeMethod()
     public void beforeMethod() {
-
-        user = new User();
-        user.setName(DataStore.getProperty("userName"));
-        user.setPassword(DataStore.getProperty("password"));
-        user.setUserName(DataStore.getProperty("userNameAfterLogged"));
+        roman = new User().set(c -> {
+            c.setName("Roman");
+            c.setPassword("Jdi1234");
+            c.setUserName(DataStore.getProperty("userNameAfterLogged"));
+        });
     }
 
     @Test(priority = 10)
     public void jdiTestRun() {
+
         SiteJdi.open();
-        LoginForm.loginAs(user);
-        openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
+
+    }
+
+    @Test(priority = 15)
+    public void loginTest() {
+
+        LoginForm.loginAs(roman);
+        LoginForm.userName.assertThat().is().displayed();
+
+    }
+
+    @Test(priority = 15)
+    public void openMenuTest() {
+
+        HomePage.openMenu(DataStore.getProperty("textOfHeaderMenuButtonsList4"));
+        Assert.assertEquals(WebPage.getTitle(),
+                DataStore.getProperty(
+                        DataStore
+                                .getProperty("textOfHeaderMenuButtonsList4")
+                                .replaceAll(" ", "")));
+
+    }
+
+    @Test(priority = 20,
+            dataProvider = "MetalsAndColorsDtProvider",
+            dataProviderClass = MetalsAndColorsDtProvider.class)
+    public void fillMetalsAndColors(MetalsAndColors metalsAndColors) {
+
+        MetalsAndColorsForm.fillForm(metalsAndColors);
+        MetalsAndColorsForm.submitButton.click();
 
     }
 
@@ -73,42 +102,5 @@ public class JdiTests {
                 DataStore.getProperty("lastResultVegetables"));
     }
 
-    public void openMenu(String menuName) {
-        //"Metals & Colors");
-        HomePage.headMenu.select(menuName);
-        Assert.assertEquals(WebPage.getTitle(),
-                            DataStore.getProperty(menuName.replaceAll(" ", "")));
 
-    }
-
-    @Test(priority = 20,
-            dataProvider = "MetalsAndColorsDtProvider",
-            dataProviderClass = MetalsAndColorsDtProvider.class)
-    public void fillMetalsAndColors(MetalsAndColors metalsAndColors) {
-
-        for (int i = 0; i < metalsAndColors.getSummary().size(); i++) {
-            int radio = metalsAndColors.getSummary().get(i);
-            if (radio %  2 == 0) {
-                MetalsAndColorsForm.customRadioEven.select(
-                        radio / 2);
-            } else {
-                MetalsAndColorsForm.customRadioOdd.select(
-                        (radio + 1) / 2);
-            }
-        }
-
-        MetalsAndColorsForm.metals.select(metalsAndColors.getMetals());
-
-        MetalsAndColorsForm.colors.select(metalsAndColors.getColor());
-
-        for (String val : metalsAndColors.getVegetables()) {
-            MetalsAndColorsForm.vegetables.select(val);
-        }
-
-        for (String val : metalsAndColors.getElements()) {
-            MetalsAndColorsForm.elements.select(val);
-        }
-
-        MetalsAndColorsForm.submitButton.click();
-    }
 }
